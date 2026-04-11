@@ -1,0 +1,187 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram id="customer-usecase-from-image" name="Customer Use Case">
+    <mxGraphModel dx="1737" dy="1043" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1500" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="system_boundary" value="Clothing Shop Website (Unleashed)" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=top;spacingTop=8;fontSize=12;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="210" y="20" width="1150" height="1270" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_guest" value="Guest" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="80" y="350" width="44" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_customer" value="Customer" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="76" y="470" width="52" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="guest_generalization" value="" style="endArrow=block;endFill=0;html=1;rounded=0;" parent="1" source="actor_customer" target="actor_guest" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_manage_profile" value="UC-18&#xa;Manage profile" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="470" y="120" width="165" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_change_password" value="UC-22.1&#xa;Change password" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="690" y="60" width="170" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="note_rud" value="RUD" style="shape=note;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="820" y="145" width="70" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_manage_order" value="UC-15&#xa;Manage order" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="450" y="355" width="145" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_place_order" value="UC-15.1&#xa;Place order" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="550" y="250" width="145" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_pay_cod" value="UC-15.2&#xa;Pay when received" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="710" y="275" width="145" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_pay_vnpay" value="UC-15.3&#xa;Pay via VNPay" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="855" y="315" width="145" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_cancel_order" value="UC-15.4&#xa;Cancel order" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="915" y="405" width="145" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_apply_voucher" value="UC-15.5&#xa;Apply voucher" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="865" y="510" width="145" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_view_order_history" value="UC-15.6&#xa;View order history" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="780" y="620" width="160" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_view_voucher_list" value="UC-15.7&#xa;View list of voucher&#xa;for customer" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="620" y="590" width="175" height="88" as="geometry" />
+        </mxCell>
+        <mxCell id="note_crud" value="CRUD" style="shape=note;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="740" y="700" width="72" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_manage_cart" value="UC-11&#xa;Manage cart" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="445" y="585" width="145" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="note_crd" value="CRD" style="shape=note;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="650" y="635" width="68" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_manage_wishlist" value="UC-26&#xa;Manage wishlist of&#xa;product" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="455" y="700" width="160" height="88" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_logout" value="UC-03&#xa;Logout" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="470" y="800" width="130" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_forgot_password" value="UC-19&#xa;Forgot password" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="470" y="875" width="145" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_manage_reviews" value="UC-20&#xa;Manage reviews" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="470" y="995" width="145" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="note_cru" value="CRU" style="shape=note;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="665" y="952" width="70" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_manage_notifications" value="UC-25&#xa;Manage&#xa;notifications" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="450" y="1130" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_check_noti_viewed" value="UC-25.1&#xa;Check notification&#xa;as viewed" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="630" y="1035" width="165" height="88" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_view_personal_notifications" value="UC-25.2&#xa;View list of personal&#xa;notifications" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="665" y="1160" width="185" height="88" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_login" value="UC-02&#xa;Login" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="1040" y="690" width="145" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_login_google" value="UC-02.1&#xa;Login by Google" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="1210" y="360" width="150" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_customer_profile" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor_customer" target="uc_manage_profile" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_customer_order" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor_customer" target="uc_manage_order" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_customer_cart" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor_customer" target="uc_manage_cart" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_customer_wishlist" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor_customer" target="uc_manage_wishlist" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_customer_logout" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor_customer" target="uc_logout" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_customer_forgot" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor_customer" target="uc_forgot_password" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_customer_reviews" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor_customer" target="uc_manage_reviews" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_customer_notifications" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor_customer" target="uc_manage_notifications" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_profile_password" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_profile" target="uc_change_password" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_profile_note" value="" style="dashed=1;endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_profile" target="note_rud" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_order_place" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_order" target="uc_place_order" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_order_cod" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_order" target="uc_pay_cod" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_order_vnpay" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_order" target="uc_pay_vnpay" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_order_cancel" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_order" target="uc_cancel_order" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_order_apply" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_order" target="uc_apply_voucher" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_order_history" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_order" target="uc_view_order_history" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_order_voucher_list" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_order" target="uc_view_voucher_list" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_voucher_note" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_view_voucher_list" target="note_crud" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_cart_note" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_cart" target="note_crd" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_reviews_note" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_reviews" target="note_cru" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_notifications_check" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_notifications" target="uc_check_noti_viewed" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_notifications_view" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="uc_manage_notifications" target="uc_view_personal_notifications" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="include_rud_login" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="note_rud" target="uc_login" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="include_apply_login" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="uc_apply_voucher" target="uc_login" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="include_crud_login" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="note_crud" target="uc_login" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="include_crd_login" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="note_crd" target="uc_login" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="include_wishlist_login" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="uc_manage_wishlist" target="uc_login" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="include_logout_login" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="uc_logout" target="uc_login" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="include_forgot_login" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="uc_forgot_password" target="uc_login" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="include_cru_login" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="note_cru" target="uc_login" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="include_notifications_login" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="uc_manage_notifications" target="uc_login" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
