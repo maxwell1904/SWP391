@@ -1,0 +1,350 @@
+﻿// Generated from migration_full.sql
+
+Table brand {
+  brand_id int [pk, not null]
+  brand_name nvarchar(255)
+  brand_description nvarchar(255)
+  brand_image_url nvarchar(255)
+  brand_website_url nvarchar(255)
+  brand_created_at datetimeoffset(7)
+  brand_updated_at datetimeoffset(7)
+}
+
+Table cart {
+  user_id uniqueidentifier [pk, not null]
+  variation_id int [pk, not null]
+  cart_quantity int
+}
+
+Table category {
+  category_id int [pk, not null]
+  category_name nvarchar(255)
+  category_description nvarchar(max)
+  category_image_url nvarchar(255)
+  category_created_at datetimeoffset(7)
+  category_updated_at datetimeoffset(7)
+}
+
+Table color {
+  color_id int [pk, not null]
+  color_name nvarchar(255)
+  color_hex_code nvarchar(255)
+}
+
+Table comment {
+  comment_id int [pk, not null]
+  review_id int
+  comment_content nvarchar(255)
+  comment_created_at datetimeoffset(7)
+  comment_updated_at datetimeoffset(7)
+}
+
+Table comment_parent {
+  comment_id int
+  comment_parent_id int
+}
+
+Table discount {
+  discount_id int [pk, not null]
+  discount_status_id int
+  discount_type_id int
+  discount_code nvarchar(20) [not null]
+  discount_value decimal(22, 2)
+  discount_description nvarchar(255)
+  discount_rank_requirement int
+  discount_minimum_order_value decimal(22, 2)
+  discount_maximum_value decimal(22, 2)
+  discount_usage_limit int
+  discount_start_date datetimeoffset(7)
+  discount_end_date datetimeoffset(7)
+  discount_created_at datetimeoffset(7)
+  discount_updated_at datetimeoffset(7)
+  discount_usage_count int
+}
+
+Table discount_status {
+  discount_status_id int [pk, not null]
+  discount_status_name nvarchar(255)
+}
+
+Table discount_type {
+  discount_type_id int [pk, not null]
+  discount_type_name nvarchar(255)
+}
+
+Table notification {
+  notification_id int [pk, not null]
+  user_id_sender uniqueidentifier
+  notification_title nvarchar(255)
+  notification_content nvarchar(max)
+  is_notification_draft bit
+  notification_created_at datetimeoffset(7)
+  notification_updated_at datetimeoffset(7)
+}
+
+Table notification_user {
+  notification_id int
+  user_id uniqueidentifier
+  is_notification_viewed bit
+  is_notification_deleted bit
+}
+
+Table order {
+  order_id nvarchar(255) [pk, not null]
+  user_id uniqueidentifier
+  order_status_id int
+  payment_method_id int
+  shipping_method_id int
+  discount_id int
+  incharge_employee_id uniqueidentifier
+  order_date datetimeoffset(7)
+  order_total_amount decimal(22, 2)
+  order_tracking_number nvarchar(50)
+  order_note nvarchar(max)
+  order_billing_address nvarchar(255)
+  order_expected_delivery_date datetime2(7)
+  order_transaction_reference nvarchar(255)
+  order_tax numeric(3, 2)
+  order_created_at datetimeoffset(7)
+  order_updated_at datetimeoffset(7)
+}
+
+Table order_status {
+  order_status_id int [pk, not null]
+  order_status_name nvarchar(255)
+}
+
+Table order_variation_single {
+  order_id nvarchar(255) [pk, not null]
+  variation_single_id int [pk, not null]
+  sale_id int
+  variation_price_at_purchase decimal(22, 2) [not null]
+}
+
+Table payment_method {
+  payment_method_id int [pk, not null]
+  payment_method_name nvarchar(255)
+}
+
+Table product {
+  product_id uniqueidentifier [pk, not null]
+  brand_id int
+  product_status_id int
+  product_name nvarchar(255)
+  product_code nvarchar(255)
+  product_description nvarchar(max)
+  product_created_at datetimeoffset(7)
+  product_updated_at datetimeoffset(7)
+}
+
+Table product_category {
+  product_id uniqueidentifier
+  category_id int
+}
+
+Table product_status {
+  product_status_id int [pk, not null]
+  product_status_name nvarchar(255)
+}
+
+Table provider {
+  provider_id int [pk, not null]
+  provider_name nvarchar(255)
+  provider_image_url nvarchar(255)
+  provider_email nvarchar(255)
+  provider_phone nvarchar(12)
+  provider_address nvarchar(255)
+  provider_created_at datetimeoffset(7)
+  provider_updated_at datetimeoffset(7)
+}
+
+Table rank {
+  rank_id int [pk, not null]
+  rank_name nvarchar(max)
+  rank_num int
+  rank_payment_requirement decimal(22, 2)
+  rank_base_discount numeric(3, 2)
+}
+
+Table review {
+  review_id int [pk, not null]
+  product_id uniqueidentifier
+  user_id uniqueidentifier
+  order_id nvarchar(255)
+  review_rating int
+}
+
+Table role {
+  role_id int [pk, not null]
+  role_name nvarchar(255)
+}
+
+Table sale {
+  sale_id int [pk, not null]
+  sale_type_id int
+  sale_status_id int
+  sale_value decimal(22, 2)
+  sale_start_date datetimeoffset(7)
+  sale_end_date datetimeoffset(7)
+  sale_created_at datetimeoffset(7)
+  sale_updated_at datetimeoffset(7)
+}
+
+Table sale_product {
+  sale_id int [pk, not null]
+  product_id uniqueidentifier [pk, not null]
+}
+
+Table sale_status {
+  sale_status_id int [pk, not null]
+  sale_status_name nvarchar(255)
+}
+
+Table sale_type {
+  sale_type_id int [pk, not null]
+  sale_type_name nvarchar(255)
+}
+
+Table shipping_method {
+  shipping_method_id int [pk, not null]
+  shipping_method_name nvarchar(255)
+}
+
+Table size {
+  size_id int [pk, not null]
+  size_name nvarchar(255)
+}
+
+Table stock {
+  stock_id int [pk, not null]
+  stock_name nvarchar(255)
+  stock_address nvarchar(255)
+}
+
+Table stock_variation {
+  variation_id int [pk, not null]
+  stock_id int [pk, not null]
+  stock_quantity int
+}
+
+Table transaction {
+  transaction_id int [pk, not null]
+  stock_id int
+  variation_id int
+  provider_id int
+  incharge_employee_id uniqueidentifier
+  transaction_type_id int
+  transaction_quantity int
+  transaction_date datetimeoffset(6)
+  transaction_product_price decimal(22, 2)
+}
+
+Table transaction_type {
+  transaction_type_id int [pk, not null]
+  transaction_type_name nvarchar(255)
+}
+
+Table user {
+  user_id uniqueidentifier [pk, not null]
+  role_id int
+  is_user_enabled bit
+  user_google_id nvarchar(255)
+  user_username nvarchar(255)
+  user_password nvarchar(255)
+  user_fullname nvarchar(255)
+  user_email nvarchar(255)
+  user_phone nvarchar(12)
+  user_birthdate nvarchar(255)
+  user_address nvarchar(255)
+  user_image nvarchar(255)
+  user_current_payment_method nvarchar(255)
+  user_created_at datetimeoffset(7)
+  user_updated_at datetimeoffset(7)
+}
+
+Table user_discount {
+  user_id uniqueidentifier [pk, not null]
+  discount_id int [pk, not null]
+  is_discount_used bit [not null]
+  discount_used_at datetimeoffset(7)
+}
+
+Table user_rank {
+  user_id uniqueidentifier [pk, not null]
+  rank_id int [not null]
+  money_spent decimal(22, 2)
+  rank_status smallint [not null]
+  rank_expire_date date [not null]
+  rank_created_date datetimeoffset(7)
+  rank_updated_date datetimeoffset(7)
+}
+
+Table variation {
+  variation_id int [pk, not null]
+  product_id uniqueidentifier
+  size_id int
+  color_id int
+  variation_image nvarchar(max)
+  variation_price decimal(22, 2)
+}
+
+Table variation_single {
+  variation_single_id int [pk, not null]
+  variation_single_code nvarchar(255)
+  is_variation_single_bought bit
+  variation_id int
+}
+
+Table wishlist {
+  user_id uniqueidentifier
+  product_id uniqueidentifier
+}
+
+Ref: cart.user_id > user.user_id
+Ref: cart.variation_id > variation.variation_id
+Ref: comment.review_id > review.review_id
+Ref: comment_parent.comment_id > comment.comment_id
+Ref: comment_parent.comment_parent_id > comment.comment_id
+Ref: discount.discount_rank_requirement > rank.rank_id
+Ref: discount.discount_status_id > discount_status.discount_status_id
+Ref: discount.discount_type_id > discount_type.discount_type_id
+Ref: notification.user_id_sender > user.user_id
+Ref: notification_user.notification_id > notification.notification_id
+Ref: notification_user.user_id > user.user_id
+Ref: order.discount_id > discount.discount_id
+Ref: order.incharge_employee_id > user.user_id
+Ref: order.order_status_id > order_status.order_status_id
+Ref: order.payment_method_id > payment_method.payment_method_id
+Ref: order.shipping_method_id > shipping_method.shipping_method_id
+Ref: order.user_id > user.user_id
+Ref: order_variation_single.order_id > order.order_id
+Ref: order_variation_single.variation_single_id > variation_single.variation_single_id
+Ref: product.brand_id > brand.brand_id
+Ref: product.product_status_id > product_status.product_status_id
+Ref: product_category.category_id > category.category_id
+Ref: product_category.product_id > product.product_id
+Ref: review.order_id > order.order_id
+Ref: review.product_id > product.product_id
+Ref: review.user_id > user.user_id
+Ref: sale.sale_status_id > sale_status.sale_status_id
+Ref: sale.sale_type_id > sale_type.sale_type_id
+Ref: sale_product.product_id > product.product_id
+Ref: sale_product.sale_id > sale.sale_id
+Ref: stock_variation.stock_id > stock.stock_id
+Ref: stock_variation.variation_id > variation.variation_id
+Ref: transaction.incharge_employee_id > user.user_id
+Ref: transaction.provider_id > provider.provider_id
+Ref: transaction.stock_id > stock.stock_id
+Ref: transaction.transaction_type_id > transaction_type.transaction_type_id
+Ref: transaction.variation_id > variation.variation_id
+Ref: user.role_id > role.role_id
+Ref: user_discount.discount_id > discount.discount_id
+Ref: user_discount.user_id > user.user_id
+Ref: user_rank.rank_id > rank.rank_id
+Ref: user_rank.user_id > user.user_id
+Ref: variation.product_id > product.product_id
+Ref: variation.color_id > color.color_id
+Ref: variation.size_id > size.size_id
+Ref: variation_single.variation_id > variation.variation_id
+Ref: wishlist.product_id > product.product_id
+Ref: wishlist.user_id > user.user_id
