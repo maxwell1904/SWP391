@@ -1,0 +1,50 @@
+<mxfile host="app.diagrams.net" version="24.7.17">
+  <diagram id="delete-account" name="Delete Account">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900">
+      <root>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+
+        <mxCell id="userController" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UserController&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ requestDeleteAccount() : ResponseEntity&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="340" y="2" width="345" height="123" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="securityContextHolder" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;SecurityContextHolder&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getContext()&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="800" y="34" width="208" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="userService" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UserService&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findByUsername(username: String) : User&lt;br/&gt;+ disableAccount(userId: String) : boolean&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="77" y="175" width="300" height="78" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="jwtUtil" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;JwtUtil&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ generateStringToken(subject: String, expirationTime: long) : String&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="407" y="176" width="264" height="77" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="userRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UserRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findByUserUsername(username: String) : Optional&lt;User&gt;&lt;br/&gt;+ findById(id: String) : Optional&lt;User&gt;&lt;br/&gt;+ save(user: User) : User&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="312" y="340" width="218" height="61" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="jpaRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;JpaRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="602" y="340" width="253" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="user" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;User&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;userId: Integer&lt;br/&gt;role: Role&lt;br/&gt;isUserEnabled: Boolean&lt;br/&gt;userGoogleId: String&lt;br/&gt;userUsername: String&lt;br/&gt;userPassword: String&lt;br/&gt;userFullname: String&lt;br/&gt;userEmail: String&lt;br/&gt;userPhone: String&lt;br/&gt;userBirthdate: String&lt;br/&gt;userAddress: String&lt;br/&gt;userImage: String&lt;br/&gt;userCurrentPaymentMethod: String&lt;br/&gt;userCreatedAt: OffsetDateTime&lt;br/&gt;userUpdatedAt: OffsetDateTime&lt;br/&gt;userRank: UserRank&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="340" y="487" width="210" height="208" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="updateUserDTO" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UpdateUserDTO&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- fullName: String&lt;br/&gt;- userImage: String&lt;br/&gt;- userPhone: String&lt;br/&gt;- userAddress: String&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="628" y="584" width="210" height="124" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="userController" target="securityContextHolder"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="userController" target="userService"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="userController" target="jwtUtil"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="userService" target="userRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" value="inheritance" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=0;endSize=16;fontSize=10;" edge="1" parent="1" source="userRepository" target="jpaRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="userService" target="user"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="userRepository" target="user"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="user" target="updateUserDTO"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
