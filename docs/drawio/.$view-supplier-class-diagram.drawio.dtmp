@@ -1,0 +1,34 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram id="view-supplier" name="View Supplier">
+    <mxGraphModel dx="1469" dy="873" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="providerRestController" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProviderRestController&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- providerService: ProviderService&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getProviderById(id: Integer): Provider&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="56" y="8" width="336" height="138" as="geometry" />
+        </mxCell>
+        <mxCell id="providerService" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProviderService&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- providerRepository: ProviderRepository&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findById(id: Integer): Provider&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="64" y="200" width="309" height="116" as="geometry" />
+        </mxCell>
+        <mxCell id="providerRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProviderRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findById(id: Integer): Provider&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="250" y="401" width="247" height="98" as="geometry" />
+        </mxCell>
+        <mxCell id="provider" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Provider&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- id: Integer&lt;br/&gt;- providerName: String&lt;br/&gt;- providerImageUrl: String&lt;br/&gt;- providerEmail: String&lt;br/&gt;- providerPhone: String&lt;br/&gt;- providerAddress: String&lt;br/&gt;- providerCreatedAt: OffsetDateTime&lt;br/&gt;- providerUpdatedAt: OffsetDateTime&lt;br/&gt;- transactions: Set&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getId(): Integer&lt;br/&gt;+ setId(id: Integer)&lt;br/&gt;+ getProviderName(): String&lt;br/&gt;+ setProviderName(name: String)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="58" y="519" width="287" height="244" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" parent="1" source="providerRestController" target="providerService" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" parent="1" source="providerService" target="providerRepository" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" parent="1" source="providerService" target="provider" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" parent="1" source="providerRepository" target="provider" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
