@@ -1,0 +1,60 @@
+<mxfile host="app.diagrams.net" version="24.7.17">
+  <diagram id="add-reviews" name="Add Reviews">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900">
+      <root>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+
+        <mxCell id="reviewRestController" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ReviewRestController&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- reviewService: ReviewService&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ addReview(review: String): ResponseEntity&lt;?&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="362" y="19" width="255" height="98" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="reviewService" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ReviewService&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- reviewRepository: ReviewRepository&lt;br/&gt;- productRepository: ProductRepository&lt;br/&gt;- orderRepository: OrderRepository&lt;br/&gt;- userRepository: UserRepository&lt;br/&gt;- commentRepository: CommentRepository&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ addReview(review: String): Review&lt;br/&gt;+ checkReviewExist(productId: String, orderId: String, userId: String): boolean&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="333" y="154" width="259" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="commentRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;CommentRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ save(comment: Comment): Comment&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="708" y="163" width="187" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="review" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Review&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- id: Integer&lt;br/&gt;- productId: String&lt;br/&gt;- user: String&lt;br/&gt;- order: String&lt;br/&gt;- reviewRating: Integer&lt;br/&gt;- comments: List&lt;Comment&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getId(): Integer&lt;br/&gt;+ setId(id: Integer)&lt;br/&gt;+ getReviewRating(): Integer&lt;br/&gt;+ setReviewRating(rating: Integer)&lt;br/&gt;+ getProductId(): String&lt;br/&gt;+ setProductId(product: String)&lt;br/&gt;+ getUser(): String&lt;br/&gt;+ setUser(user: String)&lt;br/&gt;+ getOrder(): String&lt;br/&gt;+ setOrder(order: String)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="23" y="281" width="149" height="189" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="reviewRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ReviewRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ save(review: Review): Review&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="193" y="313" width="143" height="49" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="productRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProductRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findById(id: String): String&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="369" y="313" width="163" height="54" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="orderRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;OrderRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findById(id: String): String&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="579" y="313" width="160" height="54" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="userRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UserRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findById(id: String): String&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="793" y="313" width="159" height="54" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="stringClass" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;String&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="38" y="499" width="100" height="78" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="comment" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Comment&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- id: Integer&lt;br/&gt;- review: Review&lt;br/&gt;- commentContent: String&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getId(): Integer&lt;br/&gt;+ setId(id: Integer)&lt;br/&gt;+ getReview(): Review&lt;br/&gt;+ setReview(review: Review)&lt;br/&gt;+ getCommentContent(): String&lt;br/&gt;+ setCommentContent(content: String)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="228" y="473" width="169" height="124" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="reviewRestController" target="reviewService"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="reviewService" target="commentRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="reviewService" target="reviewRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="reviewService" target="productRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="reviewService" target="orderRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="reviewService" target="userRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="reviewService" target="review"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="association" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="reviewRepository" target="comment"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" value="association" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="review" target="stringClass"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" value="association" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="comment" target="stringClass"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
