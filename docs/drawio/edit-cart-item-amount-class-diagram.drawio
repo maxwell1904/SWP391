@@ -1,0 +1,61 @@
+<mxfile host="app.diagrams.net" version="24.7.17">
+  <diagram id="edit-cart-item-amount" name="Edit Cart Item Amount">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900">
+      <root>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+
+        <mxCell id="variation" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Variation&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- id : int&lt;br/&gt;- product : Product&lt;br/&gt;- size : Size&lt;br/&gt;- Color : color&lt;br/&gt;- variationImage : String&lt;br/&gt;- variationPrice : BigDecimal&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="50" y="102" width="211" height="164" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cart" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Cart&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- id : CartId&lt;br/&gt;- user : User&lt;br/&gt;- variation : Variation&lt;br/&gt;- cartQuantity : int&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="296" y="133" width="211" height="151" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="user" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;User&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- userId : UUID&lt;br/&gt;- role : Role&lt;br/&gt;- isUserEnabled : Boolen&lt;br/&gt;- userGoogleId : String&lt;br/&gt;- userUsername : String&lt;br/&gt;- userPassword : String&lt;br/&gt;- userFullname : String&lt;br/&gt;- userEmail : String&lt;br/&gt;- userPhone : String&lt;br/&gt;- userBirthdate : String&lt;br/&gt;- userAddress : String&lt;br/&gt;- userImage : String&lt;br/&gt;- userCurrentPaymentMethod : String&lt;br/&gt;- userCreatedAt : OffsetDateTime&lt;br/&gt;- userUpdatedAt : OffsetDateTime&lt;br/&gt;- userRank : UserRank&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="542" y="0" width="212" height="296" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cartService" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;CartService&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ addToCart(String userId, int variationId, int quantity) : void&lt;br/&gt;+ removeFromCart(String userId, Integer variationId) : void&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="68" y="367" width="340" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cartRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;CartRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findById() : cart&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="543" y="322" width="113" height="55" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="variationRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;VariationRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findById() : variation&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="543" y="394" width="114" height="55" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="userRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UserRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findById() : user&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="543" y="467" width="113" height="58" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="jpaRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;JpaRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="753" y="394" width="154" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cartRestController" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;CartRestController&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ addToCart(int variationId, String quantity) : ResponseEntity&amp;lt;?&amp;gt;&lt;br/&gt;+ removeFromCart(int variationId) : ResponseEntity&amp;lt;?&amp;gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="59" y="475" width="385" height="64" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="shopView" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Shop View&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" vertex="1" parent="1">
+          <mxGeometry x="48" y="576" width="158" height="38" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="cart" target="variation"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="cart" target="user"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="cartService" target="cart"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="cartService" target="cartRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="cartService" target="variationRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="cartService" target="userRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" value="inheritance" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=0;endSize=16;fontSize=10;" edge="1" parent="1" source="cartRepository" target="jpaRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="inheritance" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=0;endSize=16;fontSize=10;" edge="1" parent="1" source="variationRepository" target="jpaRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" value="inheritance" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=0;endSize=16;fontSize=10;" edge="1" parent="1" source="userRepository" target="jpaRepository"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="cartRestController" target="cartService"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="shopView" target="cartRestController"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
