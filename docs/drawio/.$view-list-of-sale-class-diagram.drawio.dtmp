@@ -1,0 +1,78 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram id="view-list-of-sale" name="View list of sale">
+    <mxGraphModel dx="1469" dy="873" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="saleRestController" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;SaleRestController&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- saleService: SaleService&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getAllSales(): Object&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="119.37037037037035" width="251" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="saleService" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;SaleService&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;saleRepository: SaleRepository&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findAll(): Sale&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="148.37037037037035" y="214" width="193" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="saleRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;SaleRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findAll(): Sale&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="119.5" y="377" width="149" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="sale" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Sale&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;id: Integer&lt;br/&gt;saleType: SaleType&lt;br/&gt;saleStatus: SaleStatus&lt;br/&gt;saleValue: BigDecimal&lt;br/&gt;saleStartDate: OffsetDateTime&lt;br/&gt;saleEndDate: OffsetDateTime&lt;br/&gt;saleCreatedAt: OffsetDateTime&lt;br/&gt;saleUpdatedAt: OffsetDateTime&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getId(): Integer&lt;br/&gt;+ setId(id: Integer)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="132.38" y="529" width="192" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="saleType" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;SaleType&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;id: Integer&lt;br/&gt;saleTypeName: String&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getId(): Integer&lt;br/&gt;+ setId(id: Integer)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry y="768" width="197" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="saleStatus" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;SaleStatus&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;id: Integer&lt;br/&gt;saleStatusName: String&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getId(): Integer&lt;br/&gt;+ setId(id: Integer)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="227" y="768.5" width="191" height="81.5" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="saleRestController" target="saleService" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="244.87037037037032" y="126" />
+              <mxPoint x="244.87037037037032" y="202" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="saleService" target="saleRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="199.12037037037035" y="289" />
+              <mxPoint x="194" y="365" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="saleService" target="sale" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="290.6203703703703" y="289" />
+              <mxPoint x="298.5" y="327" />
+              <mxPoint x="298.5" y="479" />
+              <mxPoint x="273.875" y="517" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="saleRepository" target="sale" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="194" y="441" />
+              <mxPoint x="182.875" y="517" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" value="association" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="sale" target="saleType" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="182.875" y="680" />
+              <mxPoint x="98.5" y="756" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" value="association" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="sale" target="saleStatus" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="273.875" y="680" />
+              <mxPoint x="322.5" y="756" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
