@@ -1,0 +1,158 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram id="view-products-class-diagram" name="View List Of Products">
+    <mxGraphModel dx="1209" dy="719" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1280" pageHeight="773" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="variation" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Variation&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot; valign=&quot;top&quot;&gt;-id : int&lt;br/&gt;-product : Product&lt;br/&gt;-size : Size&lt;br/&gt;-color : color&lt;br/&gt;-variationImage : String&lt;br/&gt;-variationPrice : BigDecimal&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="354.5" y="274.5" width="145" height="111" as="geometry" />
+        </mxCell>
+        <mxCell id="category" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Category&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot; valign=&quot;top&quot;&gt;-id : int&lt;br/&gt;-categoryName : String&lt;br/&gt;-categoryDescription : String&lt;br/&gt;-categoryImageUrl : String&lt;br/&gt;-categoryCreatedAt : OffsetDateTime&lt;br/&gt;-categoryUpdatedAt : OffsetDateTime&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="4.5" y="274" width="145" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="brand" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Brand&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot; valign=&quot;top&quot;&gt;-id : int&lt;br/&gt;-brandName : String&lt;br/&gt;-brandDescription : String&lt;br/&gt;-brandImageUrl : String&lt;br/&gt;-brandWebsiteUrl : String&lt;br/&gt;-brandCreatedAt : OffsetDateTime&lt;br/&gt;-brandUpdatedAt : OffsetDateTime&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="179.5" y="274" width="145" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="productItemDTO" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProductItemDTO&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;-productId : String&lt;br/&gt;-productName : String&lt;br/&gt;-variations : Map&amp;lt;String, Map&amp;lt;String, ProductVariationDTO&amp;gt;&amp;gt;&lt;br/&gt;-colors : List&amp;lt;Color&amp;gt;&lt;br/&gt;-sizes : List&amp;lt;Size&amp;gt;&lt;br/&gt;-saleType : SaleType&lt;br/&gt;-saleValue : BigDecimal&lt;br/&gt;-description : String&lt;br/&gt;-avgRating : double&lt;br/&gt;-totalRating : long&lt;br/&gt;-reviews : List&amp;lt;ProductReviewDTO&amp;gt;&lt;br/&gt;-brand : Brand&lt;br/&gt;-categories : List&amp;lt;Category&amp;gt;&lt;br/&gt;-status : int&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="184" y="487" width="187" height="149" as="geometry" />
+        </mxCell>
+        <mxCell id="product" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Product&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot; valign=&quot;top&quot;&gt;-productId : UUID&lt;br/&gt;-brand : Brand&lt;br/&gt;-productStatus : ProductStatus&lt;br/&gt;-productName : String&lt;br/&gt;-productCode : String&lt;br/&gt;-productDescription : String&lt;br/&gt;-productCreatedAt : OffsetDateTime&lt;br/&gt;-productUpdatedAt : OffsetDateTime&lt;br/&gt;-productVariations : List&amp;lt;Variation&amp;gt;&lt;br/&gt;-categories : List&amp;lt;Category&amp;gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry y="486" width="154" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="productService" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProductService&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+getListProduct() : List&amp;lt;ProductListDTO&amp;gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="529.5" y="311" width="231" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="productRestController" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProductRestController&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+getAllProducts() : ResponseEntity&amp;lt;List&amp;lt;ProductListDTO&amp;gt;&amp;gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="459.8125" y="130" width="367" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="dashboard" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Product Dashboard&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="593.3125" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="productRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProductRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+findAllActiveProducts() : List&amp;lt;Product&amp;gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="965" y="542.5" width="217" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="saleProductRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;SaleProductRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ findSaleProductByProductId(id) : SaleProduct&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="401" y="540.5" width="252" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="reviewRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ReviewRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+getAllReviewsByProductId(id) : List&amp;lt;Review&amp;gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="683" y="540.5" width="252" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="jpaRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;JpaRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="747" y="737" width="124" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="variation" target="productItemDTO" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="460.75" y="398" />
+              <mxPoint x="233.25" y="474" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="variation" target="product" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="393.25" y="398" />
+              <mxPoint x="95" y="472" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="category" target="product" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="77" y="398" />
+              <mxPoint x="23" y="474" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="brand" target="product" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="252" y="398" />
+              <mxPoint x="59" y="472" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="productService" target="productItemDTO" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="600.8000000000001" y="400" />
+              <mxPoint x="321.75" y="474" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="productService" target="product" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="556.6" y="398" />
+              <mxPoint x="131" y="474" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="productRestController" target="productService" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="643.3125" y="186" />
+              <mxPoint x="645" y="262" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="dashboard" target="productRestController" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="643.3125" y="42" />
+              <mxPoint x="643.3125" y="118" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="productService" target="productRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="733.4000000000002" y="398" />
+              <mxPoint x="1073.5" y="474" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="productService" target="saleProductRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="645.0000000000001" y="402" />
+              <mxPoint x="527" y="474" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="productService" target="reviewRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="689.2000000000002" y="400" />
+              <mxPoint x="809" y="474" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" value="realization" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=block;endFill=0;endSize=16;fontSize=10;fontFamily=Helvetica;entryX=0.95;entryY=0.15;entryDx=0;entryDy=0;noEdgeStyle=1;orthogonal=1;" parent="1" source="productRepository" target="jpaRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1073.5" y="649" />
+              <mxPoint x="847" y="725" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13" value="realization" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=block;endFill=0;endSize=16;fontSize=10;fontFamily=Helvetica;entryX=0.95;entryY=0.5;entryDx=0;entryDy=0;noEdgeStyle=1;orthogonal=1;" parent="1" source="saleProductRepository" target="jpaRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="527" y="649" />
+              <mxPoint x="771" y="725" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" value="realization" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=block;endFill=0;endSize=16;fontSize=10;fontFamily=Helvetica;entryX=0.95;entryY=0.85;entryDx=0;entryDy=0;noEdgeStyle=1;orthogonal=1;" parent="1" source="reviewRepository" target="jpaRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="809" y="649" />
+              <mxPoint x="809" y="723" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
