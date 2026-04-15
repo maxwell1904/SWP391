@@ -1,0 +1,158 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram id="register-class-diagram" name="Register">
+    <mxGraphModel dx="2749" dy="873" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1280" pageHeight="773" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-1" value="1. Register" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontStyle=1;fontSize=24;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="1110" width="220" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="title-2" value="a. Class Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontStyle=3;fontSize=18;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="1390" width="220" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="auth" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;AuthRestController&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;-userService: UserService&lt;br/&gt;+register(user: User): ResponseDTO&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="391.75" width="264" height="118" as="geometry" />
+        </mxCell>
+        <mxCell id="userService" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UserService&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ existsByUsername(username: String) : boolean&lt;br/&gt;+ existsByEmail(userEmail: String) : boolean&lt;br/&gt;+ create(user: User) : User&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry y="218" width="227" height="109" as="geometry" />
+        </mxCell>
+        <mxCell id="userRoleService" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UserRoleService&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ findById(id: int) : Role&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="824" y="218" width="226" height="109" as="geometry" />
+        </mxCell>
+        <mxCell id="emailService" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;EmailService&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ sendHtmlMessage(to: String, subject: String, text: String) : void&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="257" y="218" width="250" height="109" as="geometry" />
+        </mxCell>
+        <mxCell id="jwtUtil" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;JwtUtil&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ generateStringToken(subject: String, expirationTime: long) : String&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="537" y="218" width="257" height="109" as="geometry" />
+        </mxCell>
+        <mxCell id="userRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UserRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ existsByUserUsername(username: String) : boolean&lt;br/&gt;+ existsByUserEmail(userEmail: String) : boolean&lt;br/&gt;+ save(user: User) : User&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="301.3333333333333" y="427" width="186" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="passwordEncoder" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;PasswordEncoder&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ encode(password: CharSequence) : String&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="-9" y="427" width="245" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="userRoleRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UserRoleRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ findById(id: int) : Role&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="676.75" y="427" width="246" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="jpaRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;JpaRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="539.5" y="687.5" width="246" height="53" as="geometry" />
+        </mxCell>
+        <mxCell id="user" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;User&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot; valign=&quot;top&quot;&gt;userId: Integer&lt;br/&gt;role: Role&lt;br/&gt;isUserEnabled: Boolean&lt;br/&gt;userGoogleId: String&lt;br/&gt;userUsername: String&lt;br/&gt;userPassword: String&lt;br/&gt;userFullname: String&lt;br/&gt;userEmail: String&lt;br/&gt;userPhone: String&lt;br/&gt;userBirthdate: String&lt;br/&gt;userAddress: String&lt;br/&gt;userImage: String&lt;br/&gt;userCurrentPaymentMethod: String&lt;br/&gt;userCreatedAt: OffsetDateTime&lt;br/&gt;userUpdatedAt: OffsetDateTime&lt;br/&gt;userRank: UserRank&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="304.5" y="612" width="205" height="204" as="geometry" />
+        </mxCell>
+        <mxCell id="role" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Role&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot; valign=&quot;top&quot;&gt;id: Integer&lt;br/&gt;roleName: String&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="519" y="925" width="204" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="responseDTO" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:11px;font-family:Helvetica;&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ResponseDTO&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot; valign=&quot;top&quot;&gt;- statusCode: int&lt;br/&gt;- message: String&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot; valign=&quot;top&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;overflow=fill;strokeColor=#000000;fillColor=#ffffff;align=left;verticalAlign=top;spacing=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="285" y="916" width="204" height="98" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="auth" target="userService" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="428.5" y="130" />
+              <mxPoint x="113.5" y="206" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="auth" target="userRoleService" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="619" y="130" />
+              <mxPoint x="937" y="206" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="auth" target="emailService" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="492" y="132" />
+              <mxPoint x="382" y="206" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="auth" target="jwtUtil" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="555.5" y="132" />
+              <mxPoint x="665.5" y="206" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="userService" target="userRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="185.83333333333331" y="339" />
+              <mxPoint x="394.3333333333333" y="415" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="userService" target="passwordEncoder" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="41.166666666666664" y="339" />
+              <mxPoint x="113.5" y="415" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="userRoleService" target="userRoleRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="937" y="339" />
+              <mxPoint x="799.75" y="415" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="userService" target="user" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="113.5" y="341" />
+              <mxPoint x="266" y="377" />
+              <mxPoint x="266" y="562" />
+              <mxPoint x="358.25" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="userRepository" target="user" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="350.3333333333333" y="524" />
+              <mxPoint x="455.75" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" value="association" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="user" target="role" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="455.75" y="828" />
+              <mxPoint x="621" y="904" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=open;endFill=0;fontSize=10;fontFamily=Helvetica;noEdgeStyle=1;orthogonal=1;" parent="1" source="user" target="responseDTO" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="358.25" y="828" />
+              <mxPoint x="387" y="904" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" value="realization" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=block;endFill=0;endSize=16;fontSize=10;fontFamily=Helvetica;entryX=0.05;entryY=0;entryDx=0;entryDy=0;noEdgeStyle=1;orthogonal=1;" parent="1" source="userRepository" target="jpaRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="438.3333333333333" y="524" />
+              <mxPoint x="603.5" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13" value="realization" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;endArrow=block;endFill=0;endSize=16;fontSize=10;fontFamily=Helvetica;entryX=0.95;entryY=0;entryDx=0;entryDy=0;noEdgeStyle=1;orthogonal=1;" parent="1" source="userRoleRepository" target="jpaRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="799.75" y="524" />
+              <mxPoint x="721.5" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
