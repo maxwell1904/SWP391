@@ -1,0 +1,79 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram id="remove-category" name="Remove Category">
+    <mxGraphModel dx="1469" dy="873" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="categoryDto" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;CategoryDTO&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;- id: int&lt;br/&gt;- categoryName: String&lt;br/&gt;- categoryDescription: String&lt;br/&gt;- categoryUrl: String&lt;br/&gt;- categoryCreatedAt: OffsetDateTime&lt;br/&gt;- categoryUpdatedAt: OffsetDateTime&lt;br/&gt;- totalQuantity: long&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry y="378" width="180" height="121" as="geometry" />
+        </mxCell>
+        <mxCell id="categoryRestController" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;CategoryRestController&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- categoryService: CategoryService&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ CategoryRestController(categoryService: CategoryService)&lt;br/&gt;+ getAllCategoryWithQuantity()&lt;br/&gt;+ getCategoryById()&lt;br/&gt;+ deleteCategoryById()&lt;br/&gt;+ createCategoryById()&lt;br/&gt;+ updateCategory()&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="94.89" y="123" width="325.11" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="categoryService" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;CategoryService&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- categoryRepository: CategoryRepository&lt;br/&gt;- productRepository: ProductRepository&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ CategoryService(CategoryRepository categoryRepository, ProductRepository productRepository)&lt;br/&gt;+ getAllCategoriesWithQuantity(): List&amp;lt;CategoryDTO&amp;gt;&lt;br/&gt;+ toOffsetDateTime(): OffsetDateTime&lt;br/&gt;+ findById(): Category&lt;br/&gt;+ createCategory(): Category&lt;br/&gt;+ updateCategory(): Category&lt;br/&gt;+ deleteCategory(): Category&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="194" y="358" width="466" height="161" as="geometry" />
+        </mxCell>
+        <mxCell id="categoryRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;br/&gt;CategoryRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findAllCategoryWithQuantity(): List&amp;lt;Object[]&amp;gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="213.36" y="619" width="286.64" height="53" as="geometry" />
+        </mxCell>
+        <mxCell id="jpaRepository" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;JpaRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="219.03758907318115" y="772" width="126" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="category" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Category&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;&quot; align=&quot;left&quot;&gt;- id: int&lt;br/&gt;- categoryName: String&lt;br/&gt;- categoryDescription: String&lt;br/&gt;- categoryImageUrl: String&lt;br/&gt;- categoryCreatedAt: OffsetDateTime&lt;br/&gt;- categoryUpdatedAt: OffsetDateTime&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ prePersist(): void&lt;br/&gt;+ preUpdate(): void&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="204.53758907318115" y="895" width="155" height="131" as="geometry" />
+        </mxCell>
+        <mxCell id="dashboard" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;CategoryDashboard&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="121.38888888888889" width="128" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="categoryRestController" target="categoryDto" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="142.63888888888889" y="270" />
+              <mxPoint x="82" y="346" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="categoryRestController" target="categoryService" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="228.1388888888889" y="270" />
+              <mxPoint x="287.5" y="346" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="dashboard" target="categoryRestController" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="185.38888888888889" y="35" />
+              <mxPoint x="185.3888888888889" y="111" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="categoryService" target="categoryRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="287.5" y="531" />
+              <mxPoint x="283.8583927154541" y="607" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" value="inheritance" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=0;endSize=16;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="categoryRepository" target="jpaRepository" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="283.8583927154541" y="684" />
+              <mxPoint x="282.03758907318115" y="760" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;noEdgeStyle=1;orthogonal=1;" parent="1" source="jpaRepository" target="category" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="282.03758907318115" y="807" />
+              <mxPoint x="282.03758907318115" y="883" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
