@@ -1,0 +1,180 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram id="login-sequence-diagram" name="Login Sequence">
+    <mxGraphModel dx="1209" dy="719" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1280" pageHeight="773" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="actorTop" value="Admin/Customer/Staff" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="24" y="22" width="80" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="loginTop" value="LoginView" style="shape=rectangle;whiteSpace=wrap;html=1;fontStyle=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="165" y="45" width="99" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="authTop" value=":AuthRestController" style="shape=rectangle;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="317" y="45" width="115" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="serviceTop" value=":UserService" style="shape=rectangle;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="504" y="45" width="98" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="repoTop" value=":UserRepository" style="shape=rectangle;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="667" y="45" width="95" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="userTop" value=":User" style="shape=rectangle;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="833" y="45" width="99" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="dbTop" value="Database" style="shape=umlBoundary;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="1009" y="21" width="60" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeActor" style="shape=line;strokeWidth=1;dashed=1;html=1;" parent="1" vertex="1">
+          <mxGeometry x="64" y="106" width="1" height="473" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeLogin" style="shape=line;strokeWidth=1;dashed=1;html=1;" parent="1" vertex="1">
+          <mxGeometry x="214" y="87" width="1" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeAuth" style="shape=line;strokeWidth=1;dashed=1;html=1;" parent="1" vertex="1">
+          <mxGeometry x="374" y="87" width="1" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeService" style="shape=line;strokeWidth=1;dashed=1;html=1;" parent="1" vertex="1">
+          <mxGeometry x="553" y="87" width="1" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeRepo" style="shape=line;strokeWidth=1;dashed=1;html=1;" parent="1" vertex="1">
+          <mxGeometry x="714" y="87" width="1" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeUser" style="shape=line;strokeWidth=1;dashed=1;html=1;" parent="1" vertex="1">
+          <mxGeometry x="882" y="87" width="1" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeDb" style="shape=line;strokeWidth=1;dashed=1;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1039" y="105" width="1" height="474" as="geometry" />
+        </mxCell>
+        <mxCell id="actActor" style="shape=rectangle;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="58" y="109" width="12" height="472" as="geometry" />
+        </mxCell>
+        <mxCell id="actLogin1" style="shape=rectangle;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="208" y="109" width="12" height="128" as="geometry" />
+        </mxCell>
+        <mxCell id="actLogin2" style="shape=rectangle;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="214" y="132" width="12" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="actAuth" style="shape=rectangle;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="368" y="208" width="12" height="185" as="geometry" />
+        </mxCell>
+        <mxCell id="actService" style="shape=rectangle;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="547" y="208" width="12" height="276" as="geometry" />
+        </mxCell>
+        <mxCell id="actRepo" style="shape=rectangle;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="708" y="252" width="12" height="159" as="geometry" />
+        </mxCell>
+        <mxCell id="actUser" style="shape=rectangle;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="876" y="303" width="12" height="94" as="geometry" />
+        </mxCell>
+        <mxCell id="actDb" style="shape=rectangle;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="1033" y="252" width="12" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="m1" value="1.Click &quot;Login&quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=11;fontFamily=Helvetica;" parent="1" source="actActor" target="actLogin1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m2" value="2. Check Input Validation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=11;fontFamily=Helvetica;" parent="1" source="actLogin1" target="actLogin2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="242" y="143" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="opt" value="opt" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="22" y="148" width="207" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="optLabel" value="[validation data]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="100" y="154" width="108" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="m21" value="2.1 Display error message" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="actLogin1" target="actActor" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="71" y="191" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" value="3.request login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=11;fontFamily=Helvetica;" parent="1" source="actLogin1" target="actAuth" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m4" value="4. authenticate user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=11;fontFamily=Helvetica;" parent="1" source="actAuth" target="actService" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m5" value="5. find account" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=11;fontFamily=Helvetica;" parent="1" source="actService" target="actRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m6" value="6. query execute data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=11;fontFamily=Helvetica;" parent="1" source="actRepo" target="actDb" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m7" value="7. return account" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="actDb" target="actRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m8" value="8. update data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;fontSize=11;fontFamily=Helvetica;" parent="1" source="actRepo" target="actUser" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m9" value="9.return result" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="actUser" target="actRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m10" value="10.return result" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="actRepo" target="actService" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="alt" value="alt" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="39" y="420" width="528" height="161" as="geometry" />
+        </mxCell>
+        <mxCell id="altLabel1" value="[authentication failed]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="103" y="426" width="154" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="divider" style="shape=line;strokeWidth=1;dashed=1;html=1;" parent="1" vertex="1">
+          <mxGeometry x="39" y="510" width="528" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="altLabel2" value="[authentication success]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="83" y="518" width="159" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="m111" value="11.1.1. return failed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="actService" target="actAuth" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m1212" value="12.1.2. return failed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="actAuth" target="actLogin1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m1213" value="12.1.3. display error message" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="actLogin1" target="actActor" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m1121" value="11.2.1. return account" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="actService" target="actAuth" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="458" y="546" as="sourcePoint" />
+            <mxPoint x="374" y="546" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1122" value="11.2.2. return account" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="actAuth" target="actLogin1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="304" y="568" as="sourcePoint" />
+            <mxPoint x="214" y="568" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1123" value="11.2.3. Display success&#xa;message" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=11;fontFamily=Helvetica;" parent="1" source="actLogin1" target="actActor" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="116" y="561" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actorBottom" value="Admin/Customer/Staff" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="24" y="564" width="80" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="loginBottom" value=":LoginView" style="shape=rectangle;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="166" y="596" width="99" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="authBottom" value=":AuthRestController" style="shape=rectangle;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="317" y="596" width="115" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="serviceBottom" value=":UserService" style="shape=rectangle;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="504" y="596" width="98" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="repoBottom" value=":UserRepository" style="shape=rectangle;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="659" y="596" width="112" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="userBottom" value=":User" style="shape=rectangle;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="833" y="596" width="99" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="dbBottom" value="Database" style="shape=umlBoundary;whiteSpace=wrap;html=1;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+          <mxGeometry x="1009" y="555" width="60" height="84" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
