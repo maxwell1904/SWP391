@@ -1,0 +1,112 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram id="suggested-products" name="Suggested Products">
+    <mxGraphModel dx="1028" dy="611" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="page" value="Product Detail Page" style="shape=rectangle;html=1;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="86" y="108" width="104" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="rest" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProductRecommendationRestController&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getRecommendedProducts()&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="88" y="149" width="156" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="dto" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProductDTO&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;- productId: String&lt;br/&gt;- productName: String&lt;br/&gt;- productDescription: String&lt;br/&gt;- productImageUrl: String&lt;br/&gt;- saleType: SaleType&lt;br/&gt;- saleValue: BigDecimal&lt;br/&gt;- brandId: int&lt;br/&gt;- categoryIdList: Integer[]&lt;br/&gt;- productPrice: BigDecimal&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="88" y="196" width="160" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="pa" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;PurchaseAnalysisDTO&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;- mostFrequentSize&lt;br/&gt;- mostFrequentBrand&lt;br/&gt;- mostFrequentCategory&lt;br/&gt;- averagePrice&lt;br/&gt;- purchasedProducts&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="88" y="395" width="150" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="ca" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;CartAnalysisDTO&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;- mostFrequentProduct&lt;br/&gt;- highestQuantityProduct&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="88" y="503" width="150" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="service" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProductRecommendationService&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;- ProductRepository&lt;br/&gt;- OrderRepository&lt;br/&gt;- OrderVariationSingleRepository&lt;br/&gt;- SaleProductRepository&lt;br/&gt;- DiscountRepository&lt;br/&gt;- StockVariationRepository&lt;br/&gt;- UserDiscountRepository&lt;br/&gt;- UserRepository&lt;br/&gt;- VariationRepository&lt;br/&gt;- CartRepository&lt;br/&gt;- SaleRepository&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getRecommendedProducts(...)&lt;br/&gt;+ analyzePurchases(...)&lt;br/&gt;+ analyzeCarts(...)&lt;br/&gt;+ calculateRecommendationScore(...)&lt;br/&gt;+ getSimilarProducts(...)&lt;br/&gt;+ getProductsWithDetails(...)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="208" y="372" width="276" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="sim" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:10px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;StringSimilarityUtils&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ calculateCosineSimilarityTF(...)&lt;br/&gt;+ calculateExactWordMatchBonus(...)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="208" y="568" width="115" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="config" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:8px;font-family:Helvetica;&quot; cellpadding=&quot;2&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;RecommendationConfig&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;- SCORE_WEIGHT_SIZE&lt;br/&gt;- SCORE_WEIGHT_BRAND&lt;br/&gt;- SCORE_WEIGHT_CATEGORY&lt;br/&gt;- SCORE_WEIGHT_PRICE&lt;br/&gt;- SCORE_WEIGHT_COLOR&lt;br/&gt;- SCORE_WEIGHT_SALE&lt;br/&gt;- SCORE_WEIGHT_DISCOUNT&lt;br/&gt;- SCORE_WEIGHT_TRENDING&lt;br/&gt;- MAX_RECOMMENDATIONS&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="208" y="648" width="118" height="126" as="geometry" />
+        </mxCell>
+        <mxCell id="productRepo" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;ProductRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findById(UUID id)&lt;br/&gt;+ findAll()&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="590" y="628" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="orderRepo" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;OrderRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findRecentOrdersByUserId(...)&lt;br/&gt;+ findTopSoldProductIds(...)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="565" y="110" width="105" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="ovsRepo" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;OrderVariationSingleRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findById_OrderIdIn(...)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="360" y="230" width="102" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="svRepo" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;StockVariationRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ getTotalStockQuantityForProduct(...)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="392" y="290" width="102" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="discountRepo" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;DiscountRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="598" y="346" width="104" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="userDiscountRepo" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UserDiscountRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="610" y="390" width="104" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="userRepo" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;UserRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findByUserUsername(String username)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="592" y="430" width="110" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="cartRepo" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;CartRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findAllById_UserId(UUID userId)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="563" y="274" width="108" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="saleRepo" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;SaleRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="592" y="520" width="96" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="saleProductRepo" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;SaleProductRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findSaleProductsByProductIds(...)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="587" y="552" width="118" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="variationRepo" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;VariationRepository&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ findProductVariationsByProductIds(...)&lt;br/&gt;+ findProductIdsByVariationIds(...)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="585" y="690" width="125" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="product" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Product&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;- productId: UUID&lt;br/&gt;- brand: Brand&lt;br/&gt;- productStatus: ProductStatus&lt;br/&gt;- productName: String&lt;br/&gt;- productCode: String&lt;br/&gt;- productDescription: String&lt;br/&gt;- productCreatedAt: OffsetDateTime&lt;br/&gt;- productUpdatedAt: OffsetDateTime&lt;br/&gt;- productVariations: List&amp;lt;Variation&amp;gt;&lt;br/&gt;- categories: List&amp;lt;Category&amp;gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;+ Constructor&lt;br/&gt;+ getters/setters&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="880" y="620" width="102" height="148" as="geometry" />
+        </mxCell>
+        <mxCell id="variation2" value="&lt;table style=&quot;width:100%;height:100%;border-collapse:collapse;font-size:9px;font-family:Helvetica;&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;border-bottom:1px solid #000;text-align:center;&quot;&gt;&lt;b&gt;Variation&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;left&quot;&gt;- id: int&lt;br/&gt;- product: Product&lt;br/&gt;- size: Size&lt;br/&gt;- color: Color&lt;br/&gt;- variationImage: String&lt;br/&gt;- variationPrice: BigDecimal&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="shape=rectangle;html=1;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="881" y="778" width="100" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="e41" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="productRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e42" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="orderRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e43" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="ovsRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e44" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="svRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e45" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="discountRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e46" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="userDiscountRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e47" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="userRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e48" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="cartRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e49" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="saleRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e50" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="saleProductRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e51" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="variationRepo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e52" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" target="product" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e53" value="dependency" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;fontSize=9;fontFamily=Helvetica;" parent="1" source="service" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

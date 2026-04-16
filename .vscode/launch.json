@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-unleashedApplication<unleashed>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.unleashed.unleashedApplication",
+            "projectName": "unleashed",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
