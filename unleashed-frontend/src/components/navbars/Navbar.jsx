@@ -74,14 +74,16 @@ export function Navbar() {
                   }`
                 }
               >
-                Shop
-                <span
-                  className={({ isActive }) =>
-                    `absolute left-0 bottom-[-4px] w-full h-[2px] bg-[#ff4d4d] transition-transform duration-300 ${
-                      isActive ? "scale-x-100" : "scale-x-0"
-                    }`
-                  }
-                ></span>
+                {({ isActive }) => (
+                  <>
+                    Shop
+                    <span
+                      className={`absolute left-0 bottom-[-4px] h-[2px] w-full bg-[#ff4d4d] transition-transform duration-300 ${
+                        isActive ? "scale-x-100" : "scale-x-0"
+                      }`}
+                    ></span>
+                  </>
+                )}
               </NavLink>
             </li>
             <li>
@@ -93,33 +95,16 @@ export function Navbar() {
                   }`
                 }
               >
-                About
-                <span
-                  className={({ isActive }) =>
-                    `absolute left-0 bottom-[-4px] w-full h-[2px] bg-[#ff4d4d] transition-transform duration-300 ${
-                      isActive ? "scale-x-100" : "scale-x-0"
-                    }`
-                  }
-                ></span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                  `font-poppins text-sm text-white/80 hover:text-[#ff4d4d] transition duration-300 relative ${
-                    isActive ? "text-[#ff4d4d]" : ""
-                  }`
-                }
-              >
-                Contact
-                <span
-                  className={({ isActive }) =>
-                    `absolute left-0 bottom-[-4px] w-full h-[2px] bg-[#ff4d4d] transition-transform duration-300 ${
-                      isActive ? "scale-x-100" : "scale-x-0"
-                    }`
-                  }
-                ></span>
+                {({ isActive }) => (
+                  <>
+                    About
+                    <span
+                      className={`absolute left-0 bottom-[-4px] h-[2px] w-full bg-[#ff4d4d] transition-transform duration-300 ${
+                        isActive ? "scale-x-100" : "scale-x-0"
+                      }`}
+                    ></span>
+                  </>
+                )}
               </NavLink>
             </li>
           </ul>

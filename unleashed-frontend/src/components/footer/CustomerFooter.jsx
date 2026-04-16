@@ -75,9 +75,6 @@ const Footer = () => {
             <Link className="transition hover:text-white" to="/about">
               About
             </Link>
-            <Link className="transition hover:text-white" to="/contact">
-              Contact
-            </Link>
           </div>
         </div>
 
