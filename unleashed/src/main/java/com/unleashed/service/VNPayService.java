@@ -34,6 +34,11 @@ public class VNPayService {
         String locate = "vn";
         vnp_Params.put("vnp_Locale", locate);
 
+        String bankCode = System.getenv("VNPAY_BANK_CODE");
+        if (bankCode != null && !bankCode.isBlank()) {
+            vnp_Params.put("vnp_BankCode", bankCode.trim());
+        }
+
         urlReturn += VNPayConfig.vnp_Returnurl;
         vnp_Params.put("vnp_ReturnUrl", urlReturn);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);

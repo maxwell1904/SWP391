@@ -16,6 +16,7 @@ function OrderBankTransfer() {
 
     const queryParams = new URLSearchParams(location.search);
     const total = queryParams.get("total");
+    const customQrSrc = "/download.png";
 
     const handleNavigate = () => {
         navigate("/orders/success");
@@ -57,16 +58,32 @@ function OrderBankTransfer() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-10">
                         {/* Left side: QR Codes */}
                         <div className="flex flex-col md:flex-row justify-center items-center">
-                            <img
-                                src={qrvcb}
-                                alt="QR Code for VCB Payment"
-                                className="w-full md:w-1/2 h-auto object-contain"
-                            />
-                            <img
-                                src={qrzp}
-                                alt="QR Code for ZaloPay Payment"
-                                className="w-full md:w-1/2 h-auto object-contain"
-                            />
+                            <div className="relative w-full md:w-1/2">
+                                <img
+                                    src={qrvcb}
+                                    alt="QR Code for VCB Payment"
+                                    className="w-full h-auto object-contain"
+                                />
+                                <img
+                                    src={customQrSrc}
+                                    alt="Custom QR for VCB Payment"
+                                    className="absolute object-contain pointer-events-none"
+                                    style={{ left: "25.4%", top: "24.3%", width: "48.5%" }}
+                                />
+                            </div>
+                            <div className="relative w-full md:w-1/2">
+                                <img
+                                    src={qrzp}
+                                    alt="QR Code for ZaloPay Payment"
+                                    className="w-full h-auto object-contain"
+                                />
+                                <img
+                                    src={customQrSrc}
+                                    alt="Custom QR for ZaloPay Payment"
+                                    className="absolute object-contain pointer-events-none"
+                                    style={{ left: "19.8%", top: "36.6%", width: "60.3%" }}
+                                />
+                            </div>
                         </div>
 
                         {/* Right side: Order Information */}
@@ -85,7 +102,7 @@ function OrderBankTransfer() {
                                 <p className="text-center text-gray-600 font-bold">
                                     Total: {formatPrice(total)}
                                 </p>
-                                <p className="text-center text-gray-600">Owner: G1</p>
+                                <p className="text-center text-gray-600">Owner: Nguyễn Phúc An</p>
                                 <div className="space-y-4 mt-4">
                                     {!isConfirmed ? (
                                         <>

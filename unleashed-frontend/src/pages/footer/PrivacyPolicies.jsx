@@ -7,14 +7,11 @@ import {
   ListItemText,
   Button,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 function PrivacyPolicies() {
-    const navigate = useNavigate();
-
-    const handlecontact = () => {
-        navigate("/contact");
-    }
+  const handleEmailSupport = () => {
+    window.location.href = "mailto:unleashedworkshop.business@gmail.com?subject=Privacy%20Policy%20Question";
+  };
   return (
     <div>
       <Box sx={{ padding: "24px", maxWidth: "900px", margin: "0 auto" }}>
@@ -137,7 +134,7 @@ function PrivacyPolicies() {
           <Button
             variant="contained"
             color="primary"
-            onClick={handlecontact}
+            onClick={handleEmailSupport}
             sx={{
               textTransform: "none",
               borderRadius: "8px", // Slightly rounded
@@ -153,7 +150,7 @@ function PrivacyPolicies() {
               },
             }}
           >
-            Contact Us for More Information
+            Email Support for More Information
           </Button>
         </Box>
       </Box>
