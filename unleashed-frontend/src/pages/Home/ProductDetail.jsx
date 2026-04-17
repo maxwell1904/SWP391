@@ -117,23 +117,47 @@ const ProductDetailPage = () => {
         loadInitialData();
     }, [productId, fetchProductDetails, fetchReviews]);
 
+    const sortedColors = useMemo(() => {
+        if (!product?.colors) return [];
+        return [...product.colors].sort((a, b) => (a.id ?? 0) - (b.id ?? 0));
+    }, [product?.colors]);
+
     useEffect(() => {
         if (!product || !product.variations) return;
-        const firstAvailableColor = product.colors?.find(color => {
-            const variationsForColor = product.variations[color.colorName];
+
+        const hasStockForColor = (colorName) => {
+            const variationsForColor = product.variations[colorName];
             return variationsForColor && Object.values(variationsForColor).some(v => v.quantity > 0);
-        });
+        };
+
+        const hasStockForColorAndSize = (colorName, sizeName) => {
+            return (product.variations?.[colorName]?.[sizeName]?.quantity || 0) > 0;
+        };
+
+        // Keep current color/size after refresh if that combination is still in stock.
+        if (selectedColor && hasStockForColor(selectedColor)) {
+            if (selectedSize && hasStockForColorAndSize(selectedColor, selectedSize)) {
+                return;
+            }
+            const variationsForColor = product.variations[selectedColor];
+            const firstAvailableSize = product.sizes.find(size => variationsForColor[size.sizeName]?.quantity > 0);
+            setSelectedSize(firstAvailableSize?.sizeName || null);
+            return;
+        }
+
+        const firstAvailableColor = sortedColors.find(color => hasStockForColor(color.colorName));
         if (firstAvailableColor) {
             const colorName = firstAvailableColor.colorName;
             const variationsForColor = product.variations[colorName];
             const firstAvailableSize = product.sizes.find(size => variationsForColor[size.sizeName]?.quantity > 0);
             setSelectedColor(colorName);
             setSelectedSize(firstAvailableSize?.sizeName || null);
-        } else {
-            setSelectedColor(null);
-            setSelectedSize(null);
+            return;
         }
-    }, [product]);
+
+        setSelectedColor(null);
+        setSelectedSize(null);
+    }, [product, selectedColor, selectedSize, sortedColors]);
 
     const handleColorSelect = (colorName) => {
         setSelectedColor(colorName);
@@ -146,7 +170,7 @@ const ProductDetailPage = () => {
         setSelectedSize(sizeName);
         const isCurrentColorValid = product.variations[selectedColor]?.[sizeName]?.quantity > 0;
         if (!isCurrentColorValid) {
-            const firstAvailableColor = product.colors.find(color => product.variations[color.colorName]?.[sizeName]?.quantity > 0);
+            const firstAvailableColor = sortedColors.find(color => product.variations[color.colorName]?.[sizeName]?.quantity > 0);
             if (firstAvailableColor) {
                 setSelectedColor(firstAvailableColor.colorName);
             }
@@ -171,24 +195,30 @@ const ProductDetailPage = () => {
 
     const { allImages, imageStartIndex } = useMemo(() => {
         if (!product?.variations) return { allImages: [], imageStartIndex: {} };
+
         const collectedImages = [];
         const colorStartIndices = {};
-        const seenImageUrls = new Set();
-        (product.colors || []).forEach(color => {
+
+        sortedColors.forEach(color => {
             const variationsForColor = product.variations[color.colorName];
             if (!variationsForColor) return;
-            Object.values(variationsForColor).forEach(variation => {
-                if (variation.images && !seenImageUrls.has(variation.images)) {
-                    if (colorStartIndices[color.colorName] === undefined) {
-                        colorStartIndices[color.colorName] = collectedImages.length;
-                    }
-                    seenImageUrls.add(variation.images);
-                    collectedImages.push({ colorName: color.colorName, image: variation.images });
-                }
+
+            const variationList = Object.values(variationsForColor);
+            const representativeVariation =
+                variationList.find(v => v?.quantity > 0 && v?.images) ||
+                variationList.find(v => v?.images);
+
+            if (!representativeVariation) return;
+
+            colorStartIndices[color.colorName] = collectedImages.length;
+            collectedImages.push({
+                colorName: color.colorName,
+                image: representativeVariation.images,
             });
         });
+
         return { allImages: collectedImages, imageStartIndex: colorStartIndices };
-    }, [product]);
+    }, [product, sortedColors]);
 
     useEffect(() => {
         if (selectedColor && imageStartIndex[selectedColor] !== undefined) {
@@ -321,7 +351,7 @@ const ProductDetailPage = () => {
                     <div className='colors flex items-center mb-4'>
                         <div className='font-semibold text-gray-600'>Color:</div>
                         <div className='px-4 flex gap-2'>
-                            {product.colors?.map((color) => {
+                            {sortedColors.map((color) => {
                                 const variations = product.variations?.[color.colorName];
                                 const hasAvailableSizes = variations && Object.values(variations).some(v => v.quantity > 0);
                                 if (!hasAvailableSizes) return null;
@@ -335,7 +365,7 @@ const ProductDetailPage = () => {
                         <div className='font-semibold text-gray-600'>Size:</div>
                         <div className='flex gap-2 flex-row px-5'>
                             {product.sizes?.map((size) => {
-                                const isAvailableForAnyColor = product.colors.some(color => product.variations?.[color.colorName]?.[size.sizeName]?.quantity > 0);
+                                const isAvailableForAnyColor = sortedColors.some(color => product.variations?.[color.colorName]?.[size.sizeName]?.quantity > 0);
                                 if (!isAvailableForAnyColor) return null;
 
                                 const isSelected = selectedSize === size.sizeName;

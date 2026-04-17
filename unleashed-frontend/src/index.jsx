@@ -17,11 +17,15 @@ const store = createStore({
   cookieSecure: window.location.protocol === "https:",
 });
 
+const googleClientId =
+  process.env.REACT_APP_GOOGLE_CLIENT_ID ||
+  "118539556051-883ov35dcro331eo6f6jcp85kq2cjm2u.apps.googleusercontent.com";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AuthProvider store={store}>
-      <GoogleOAuthProvider clientId="300845919892-bbvpmkgcep2j7jl8dfk09spmf4lf95sv.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={googleClientId}>
         <BrowserRouter basename="/">
             <SearchProvider>
                 <CartProvider>
