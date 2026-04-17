@@ -4,11 +4,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        poppins: ["Poppins", "san-serif"],
-        montserrat: ["Montserrat", "san-serif"],
-        ropaSans: ["Ropa Sans", "san-serif"],
-        inter: ["Inter", "san-serif"],
-        nunito: ["Nunito", "san-serif"],
+        poppins: ["Poppins", "Inter", "Segoe UI", "sans-serif"],
+        montserrat: ["Montserrat", "Segoe UI", "sans-serif"],
+        ropaSans: ["Ropa Sans", "Segoe UI", "sans-serif"],
+        inter: ["Inter", "Segoe UI", "sans-serif"],
+        nunito: ["Nunito", "Segoe UI", "sans-serif"],
       },
       screens: {
         "desktop-100": { raw: "(min-width: 1280px) and (max-width: 1865px)" },
