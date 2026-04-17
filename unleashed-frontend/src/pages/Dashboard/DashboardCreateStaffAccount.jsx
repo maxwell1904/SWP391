@@ -18,8 +18,6 @@ import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 const DashboardCreateStaffAccount = () => {
   const varToken = useAuthHeader();
   const navigate = useNavigate();
-  const [userImage, setUserImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validationSchema = Yup.object({
@@ -50,16 +48,6 @@ const DashboardCreateStaffAccount = () => {
         "Phone number must start with '+84' or '0' and be 10-11 digits"
       )
       .required("Phone number is required"),
-    password: Yup.string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
-        "Password must contain one uppercase, one lowercase, and one number"
-      ),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Please confirm your password"),
   });
 
   const formik = useFormik({
@@ -68,32 +56,12 @@ const DashboardCreateStaffAccount = () => {
       username: "",
       fullName: "",
       phoneNumber: "",
-      password: "",
-      confirmPassword: "",
       userAddress: "",
     },
     validationSchema,
     onSubmit: async (values) => {
       setIsSubmitting(true);
       try {
-        let imageUrl = "";
-
-        if (userImage) {
-          const formData = new FormData();
-          formData.append("image", userImage);
-
-          const uploadResponse = await fetch(
-            "https://api.imgbb.com/1/upload?key=387abfba10f808a7f6ac4abb89a3d912",
-            { method: "POST", body: formData }
-          );
-          const uploadData = await uploadResponse.json();
-
-          if (uploadData.success) {
-            imageUrl = uploadData.data.display_url;
-          } else {
-            throw new Error("Image upload failed");
-          }
-        }
         // console.log(varToken)
         await apiClient.post(
           "/api/admin",
@@ -102,8 +70,6 @@ const DashboardCreateStaffAccount = () => {
             userUsername: values.username,
             userFullname: values.fullName,
             userPhone: values.phoneNumber,
-            userPassword: values.password,
-            userImage: imageUrl,
             userAddress: values.userAddress,
           },
           {
@@ -118,10 +84,18 @@ const DashboardCreateStaffAccount = () => {
           position: "bottom-right",
           transition: Zoom,
         });
+        toast.info("A password setup email has been sent to the staff account.", {
+          position: "bottom-right",
+          transition: Zoom,
+        });
         navigate("/Dashboard/Accounts");
       } catch (error) {
         console.error("Error creating staff account:", error);
-        toast.error("Failed to create staff account. Please try again.", {
+        const backendMessage =
+          error?.response?.data && typeof error.response.data === "string"
+            ? error.response.data
+            : "Failed to create staff account. Please try again.";
+        toast.error(backendMessage, {
           position: "bottom-right",
           transition: Zoom,
         });
@@ -131,18 +105,13 @@ const DashboardCreateStaffAccount = () => {
     },
   });
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setUserImage(file);
-      setPreviewImage(URL.createObjectURL(file));
-    }
-  };
-
   return (
-    <div maxWidth="sm" mx="auto">
+    <Box maxWidth="sm" mx="auto">
       <Typography variant="h4" gutterBottom>
         Create Staff Account
+      </Typography>
+      <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+        Password is not set by admin. The staff will receive an email to set a password and activate the account.
       </Typography>
       <form onSubmit={formik.handleSubmit}>
         <TextField
@@ -183,57 +152,6 @@ const DashboardCreateStaffAccount = () => {
           fullWidth
           margin="normal"
         />
-        <TextField
-          label="Password"
-          type="password"
-          {...formik.getFieldProps("password")}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
-          variant="outlined"
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Confirm Password"
-          type="password"
-          {...formik.getFieldProps("confirmPassword")}
-          error={
-            formik.touched.confirmPassword &&
-            Boolean(formik.errors.confirmPassword)
-          }
-          helperText={
-            formik.touched.confirmPassword && formik.errors.confirmPassword
-          }
-          variant="outlined"
-          fullWidth
-          margin="normal"
-        />
-
-        <Box mt={2}>
-          <Button variant="outlined" component="label">
-            Upload Image
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              hidden
-            />
-          </Button>
-        </Box>
-        {previewImage != null || (
-          <div className="text-red-500">Image is required</div>
-        )}
-
-        {previewImage && (
-          <Box mt={2}>
-            <img
-              src={previewImage}
-              alt="User Image Preview"
-              className="w-32 h-32 object-cover rounded"
-            />
-          </Box>
-        )}
-
         <Box mt={2}>
           <LocationSelector
             onLocationChange={(location) =>
@@ -261,7 +179,7 @@ const DashboardCreateStaffAccount = () => {
           </Button>
         </Box>
       </form>
-    </div>
+    </Box>
   );
 };
 

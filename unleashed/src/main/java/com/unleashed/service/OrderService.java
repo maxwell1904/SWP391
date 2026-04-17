@@ -766,7 +766,10 @@ public class OrderService {
     }
 
     private String resolveVnPayReturnUrl() {
-        String configuredUrl = System.getenv("VNPAY_RETURN_URL");
+        String configuredUrl = System.getProperty("VNPAY_RETURN_URL");
+        if (!StringUtils.hasText(configuredUrl)) {
+            configuredUrl = System.getenv("VNPAY_RETURN_URL");
+        }
         if (StringUtils.hasText(configuredUrl)) {
             return configuredUrl.trim();
         }

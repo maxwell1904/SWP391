@@ -52,6 +52,8 @@ function App() {
         location.pathname !== "/forgotPassword/success" &&
         location.pathname !== "/reset-password/success" &&
         location.pathname !== "/reset-password" &&
+        location.pathname !== "/staff/activate-password" &&
+        location.pathname !== "/staff/activate-password/success" &&
         !location.pathname.startsWith("/LoginForStaffAndAdmin") &&
         location.pathname !== "/confirm-registration/success";
 
@@ -65,6 +67,8 @@ function App() {
         location.pathname !== "/forgotPassword/success" &&
         location.pathname !== "/reset-password/success" &&
         location.pathname !== "/reset-password" &&
+        location.pathname !== "/staff/activate-password" &&
+        location.pathname !== "/staff/activate-password/success" &&
         location.pathname !== "/LoginForStaffAndAdmin" &&
         location.pathname !== "/checkout" &&
         location.pathname !== "/payment-options" &&
@@ -88,6 +92,8 @@ function App() {
             path === "/register/success" ||
             path === "/reset-password/success" ||
             path === "/reset-password" ||
+            path === "/staff/activate-password" ||
+            path === "/staff/activate-password/success" ||
             path === "/confirm-registration/success"
         ) {
             return "pt-[92px]";
