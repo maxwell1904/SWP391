@@ -57,6 +57,10 @@ public class Transaction {
     @JsonView(Views.TransactionView.class)
     private BigDecimal transactionProductPrice;
 
+    @Column(name = "transaction_note", length = 500)
+    @JsonView(Views.TransactionView.class)
+    private String transactionNote;
+
     @PrePersist
     public void prePersist() {
         setTransactionDate(OffsetDateTime.now());

@@ -1,6 +1,7 @@
 package com.unleashed.rest;
 
 import com.unleashed.dto.StockTransactionDTO;
+import com.unleashed.dto.StockAdjustmentDTO;
 import com.unleashed.dto.TransactionCardDTO;
 import com.unleashed.service.StockTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,16 @@ public class StockTransactionRestController {
             return ResponseEntity.ok("Bulk import of stock transactions successful");
         }
         return ResponseEntity.badRequest().body("Bulk import of stock transactions failed");
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'STAFF')")
+    @PostMapping("/adjust")
+    public ResponseEntity<String> adjustStock(@RequestBody StockAdjustmentDTO stockAdjustmentDTO) {
+        try {
+            stockTransactionService.adjustStockQuantity(stockAdjustmentDTO);
+            return ResponseEntity.ok("Stock adjusted successfully");
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

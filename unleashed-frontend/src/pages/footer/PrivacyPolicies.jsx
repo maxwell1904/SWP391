@@ -13,7 +13,7 @@ function PrivacyPolicies() {
     const navigate = useNavigate();
 
     const handlecontact = () => {
-        navigate("/contact");
+    navigate("/about");
     }
   return (
     <div>

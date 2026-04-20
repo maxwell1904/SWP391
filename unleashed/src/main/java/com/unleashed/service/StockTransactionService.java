@@ -1,6 +1,7 @@
 package com.unleashed.service;
 
 import com.unleashed.dto.StockTransactionDTO;
+import com.unleashed.dto.StockAdjustmentDTO;
 import com.unleashed.dto.TransactionCardDTO;
 import com.unleashed.entity.*;
 import com.unleashed.entity.composite.StockVariationId;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -56,6 +58,10 @@ public class StockTransactionService {
     @Transactional
     public boolean createStockTransactions(StockTransactionDTO stockTransactionDTO) {
         try {
+            if (stockTransactionDTO.getVariations() == null || stockTransactionDTO.getVariations().isEmpty()) {
+                throw new IllegalArgumentException("No products selected for import.");
+            }
+
             Provider provider = providerRepository.findById(stockTransactionDTO.getProviderId())
                     .orElseThrow(() -> new IllegalArgumentException("Provider not found with ID: " + stockTransactionDTO.getProviderId()));
 
@@ -74,6 +80,10 @@ public class StockTransactionService {
                     .orElseThrow(() -> new IllegalStateException("Product Status 'AVAILABLE' (ID 3) not found."));
 
             for (StockTransactionDTO.ProductVariationQuantity variationQuantity : stockTransactionDTO.getVariations()) {
+                if (variationQuantity.getQuantity() == null || variationQuantity.getQuantity() <= 0) {
+                    throw new IllegalArgumentException("Import quantity must be greater than zero.");
+                }
+
                 Variation variation = variationRepository.findById(variationQuantity.getProductVariationId())
                         .orElseThrow(() -> new IllegalArgumentException("Product variation not found with ID: " + variationQuantity.getProductVariationId()));
 
@@ -91,7 +101,8 @@ public class StockTransactionService {
 
                 if (existingStockVariation.isPresent()) {
                     StockVariation stockVariationToUpdate = existingStockVariation.get();
-                    stockVariationToUpdate.setStockQuantity(stockVariationToUpdate.getStockQuantity() + variationQuantity.getQuantity());
+                    int currentQuantity = Optional.ofNullable(stockVariationToUpdate.getStockQuantity()).orElse(0);
+                    stockVariationToUpdate.setStockQuantity(currentQuantity + variationQuantity.getQuantity());
                     stockVariationRepository.save(stockVariationToUpdate);
                 } else {
                     StockVariation newStockVariation = new StockVariation();
@@ -113,8 +124,9 @@ public class StockTransactionService {
                 }
                 productRepository.save(product);
             }
-        } catch (IllegalArgumentException | IllegalStateException e) {
+        } catch (Exception e) {
             System.err.println("Stock import failed: " + e.getMessage());
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return false;
         }
         return true;
@@ -147,6 +159,68 @@ public class StockTransactionService {
         return response;
     }
 
+    @Transactional
+    public void adjustStockQuantity(StockAdjustmentDTO stockAdjustmentDTO) {
+        if (stockAdjustmentDTO == null) {
+            throw new IllegalArgumentException("Adjustment payload is required.");
+        }
+
+        if (stockAdjustmentDTO.getQuantityChange() == null || stockAdjustmentDTO.getQuantityChange() == 0) {
+            throw new IllegalArgumentException("Quantity change must be non-zero.");
+        }
+
+        if (stockAdjustmentDTO.getReason() == null || stockAdjustmentDTO.getReason().trim().isEmpty()) {
+            throw new IllegalArgumentException("Reason is required for stock adjustment.");
+        }
+
+        Stock stock = stockRepository.findById(stockAdjustmentDTO.getStockId())
+                .orElseThrow(() -> new IllegalArgumentException("Stock not found with ID: " + stockAdjustmentDTO.getStockId()));
+
+        Variation variation = variationRepository.findById(stockAdjustmentDTO.getVariationId())
+                .orElseThrow(() -> new IllegalArgumentException("Variation not found with ID: " + stockAdjustmentDTO.getVariationId()));
+
+        User inchargeEmployee = null;
+        if (stockAdjustmentDTO.getUsername() != null && !stockAdjustmentDTO.getUsername().isBlank()) {
+            inchargeEmployee = userRepository.findByUserUsername(stockAdjustmentDTO.getUsername())
+                    .orElseThrow(() -> new IllegalArgumentException("User not found: " + stockAdjustmentDTO.getUsername()));
+        }
+
+        StockVariationId stockVariationId = new StockVariationId(stock.getId(), variation.getId());
+        StockVariation stockVariation = stockVariationRepository.findById(stockVariationId)
+                .orElseGet(() -> {
+                    StockVariation newStockVariation = new StockVariation();
+                    newStockVariation.setId(new StockVariationId());
+                    newStockVariation.setStock(stock);
+                    newStockVariation.setVariation(variation);
+                    newStockVariation.setStockQuantity(0);
+                    return newStockVariation;
+                });
+
+        int currentQuantity = Optional.ofNullable(stockVariation.getStockQuantity()).orElse(0);
+        int newQuantity = currentQuantity + stockAdjustmentDTO.getQuantityChange();
+
+        if (newQuantity < 0) {
+            throw new IllegalStateException("Adjustment would make stock negative.");
+        }
+
+        stockVariation.setStockQuantity(newQuantity);
+        stockVariationRepository.save(stockVariation);
+
+        int transactionTypeId = stockAdjustmentDTO.getQuantityChange() > 0 ? 1 : 2;
+        TransactionType transactionType = transactionTypeRepository.findById(transactionTypeId)
+                .orElseThrow(() -> new IllegalStateException("Transaction type not found with ID: " + transactionTypeId));
+
+        Transaction transaction = new Transaction();
+        transaction.setStock(stock);
+        transaction.setVariation(variation);
+        transaction.setProvider(null);
+        transaction.setInchargeEmployee(inchargeEmployee);
+        transaction.setTransactionType(transactionType);
+        transaction.setTransactionQuantity(Math.abs(stockAdjustmentDTO.getQuantityChange()));
+        transaction.setTransactionNote(stockAdjustmentDTO.getReason().trim());
+        transactionRepository.save(transaction);
+    }
+
     private TransactionCardDTO mapEntityToCardDTO(Transaction t) {
         if (t == null) return null;
 
@@ -175,7 +249,8 @@ public class StockTransactionService {
                 t.getTransactionQuantity(),
                 t.getTransactionDate(),
                 (t.getInchargeEmployee() != null) ? t.getInchargeEmployee().getUsername() : null,
-                (t.getProvider() != null) ? t.getProvider().getProviderName() : null
+                (t.getProvider() != null) ? t.getProvider().getProviderName() : null,
+                t.getTransactionNote()
         );
     }
 
@@ -229,29 +304,47 @@ public class StockTransactionService {
             Variation variation = entry.getKey();
             Integer quantity = entry.getValue().intValue();
 
-            // Find a stock location to pull from
             List<StockVariation> stockLocations = stockVariationRepository.findByVariationId(variation.getId());
             if (stockLocations.isEmpty()) {
-                System.err.println("Warning: No stock location found for Variation ID: " + variation.getId() + ". Cannot create OUT transaction or reduce stock.");
-                continue;
+                throw new IllegalStateException("No stock location found for variation ID: " + variation.getId());
             }
-            Stock stock = stockLocations.get(0).getStock();
-            StockVariation stockToUpdate = stockLocations.get(0);
 
-            // 1. Create the audit transaction
-            Transaction transaction = new Transaction();
-            transaction.setVariation(variation);
-            transaction.setTransactionQuantity(quantity);
-            transaction.setTransactionType(outTransactionType);
-            transaction.setStock(stock);
-            // At creation, no staff is assigned yet. You could assign the user or leave null.
-            transaction.setInchargeEmployee(null);
-            transaction.setProvider(null);
-            transactionRepository.save(transaction);
+            int totalAvailable = stockLocations.stream()
+                    .map(StockVariation::getStockQuantity)
+                    .filter(Objects::nonNull)
+                    .mapToInt(Integer::intValue)
+                    .sum();
 
-            // 2. Update the actual stock quantity
-            stockToUpdate.setStockQuantity(stockToUpdate.getStockQuantity() - quantity);
-            stockVariationRepository.save(stockToUpdate);
+            if (totalAvailable < quantity) {
+                throw new IllegalStateException("Not enough stock for variation ID: " + variation.getId());
+            }
+
+            int remainingQuantity = quantity;
+            for (StockVariation stockLocation : stockLocations) {
+                int availableInLocation = Optional.ofNullable(stockLocation.getStockQuantity()).orElse(0);
+                if (availableInLocation <= 0 || remainingQuantity <= 0) {
+                    continue;
+                }
+
+                int deducted = Math.min(availableInLocation, remainingQuantity);
+                stockLocation.setStockQuantity(availableInLocation - deducted);
+                stockVariationRepository.save(stockLocation);
+
+                Transaction transaction = new Transaction();
+                transaction.setVariation(variation);
+                transaction.setTransactionQuantity(deducted);
+                transaction.setTransactionType(outTransactionType);
+                transaction.setStock(stockLocation.getStock());
+                transaction.setInchargeEmployee(null);
+                transaction.setProvider(null);
+                transactionRepository.save(transaction);
+
+                remainingQuantity -= deducted;
+            }
+
+            if (remainingQuantity > 0) {
+                throw new IllegalStateException("Failed to reserve full quantity for variation ID: " + variation.getId());
+            }
         }
     }
 

@@ -69,7 +69,6 @@ function App() {
         location.pathname !== "/checkout" &&
         location.pathname !== "/payment-options" &&
         location.pathname !== "/return" &&
-        location.pathname !== "/contact" &&
         location.pathname !== "/privacy-policies" &&
         !location.pathname.startsWith("/user") &&
         !location.pathname.startsWith("/Dashboard") &&
@@ -97,7 +96,6 @@ function App() {
         if (
             path === "/" ||
             path === "/about" ||
-            path === "/contact" ||
             path.startsWith("/shop/product/") ||
             path.startsWith("/user") ||
             path === "/cart" ||

@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
-import about from "../../assets/images/about.webp";
-import Lottie from "lottie-react";
-import FiveWhy from "../../assets/anim/5Why.json";
-import nambuoc from "../../assets/anim/5buoc.json";
+import superlogo from "../../assets/images/superlogo.png";
 
 export function About() {
   return (
@@ -27,7 +24,7 @@ export function About() {
           </div>
         </div>
         <div className="AboutRight flex justify-start mt-10 md:mt-0">
-  <img src={about} alt="store visual" className="w-1/2 md:w-full ml-20" />
+  <img src={superlogo} alt="Superlogo" className="w-1/2 md:w-full ml-20" />
 </div>
 
       </div>

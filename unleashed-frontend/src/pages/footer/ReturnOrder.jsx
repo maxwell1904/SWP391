@@ -14,7 +14,7 @@ function ReturnOrder() {
   const navigate = useNavigate();
 
   const handlecontact = () => {
-    navigate("/contact");
+    navigate("/about");
   }
   return (
     <div className="bg-beluBlue min-h-[100vh]">
