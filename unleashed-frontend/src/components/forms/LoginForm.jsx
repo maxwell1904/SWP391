@@ -68,11 +68,11 @@ export function LoginForm() {
       >
         {({ isSubmitting }) => (
           <Form className="space-y-6">
-            {/* Username Input */}
+            {/* Username or Email Input */}
             <InputField
-              label="Username"
+              label="Username or Email"
               name="username"
-              placeholder="Enter your username"
+              placeholder="Enter your username or email"
               tabIndex={1}
               labelClassName="mb-2 block text-sm font-semibold uppercase tracking-[0.25em] text-white/55"
               fieldClassName="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-4 text-base text-white outline-none transition duration-200 placeholder:text-white/30 focus:border-red-500 focus:ring-0"

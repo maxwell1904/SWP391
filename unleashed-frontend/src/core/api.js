@@ -2,7 +2,9 @@ import axios from "axios";
 import { QueryClient } from "react-query";
 import "react-toastify/dist/ReactToastify.css";
 
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || "";
+const apiBaseUrl =
+  process.env.REACT_APP_API_BASE_URL ||
+  `${window.location.protocol}//${window.location.hostname}:8080`;
 
 // Tạo instance Axios
 const apiClient = axios.create({

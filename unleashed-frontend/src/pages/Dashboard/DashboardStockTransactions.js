@@ -76,6 +76,7 @@ const DashboardStockTransactions = () => {
                     <td className='px-4 py-3'><Skeleton variant="text" /></td>
                     <td className='px-4 py-3'><Skeleton variant="text" /></td>
                     <td className='px-4 py-3'><Skeleton variant="text" /></td>
+                    <td className='px-4 py-3'><Skeleton variant="text" /></td>
                 </tr>
             ))}
         </>
@@ -133,6 +134,7 @@ const DashboardStockTransactions = () => {
                         <th className='px-4 py-3 text-left text-sm font-semibold text-gray-600' style={{ width: '15%' }}>Price/Unit</th>
                         <th className='px-4 py-3 text-left text-sm font-semibold text-gray-600' style={{ width: '15%' }}>Staff</th>
                         <th className='px-4 py-3 text-left text-sm font-semibold text-gray-600' style={{ width: '15%' }}>Provider</th>
+                        <th className='px-4 py-3 text-left text-sm font-semibold text-gray-600' style={{ width: '15%' }}>Reason</th>
                         <th className='px-4 py-3 text-left text-sm font-semibold text-gray-600' style={{ width: '10%' }}>Date</th>
                     </tr>
                     </thead>
@@ -161,12 +163,13 @@ const DashboardStockTransactions = () => {
                                 <td className='px-4 py-3 text-sm'>{formatPrice(t.transactionProductPrice || 0)}</td>
                                 <td className='px-4 py-3 text-sm text-gray-700'>{t.inchargeEmployeeUsername || 'N/A'}</td>
                                 <td className='px-4 py-3 text-sm text-gray-700'>{t.providerName || 'N/A'}</td>
+                                <td className='px-4 py-3 text-sm text-gray-700'>{t.transactionNote || 'N/A'}</td>
                                 <td className='px-4 py-3 text-sm text-gray-700'>{new Date(t.transactionDate).toLocaleDateString()}</td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="7" className="text-center py-10 text-gray-500">
+                            <td colSpan="8" className="text-center py-10 text-gray-500">
                                 No transactions found for the selected filters.
                             </td>
                         </tr>

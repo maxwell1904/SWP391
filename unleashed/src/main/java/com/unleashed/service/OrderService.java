@@ -526,6 +526,9 @@ public class OrderService {
             }
         }
 
+        // Always re-check stock on the backend to prevent stale client-side stock checks.
+        checkStockAvailability(orderDTO);
+
         List<OrderVariationSingle> orderVariationSingles = saveOrderDetails(order, orderDTO);
 
         JSONObject paymentResponse = handlePayment(order, orderDTO, orderVariationSingles, request);

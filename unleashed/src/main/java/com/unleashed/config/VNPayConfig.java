@@ -12,9 +12,9 @@ import java.util.*;
 
 public class VNPayConfig {
     public static String vnp_PayUrl = resolve("VNPAY_PAY_URL", "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html");
-    public static String vnp_Returnurl = ""; // OrderService already passes the full return URL.
-    public static String vnp_TmnCode = resolve("VNPAY_TMN_CODE", "3J9MCD67");
-    public static String vnp_HashSecret = resolve("VNPAY_HASH_SECRET", "0LXAT8O05NXQS6V8R3PTLOR6BZR4MEO9");
+    public static String vnp_Returnurl = ""; // OrderService.resolveVnPayReturnUrl() already passes the full return URL
+    public static String vnp_TmnCode = resolve("VNPAY_TMN_CODE", "XHU1K0ZC");
+    public static String vnp_HashSecret = resolve("VNPAY_HASH_SECRET", "SJ6Q5ROETRGDBVCLHVPHND5XDBSATDCP");
     public static String vnp_apiUrl = resolve("VNPAY_API_URL", "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction");
 
     private static String resolve(String key, String defaultValue) {

@@ -19,6 +19,11 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByUserUsername(String username);
 
+    @Query("SELECT u FROM User u WHERE " +
+            "LOWER(TRIM(u.userUsername)) = LOWER(TRIM(:identifier)) " +
+            "OR LOWER(TRIM(u.userEmail)) = LOWER(TRIM(:identifier))")
+    Optional<User> findByUsernameOrEmailInsensitive(@Param("identifier") String identifier);
+
     Optional<User> findByUserUsernameAndUserPassword(String userUsername, String userPassword);
 
     Optional<User> findByUserGoogleId(String googleId);
