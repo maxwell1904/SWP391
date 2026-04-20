@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -464,19 +466,74 @@ public class UserService {
             throw new CustomException("Email already exists!", HttpStatus.BAD_REQUEST);
         }
 
+        if (existsByUsername(user.getUserUsername())) {
+            throw new CustomException("Username already exists!", HttpStatus.BAD_REQUEST);
+        }
+
+        if (user.getUserEmail() == null || user.getUserEmail().trim().isEmpty()) {
+            throw new CustomException("Email is required!", HttpStatus.BAD_REQUEST);
+        }
+
+        if (user.getUserUsername() == null || user.getUserUsername().trim().isEmpty()) {
+            throw new CustomException("Username is required!", HttpStatus.BAD_REQUEST);
+        }
+
+        String temporaryPassword = generateTemporaryPassword();
+
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2A, 10);
-        user.setUserPassword(encoder.encode(user.getPassword()));
+        user.setUserPassword(encoder.encode(temporaryPassword));
 
-        user.setUserImage(user.getUserImage());
-        user.setIsUserEnabled(true);
+        user.setIsUserEnabled(false);
 
         user.setRole(userRoleService.findById(3));
 
 //        user.setCurrentPaymentMethod(userDTO.getCurrentPaymentMethod());
         user.setUserAddress(user.getUserAddress());
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        sendStaffFirstLoginEmail(savedUser);
+        return savedUser;
+    }
+
+    private String generateTemporaryPassword() {
+        String raw = UUID.randomUUID().toString().replace("-", "");
+        return "Tmp" + raw.substring(0, 9) + "1A";
+    }
+
+    private String resolveFrontendBaseUrl() {
+        String fromProperty = System.getProperty("FRONTEND_BASE_URL");
+        if (fromProperty != null && !fromProperty.isBlank()) {
+            return fromProperty.trim();
+        }
+
+        String fromEnv = System.getenv("FRONTEND_BASE_URL");
+        if (fromEnv != null && !fromEnv.isBlank()) {
+            return fromEnv.trim();
+        }
+
+        return "http://localhost:3000";
+    }
+
+    private void sendStaffFirstLoginEmail(User user) {
+        String setupToken = jwtUtil.generateStringToken(user.getUserId() + "staff-first-login", 24 * 60 * 60 * 1000);
+        String frontendBaseUrl = resolveFrontendBaseUrl();
+        String resetLink = frontendBaseUrl
+            + "/staff/activate-password?source=staff&email="
+                + URLEncoder.encode(user.getUserEmail(), StandardCharsets.UTF_8)
+                + "&token="
+                + setupToken;
+
+        String htmlContent = "<div style=\"font-family: Arial, sans-serif; text-align: center; padding: 20px;\">"
+                + "<h2 style=\"color: #2563eb;\">Staff Account Created</h2>"
+                + "<p style=\"color: #555; font-size: 16px;\">Hello " + user.getUserFullname() + ",</p>"
+                + "<p style=\"color: #555; font-size: 16px;\">An administrator has created your staff account. Please set your password to activate your account.</p>"
+                + "<p style=\"color: #555; font-size: 16px;\"><strong>Username:</strong> " + user.getUserUsername() + "</p>"
+                + "<a href=\"" + resetLink + "\" style=\"display:inline-block;padding:10px 20px;font-size:16px;color:white;background-color:#2563eb;text-decoration:none;border-radius:5px;\">Set Password & Activate</a>"
+                + "<p style=\"color:#555; font-size:14px; margin-top:20px;\">This link will expire in 24 hours.</p>"
+                + "</div>";
+
+        emailService.sendHtmlMessage(user.getUserEmail(), "Activate your staff account", htmlContent);
     }
 
     public User getUserById(String userId) throws CustomException {

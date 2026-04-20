@@ -8,14 +8,11 @@ import {
   Button,
   Container,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 function ReturnOrder() {
-  const navigate = useNavigate();
-
-  const handlecontact = () => {
-    navigate("/about");
-  }
+  const handleEmailSupport = () => {
+    window.location.href = "mailto:unleashedworkshop.business@gmail.com?subject=Return%20Support%20Request";
+  };
   return (
     <div className="bg-beluBlue min-h-[100vh]">
       <Container
@@ -142,7 +139,7 @@ function ReturnOrder() {
             <Button
               variant="outlined"
               color="primary"
-              onClick={handlecontact}
+              onClick={handleEmailSupport}
               sx={{
                 textTransform: "none",
                 borderRadius: "30px", // Rounded corners
@@ -154,7 +151,7 @@ function ReturnOrder() {
                 },
               }}
             >
-              Contact Us for Returns
+              Email Support for Returns
             </Button>
           </Box>
         </Box>

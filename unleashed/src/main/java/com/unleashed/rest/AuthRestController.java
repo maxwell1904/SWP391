@@ -235,10 +235,20 @@ public class AuthRestController {
             }
 
             String parsedUserId = jwtUtil.extractSubject(resetPasswordDTO.getToken());
+            String forgotPasswordSubject = user.getUserId() + "forgot-password";
+            String staffFirstLoginSubject = user.getUserId() + "staff-first-login";
+            boolean isForgotPasswordToken = parsedUserId.equals(forgotPasswordSubject);
+            boolean isStaffFirstLoginToken = parsedUserId.equals(staffFirstLoginSubject);
 
-            if (parsedUserId.equals(user.getUserId() + "forgot-password")) {
+            if (isForgotPasswordToken || isStaffFirstLoginToken) {
                 String newPassword = resetPasswordDTO.getNewPassword();
                 userService.updatePassword(user, newPassword);
+
+                if (isStaffFirstLoginToken && !Boolean.TRUE.equals(user.getIsUserEnabled())) {
+                    userService.updateEnable(user, true);
+                    return ResponseEntity.ok("Your account has been activated. Please login with your new password.");
+                }
+
                 return ResponseEntity.ok("Your password has been reset");
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Your token was incorrect");

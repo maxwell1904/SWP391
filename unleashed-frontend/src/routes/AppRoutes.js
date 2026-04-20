@@ -122,8 +122,10 @@ const AppRoutes = ({ toggleSidebar, isOpen }) => {
             <Route path='/login' element={<ProtectedRoute types={['GUEST']}><Login /></ProtectedRoute>} />
             <Route path='/register' element={<ProtectedRoute types={['GUEST']}><Register /></ProtectedRoute>} />
             <Route path='/forgotPassword' element={<ProtectedRoute types={['GUEST']}><ForgotPassword /></ProtectedRoute>} />
-            <Route path='/reset-password' element={<ProtectedRoute types={['GUEST']}><ResetPasswordPage /></ProtectedRoute>} />
-            <Route path='/reset-password/success' element={<ProtectedRoute types={['GUEST']}><ResetSuccessPage /></ProtectedRoute>} />
+            <Route path='/reset-password' element={<ResetPasswordPage />} />
+            <Route path='/reset-password/success' element={<ResetSuccessPage />} />
+            <Route path='/staff/activate-password' element={<ResetPasswordPage />} />
+            <Route path='/staff/activate-password/success' element={<ResetSuccessPage />} />
             <Route path='/logout' element={<ProtectedRoute types={['CUSTOMER']}><Logout /></ProtectedRoute>} />
             <Route path='/orders/success' element={<ProtectedRoute types={['CUSTOMER']}><OrderSuccess /></ProtectedRoute>} />
             <Route path='/orders/bankTransfer' element={<ProtectedRoute types={['CUSTOMER']}><OrderBankTransfer /></ProtectedRoute>} />

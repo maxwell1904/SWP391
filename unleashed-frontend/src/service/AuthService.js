@@ -185,21 +185,33 @@ export const HandleLoginGoogle = async (accessToken, navigate, signIn) => {
     }
 };
 
-export const ResetPassword = async (password, email, token, navigate) => {
+export const ResetPassword = async (
+  password,
+  email,
+  token,
+  navigate,
+  successPath = "/reset-password/success"
+) => {
   try {
     const response = await apiClient.post("/api/auth/reset-password", {
       email: email,
       newPassword: password,
       token: token,
     });
-    toast.success(response.data.message, {
+    const successMessage =
+      typeof response.data === "string"
+        ? response.data
+        : response.data?.message || "Password updated successfully";
+    toast.success(successMessage, {
       position: "bottom-center",
       transition: Zoom,
     });
-    navigate("/reset-password/success");
+    navigate(successPath);
   } catch (error) {
     const errorMessage = error.response
-      ? error.response.data.message
+      ? typeof error.response.data === "string"
+        ? error.response.data
+        : error.response.data?.message || error.message
       : error.message;
     toast.error(`Reset password error: ${errorMessage}`, {
       position: "bottom-center",

@@ -44,12 +44,12 @@ export function ShowMore({ onClick, tabindex = "0" }) {
   );
 }
 
-export function LoginBtn({ onClick, tabindex = "0", sxOverride = {} }) {
+export function LoginBtn({ onClick, tabindex = 0, sxOverride = {} }) {
   return (
     <Button
       variant="outlined"
       onClick={onClick}
-      tabIndex={tabindex}
+      tabIndex={Number(tabindex)}
       type="submit"
       sx={{
         width: "100%",
@@ -75,12 +75,12 @@ export function LoginBtn({ onClick, tabindex = "0", sxOverride = {} }) {
   );
 }
 
-export function ForgotBtn({ onClick, tabindex = "0", disabled = false }) {
+export function ForgotBtn({ onClick, tabindex = 0, disabled = false }) {
   return (
     <Button
       variant="outlined"
       onClick={onClick}
-      tabIndex={tabindex}
+      tabIndex={Number(tabindex)}
       type="submit"
       disabled={disabled}
       sx={{
@@ -111,12 +111,12 @@ export function ForgotBtn({ onClick, tabindex = "0", disabled = false }) {
   );
 }
 
-export function RegisterBtn({ onClick, tabindex = "0", disabled = false }) {
+export function RegisterBtn({ onClick, tabindex = 0, disabled = false }) {
   return (
     <Button
       variant="outlined"
       onClick={onClick}
-      tabIndex={tabindex}
+      tabIndex={Number(tabindex)}
       type="submit"
       disabled={disabled}
       sx={{
@@ -167,6 +167,7 @@ export function LoginGooglebtn({ signIn, className = "" }) {
       const accessToken = tokenResponse.access_token;
       HandleLoginGoogle(accessToken, navigate, signIn);
     },
+    ux_mode: "popup",
     scope: "openid email profile",
   });
 

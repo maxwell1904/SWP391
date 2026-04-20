@@ -16,6 +16,9 @@ const ResetPasswordPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("token");
   const email = queryParams.get("email");
+  const isStaffActivation =
+    location.pathname.startsWith("/staff/activate-password") ||
+    queryParams.get("source") === "staff";
 
   // useEffect(() => {
   //   if (token === undefined && email === undefined) {
@@ -30,7 +33,10 @@ const ResetPasswordPage = () => {
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
-      await ResetPassword(values.password, email, token, navigate);
+      const successPath = isStaffActivation
+        ? "/staff/activate-password/success"
+        : "/reset-password/success";
+      await ResetPassword(values.password, email, token, navigate, successPath);
     } catch (error) {
     }
   };
@@ -53,8 +59,13 @@ const ResetPasswordPage = () => {
       <div className="resetPassword">
         <div className="pt-20">
           <h2 className="font-poppins text-5xl mb-6 text-left">
-            Reset Password
+            {isStaffActivation ? "Activate Staff Account" : "Reset Password"}
           </h2>
+          {isStaffActivation && (
+            <p className="mb-6 text-base text-gray-500">
+              Set your password to activate your staff account.
+            </p>
+          )}
           <Formik
             initialValues={{ password: "", confirmPassword: "" }}
             validationSchema={ResetPasswordSchema}
@@ -107,7 +118,10 @@ const ResetPasswordPage = () => {
                   />
                 </div>
 
-                <AuthCommonBtn context="Confirm Password" type={"submit"}  />
+                <AuthCommonBtn
+                  context={isStaffActivation ? "Set Password & Activate" : "Confirm Password"}
+                  type={"submit"}
+                />
               </Form>
             )}
           </Formik>
