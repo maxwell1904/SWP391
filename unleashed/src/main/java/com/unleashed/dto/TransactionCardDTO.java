@@ -28,4 +28,5 @@ public class TransactionCardDTO {
     private OffsetDateTime transactionDate;
     private String inchargeEmployeeUsername;
     private String providerName;
+    private String transactionNote;
 }

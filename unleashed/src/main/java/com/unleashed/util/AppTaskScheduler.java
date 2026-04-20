@@ -48,6 +48,7 @@ public class AppTaskScheduler {
         logger.info("Checking for 'System' user on application startup...");
         try {
             userService.findOrCreateSystemUser();
+            userService.findOrCreateDefaultPrivilegedUsersForDev();
             productService.performScheduledAgingUpdate();
             saleService.performScheduledStatusUpdates();
             discountService.performScheduledStatusUpdates();

@@ -16,7 +16,6 @@ import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -123,11 +122,29 @@ public class UserService {
     public ResponseDTO login(UserDTO userDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
-            User user = userRepository.findByUserUsername(userDTO.getUsername()).orElseThrow(() -> new CustomException("Username or password is wrong! Please try again", HttpStatus.NOT_FOUND));
+            String identifier = userDTO.getUsername() == null ? "" : userDTO.getUsername().trim();
+
+            Optional<User> userOptional = userRepository.findByUsernameOrEmailInsensitive(identifier);
+
+            User user = userOptional.orElseThrow(() -> new CustomException("Username or password is wrong! Please try again", HttpStatus.NOT_FOUND));
             if (!user.getIsUserEnabled()) {
                 throw new CustomException("User account is disabled. Please contact us for support.", HttpStatus.FORBIDDEN);
             }
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword()));
+
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2A, 10);
+            boolean isPasswordMatched = passwordEncoder.matches(userDTO.getPassword(), user.getUserPassword());
+
+            // Support legacy plaintext records and transparently migrate to bcrypt on first successful login.
+            if (!isPasswordMatched && Objects.equals(user.getUserPassword(), userDTO.getPassword())) {
+                user.setUserPassword(passwordEncoder.encode(userDTO.getPassword()));
+                userRepository.save(user);
+                isPasswordMatched = true;
+            }
+
+            if (!isPasswordMatched) {
+                throw new BadCredentialsException("Username or password is wrong! Please try again");
+            }
+
             if (user.getUserGoogleId() != null) {
                 throw new CustomException("Please login with Google account", HttpStatus.FORBIDDEN);
             }
@@ -700,6 +717,69 @@ public class UserService {
 
                     return userRepository.save(systemUser);
                 });
+    }
+
+    @Transactional
+    public void findOrCreateDefaultPrivilegedUsersForDev() {
+        ensureFixedPrivilegedUser("admin123", "admin123@unleashed.local", "Admin Tester", "admin123", 1);
+        ensureFixedPrivilegedUser("staff123", "staff123@unleashed.local", "Staff Tester", "staff123", 3);
+    }
+
+    private void ensureFixedPrivilegedUser(String username,
+                                           String email,
+                                           String fullname,
+                                           String rawPassword,
+                                           int roleId) {
+        Role role = userRoleRepository.findById(roleId)
+                .orElseThrow(() -> new IllegalStateException("Role not found with ID: " + roleId));
+
+        PasswordEncoder encoder = new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2A, 10);
+
+        Optional<User> existingUser = userRepository.findByUserUsername(username);
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            boolean changed = false;
+
+            if (user.getRole() == null || !Objects.equals(user.getRole().getId(), roleId)) {
+                user.setRole(role);
+                changed = true;
+            }
+
+            if (!Boolean.TRUE.equals(user.getIsUserEnabled())) {
+                user.setIsUserEnabled(true);
+                changed = true;
+            }
+
+            if (user.getUserEmail() == null || user.getUserEmail().isBlank()) {
+                user.setUserEmail(email);
+                changed = true;
+            }
+
+            if (user.getUserFullname() == null || user.getUserFullname().isBlank()) {
+                user.setUserFullname(fullname);
+                changed = true;
+            }
+
+            if (user.getUserPassword() == null || !encoder.matches(rawPassword, user.getUserPassword())) {
+                user.setUserPassword(encoder.encode(rawPassword));
+                changed = true;
+            }
+
+            if (changed) {
+                userRepository.save(user);
+            }
+            return;
+        }
+
+        User user = new User();
+        user.setUserUsername(username);
+        user.setUserEmail(email);
+        user.setUserFullname(fullname);
+        user.setUserPassword(encoder.encode(rawPassword));
+        user.setIsUserEnabled(true);
+        user.setRole(role);
+
+        userRepository.save(user);
     }
 
 
