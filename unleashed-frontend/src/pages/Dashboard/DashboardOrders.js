@@ -119,6 +119,17 @@ const DashboardOrders = () => {
         return <Chip label={status} color={color} variant='outlined' size='small' />;
     };
 
+    const renderReviewedBy = (order) => {
+        const username = order.reviewedByUsername || (order.staffUsername && order.staffUsername !== 'N/A' ? order.staffUsername : null);
+        const role = order.reviewedByRole;
+
+        if (!username) {
+            return 'N/A';
+        }
+
+        return role ? `${username} (${role})` : username;
+    };
+
     const renderOrderActions = (order) => {
         switch (order.orderStatus.toUpperCase()) {
             case 'PENDING':
@@ -210,7 +221,7 @@ const DashboardOrders = () => {
                         <th style={{ width: '20%' }} className='px-4 py-3 text-left text-sm font-semibold text-gray-600'>Date</th>
                         <th style={{ width: '10%' }} className='px-4 py-3 text-left text-sm font-semibold text-gray-600'>Total</th>
                         <th style={{ width: '10%' }} className='px-4 py-3 text-left text-sm font-semibold text-gray-600'>Status</th>
-                        <th style={{ width: '10%' }} className='px-4 py-3 text-left text-sm font-semibold text-gray-600'>Staff</th>
+                        <th style={{ width: '10%' }} className='px-4 py-3 text-left text-sm font-semibold text-gray-600'>Reviewed By</th>
                         <th style={{ width: '23%' }} className='px-4 py-3 text-left text-sm font-semibold text-gray-600'>Actions</th>
                     </tr>
                     </thead>
@@ -234,7 +245,7 @@ const DashboardOrders = () => {
                                     {formatPrice(order.totalAmount)}
                                 </td>
                                 <td className='px-4 py-3 text-sm'>{getStatusChip(order.orderStatus)}</td>
-                                <td className='px-4 py-3 text-sm text-gray-700'>{order.staffUsername || 'N/A'}</td>
+                                <td className='px-4 py-3 text-sm text-gray-700'>{renderReviewedBy(order)}</td>
                                 <td className='px-4 py-3'>
                                     <div className='flex items-center gap-2 min-h-[40px]'>
                                         <IconButton

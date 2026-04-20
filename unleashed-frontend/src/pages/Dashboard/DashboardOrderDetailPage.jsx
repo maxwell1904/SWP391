@@ -168,7 +168,7 @@ const DashboardOrderDetailPage = () => {
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <DetailItem icon={<Person sx={{ mr: 1.5, color: 'success.main' }} />} label="Customer:">{orderDetails.customerUsername}</DetailItem>
-                        <DetailItem icon={<Group sx={{ mr: 1.5, color: 'warning.main' }} />} label="Assigned Staff:">{orderDetails.staffUsername || 'N/A'}</DetailItem>
+                        <DetailItem icon={<Group sx={{ mr: 1.5, color: 'warning.main' }} />} label="Reviewed By:">{orderDetails.reviewedByUsername ? `${orderDetails.reviewedByUsername}${orderDetails.reviewedByRole ? ` (${orderDetails.reviewedByRole})` : ''}` : (orderDetails.staffUsername || 'N/A')}</DetailItem>
                         <DetailItem icon={<Home sx={{ mr: 1.5, color: 'text.secondary' }} />} label="Billing Address:">{orderDetails.billingAddress}</DetailItem>
                     </Grid>
                     <Grid item xs={12} md={4}>
