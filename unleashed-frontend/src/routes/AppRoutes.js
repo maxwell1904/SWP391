@@ -69,7 +69,6 @@ import OrderBankTransfer from '../pages/Order/OrderBankTransfer.jsx'
 import PaymentOptions from '../pages/footer/PaymentOptions.jsx'
 import ReturnOrder from '../pages/footer/ReturnOrder.jsx'
 import PrivacyPolicies from '../pages/footer/PrivacyPolicies.jsx'
-import Contact from '../pages/Home/Contact.js'
 import SearchResultsPage from '../pages/SearchResult/SearchResultsPage.jsx'
 import DiscountDetailPage from '../pages/Discount/DiscountDetailPage'
 import Membership from '../pages/User/Membership.jsx'
@@ -120,7 +119,6 @@ const AppRoutes = ({ toggleSidebar, isOpen }) => {
             <Route path='/payment-options' element={<ProtectedRoute types={['GUEST', 'CUSTOMER']}><PaymentOptions /></ProtectedRoute>} />
             <Route path='/return' element={<ProtectedRoute types={['GUEST', 'CUSTOMER']}><ReturnOrder /></ProtectedRoute>} />
             <Route path='/privacy-policies' element={<ProtectedRoute types={['GUEST', 'CUSTOMER']}><PrivacyPolicies /></ProtectedRoute>} />
-            <Route path='/contact' element={<ProtectedRoute types={['GUEST', 'CUSTOMER']}><Contact /></ProtectedRoute>} />
             <Route path='/login' element={<ProtectedRoute types={['GUEST']}><Login /></ProtectedRoute>} />
             <Route path='/register' element={<ProtectedRoute types={['GUEST']}><Register /></ProtectedRoute>} />
             <Route path='/forgotPassword' element={<ProtectedRoute types={['GUEST']}><ForgotPassword /></ProtectedRoute>} />

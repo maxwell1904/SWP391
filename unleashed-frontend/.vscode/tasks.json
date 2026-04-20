@@ -7,6 +7,16 @@
 			"problemMatcher": [],
 			"label": "npm: start",
 			"detail": "set PORT=8080 && react-scripts start"
+		},
+		{
+			"label": "build-frontend",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"build"
+			],
+			"isBackground": false
 		}
 	]
 }

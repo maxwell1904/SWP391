@@ -103,25 +103,6 @@ export function Navbar() {
                 ></span>
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                  `font-poppins text-sm text-white/80 hover:text-[#ff4d4d] transition duration-300 relative ${
-                    isActive ? "text-[#ff4d4d]" : ""
-                  }`
-                }
-              >
-                Contact
-                <span
-                  className={({ isActive }) =>
-                    `absolute left-0 bottom-[-4px] w-full h-[2px] bg-[#ff4d4d] transition-transform duration-300 ${
-                      isActive ? "scale-x-100" : "scale-x-0"
-                    }`
-                  }
-                ></span>
-              </NavLink>
-            </li>
           </ul>
         </div>
         <div className="nav-right col-span-1 flex items-center justify-end space-x-2 md:space-x-6">
