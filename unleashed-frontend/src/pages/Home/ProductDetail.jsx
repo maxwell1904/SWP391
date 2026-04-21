@@ -267,8 +267,8 @@ const ProductDetailPage = () => {
 
     useEffect(() => {
         const checkProductInWishlist = async () => {
-            if (authUser?.name && product?.productId) {
-                setIsInWishlist(await checkWishlist(authUser.name, product.productId) || false);
+            if (authUser?.username && product?.productId) {
+                setIsInWishlist(await checkWishlist(authUser.username, product.productId) || false);
             } else { setIsInWishlist(false); }
         };
         checkProductInWishlist();
@@ -281,7 +281,7 @@ const ProductDetailPage = () => {
         }
         try {
             if (isInWishlist) {
-                if (await removeFromWishlist(authUser.name, product.productId)) {
+                if (await removeFromWishlist(authUser.username, product.productId)) {
                     setIsInWishlist(false);
                     toast.info("Removed from wishlist.", { position: "top-center", autoClose: 2000 });
                 }

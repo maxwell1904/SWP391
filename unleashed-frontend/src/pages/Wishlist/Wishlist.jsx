@@ -54,7 +54,7 @@ const WishlistPage = () => {
             const success = await removeFromWishlist(username, productId);
             if (success) {
                 toast.success("Removed from wishlist!");
-                setWishlist(wishlist.filter(item => item.productId !== productId));
+                setWishlist(prev => prev.filter(item => item.productId !== productId));
             } else {
                 toast.error("Failed to remove item.");
             }

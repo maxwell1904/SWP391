@@ -38,6 +38,7 @@ public class ProductRecommendationService {
     private final VariationRepository variationRepository;
     private final CartRepository cartRepository;
     private final SaleRepository saleRepository;
+    private final ReviewRepository reviewRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(ProductRecommendationService.class);
 
@@ -54,7 +55,8 @@ public class ProductRecommendationService {
             UserRepository userRepository,
             VariationRepository variationRepository,
             CartRepository cartRepository,
-            SaleRepository saleRepository) {
+            SaleRepository saleRepository,
+            ReviewRepository reviewRepository) {
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
         this.orderVariationSingleRepository = orderVariationSingleRepository;
@@ -66,6 +68,7 @@ public class ProductRecommendationService {
         this.variationRepository = variationRepository;
         this.cartRepository = cartRepository;
         this.saleRepository = saleRepository;
+        this.reviewRepository = reviewRepository;
     }
 
 
@@ -500,6 +503,18 @@ public class ProductRecommendationService {
                 })
                 .collect(Collectors.toList());
         dto.setVariations(variationDTOs);
+
+        List<Object[]> totalRatingResult = reviewRepository.countAndAvgRatingByProductId(productId);
+        if (totalRatingResult != null && !totalRatingResult.isEmpty()) {
+            Object[] result = totalRatingResult.get(0);
+            Number totalRatings = (Number) result[0];
+            Number averageRating = (Number) result[1];
+            dto.setTotalRatings(totalRatings != null ? totalRatings.longValue() : 0L);
+            dto.setAverageRating(averageRating != null ? averageRating.doubleValue() : 0.0);
+        } else {
+            dto.setTotalRatings(0L);
+            dto.setAverageRating(0.0);
+        }
 
         return dto;
     }

@@ -109,7 +109,7 @@ const Footer = () => {
       <div className="bg-[#050505] px-6 pb-8 md:px-10">
         <Divider />
         <p className="pt-4 font-poppins text-sm text-white/55 md:text-base">
-          2025 &copy; Group 1. All rights reserved
+          2026 &copy; Group 6. All rights reserved
         </p>
       </div>
     </>

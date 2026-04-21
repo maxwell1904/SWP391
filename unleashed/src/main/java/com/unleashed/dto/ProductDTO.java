@@ -28,6 +28,8 @@ public class ProductDTO {
     private List<ProductVariationDTO> variations;
     private SaleType saleType;
     private BigDecimal saleValue;
+    private Double averageRating;
+    private Long totalRatings;
 
     @Data
     @AllArgsConstructor
