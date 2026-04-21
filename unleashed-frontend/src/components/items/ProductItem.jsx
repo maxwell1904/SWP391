@@ -5,6 +5,8 @@ import { formatPrice } from "../format/formats";
 
 const ProductItem = ({ product }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
+    const ratingValue = product.averageRating ?? product.avgRating ?? 0;
+    const ratingCount = product.totalRatings ?? product.totalRating ?? 0;
     let discountedPrice = product.productPrice;
 
     if (product.sale?.saleType?.saleTypeName === "PERCENTAGE" && product.saleValue > 0) {
@@ -82,7 +84,7 @@ const ProductItem = ({ product }) => {
                         <div className="text-right">
                             <Rating
                                 name="half-rating-read"
-                                value={product.averageRating || 0}
+                                value={ratingValue}
                                 precision={0.5}
                                 readOnly
                                 size="small"
@@ -92,7 +94,7 @@ const ProductItem = ({ product }) => {
                                 }}
                             />
                             <p className="mt-1 font-poppins text-xs text-gray-500">
-                                ({product.totalRatings || 0})
+                                ({ratingCount})
                             </p>
                         </div>
                     </div>
