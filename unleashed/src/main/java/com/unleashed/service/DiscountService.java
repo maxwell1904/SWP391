@@ -43,13 +43,18 @@ public class DiscountService {
     private final DiscountStatusRespository discountStatusRespository;
     private final DiscountTypeRepository discountTypeRepository;
     private final RankRepository rankRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
     public DiscountService(DiscountRepository discountRepository,
                            UserDiscountRepository userDiscountRepository,
                            UserRepository userRepository,
                            JwtUtil jwtUtil,
-                           UserMapper userMapper, DiscountStatusRespository discountStatusRespository, DiscountTypeRepository discountTypeRepository, RankRepository rankRepository) {
+                           UserMapper userMapper,
+                           DiscountStatusRespository discountStatusRespository,
+                           DiscountTypeRepository discountTypeRepository,
+                           RankRepository rankRepository,
+                           OrderRepository orderRepository) {
         this.discountRepository = discountRepository;
         this.userDiscountRepository = userDiscountRepository;
         this.userRepository = userRepository;
@@ -58,6 +63,7 @@ public class DiscountService {
         this.discountStatusRespository = discountStatusRespository;
         this.discountTypeRepository = discountTypeRepository;
         this.rankRepository = rankRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Transactional
@@ -246,6 +252,11 @@ public class DiscountService {
         return discountRepository.findByDiscountCode(discountCode).map(this::convertToDTO);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<Discount> findDiscountEntityByCode(String discountCode) {
+        return discountRepository.findByDiscountCode(discountCode);
+    }
+
     public Optional<DiscountDTO> endDiscount(int discountId) {
         return discountRepository.findById(discountId).map(discount -> {
             discount.setDiscountStatus(discountStatusRespository.getReferenceById(1)); // 1 = INACTIVE
@@ -264,14 +275,21 @@ public class DiscountService {
             throw new IllegalArgumentException("Discount code not found.");
         }
         Discount discount = discountOpt.get();
+        UUID userUuid = UUID.fromString(userId);
+        int currentUsageCount = discount.getDiscountUsageCount() == null ? 0 : discount.getDiscountUsageCount();
 
-        if (discount.getDiscountUsageLimit() != null && discount.getDiscountUsageCount() >= discount.getDiscountUsageLimit()) {
+        if (discount.getDiscountUsageLimit() != null && currentUsageCount >= discount.getDiscountUsageLimit()) {
             throw new IllegalStateException("This discount has been fully used by all users.");
         }
-        return userDiscountRepository
-                .findById_UserIdAndId_DiscountId(UUID.fromString(userId), discount.getDiscountId())
-                .map(UserDiscount::getIsDiscountUsed)
-                .orElse(false);
+
+        if (isPrivateDiscount(discount.getDiscountId())) {
+            return userDiscountRepository
+                    .findById_UserIdAndId_DiscountId(userUuid, discount.getDiscountId())
+                    .map(UserDiscount::getIsDiscountUsed)
+                    .orElse(false);
+        }
+
+        return hasUserUsedPublicDiscount(userUuid, discount.getDiscountId());
     }
 
     @Transactional
@@ -318,6 +336,14 @@ public class DiscountService {
         return result;
     }
 
+    private boolean isPrivateDiscount(Integer discountId) {
+        return userDiscountRepository.countByDiscountId(discountId) > 0;
+    }
+
+    private boolean hasUserUsedPublicDiscount(UUID userId, Integer discountId) {
+        return orderRepository.existsByUser_UserIdAndDiscount_DiscountId(userId, discountId);
+    }
+
     public ResponseEntity<?> checkUserDiscount(String discountCode, BigDecimal subTotal) {
         DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -332,28 +358,35 @@ public class DiscountService {
         if (userId == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(HttpStatus.NOT_FOUND.value(), "User ID not found for authenticated user"));
         }
-        Optional<DiscountDTO> discountOpt = findDiscountByCode(discountCode);
+        Optional<Discount> discountOpt = discountRepository.findByDiscountCode(discountCode);
         if (discountOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(HttpStatus.NOT_FOUND.value(), "Discount code not found"));
         }
-        Map<String, Object> discountUsersData = getUsersByDiscountId(discountOpt.get().getDiscountId());
-        Set<UUID> allowedUserIds = (Set<UUID>) discountUsersData.get("allowedUserIds");
-        if (!allowedUserIds.contains(userId)) {
+
+        Discount discount = discountOpt.get();
+        DiscountDTO discountDTO = convertToDTO(discount);
+
+        if (isPrivateDiscount(discount.getDiscountId())
+                && !userDiscountRepository.existsById_UserIdAndId_DiscountId(userId, discount.getDiscountId())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseDTO(HttpStatus.FORBIDDEN.value(), "User is not available for this discount"));
         }
-        boolean hasDiscount = checkDiscountUsage(userId.toString(), discountCode);
+
+        boolean hasDiscount;
+        try {
+            hasDiscount = checkDiscountUsage(userId.toString(), discountCode);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.GONE).body(new ResponseDTO(HttpStatus.GONE.value(), e.getMessage()));
+        }
+
         if (!hasDiscount) {
-            DiscountDTO discountDTO = discountOpt.get();
             if (!"ACTIVE".equalsIgnoreCase(discountDTO.getDiscountStatus().getDiscountStatusName())) {
                 return ResponseEntity.status(HttpStatus.GONE).body(new ResponseDTO(HttpStatus.GONE.value(), "Discount is not active."));
             }
-            if (discountDTO.getMinimumOrderValue() != null && discountDTO.getMinimumOrderValue().compareTo(subTotal) <= 0) {
-                return ResponseEntity.ok(discountDTO);
-            } else if (discountDTO.getMinimumOrderValue() == null) {
-                return ResponseEntity.ok(discountDTO);
-            } else {
+            if (discountDTO.getMinimumOrderValue() != null
+                    && discountDTO.getMinimumOrderValue().compareTo(subTotal) > 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO(HttpStatus.BAD_REQUEST.value(), "The minimum order value is " + decimalFormat.format(discountDTO.getMinimumOrderValue()) + ". Please add more items to your cart."));
             }
+            return ResponseEntity.ok(discountDTO);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(HttpStatus.NOT_FOUND.value(), "User used this discount"));
         }
@@ -366,19 +399,27 @@ public class DiscountService {
             throw new IllegalArgumentException("Discount code not found.");
         }
         Discount discount = discountOpt.get();
-        if (discount.getDiscountUsageLimit() != null && discount.getDiscountUsageCount() >= discount.getDiscountUsageLimit()) {
+        int currentUsageCount = discount.getDiscountUsageCount() == null ? 0 : discount.getDiscountUsageCount();
+        if (discount.getDiscountUsageLimit() != null && currentUsageCount >= discount.getDiscountUsageLimit()) {
             throw new IllegalStateException("This discount has been fully used.");
         }
-        UserDiscount userDiscount = userDiscountRepository.findById_UserIdAndId_DiscountId(UUID.fromString(userId), discount.getDiscountId())
-                .orElseThrow(() -> new IllegalStateException("User has not been assigned this discount."));
-        if (userDiscount.getIsDiscountUsed()) {
+
+        UUID userUuid = UUID.fromString(userId);
+        if (isPrivateDiscount(discount.getDiscountId())) {
+            UserDiscount userDiscount = userDiscountRepository.findById_UserIdAndId_DiscountId(userUuid, discount.getDiscountId())
+                    .orElseThrow(() -> new IllegalStateException("User has not been assigned this discount."));
+            if (Boolean.TRUE.equals(userDiscount.getIsDiscountUsed())) {
+                throw new IllegalStateException("User has already used this discount.");
+            }
+            userDiscount.setIsDiscountUsed(true);
+            userDiscount.setDiscountUsedAt(OffsetDateTime.now());
+            userDiscountRepository.save(userDiscount);
+        } else if (hasUserUsedPublicDiscount(userUuid, discount.getDiscountId())) {
             throw new IllegalStateException("User has already used this discount.");
         }
-        userDiscount.setIsDiscountUsed(true);
-        userDiscount.setDiscountUsedAt(OffsetDateTime.now());
-        userDiscountRepository.save(userDiscount);
-        discount.setDiscountUsageCount(discount.getDiscountUsageCount() + 1);
-        if (discount.getDiscountUsageLimit() != null && discount.getDiscountUsageLimit().equals(discount.getDiscountUsageCount())) {
+
+        discount.setDiscountUsageCount(currentUsageCount + 1);
+        if (discount.getDiscountUsageLimit() != null && discount.getDiscountUsageCount() >= discount.getDiscountUsageLimit()) {
             DiscountStatus inactiveDiscountStatus = discountStatusRespository.findByDiscountStatusName("INACTIVE");
             if (inactiveDiscountStatus != null) {
                 discount.setDiscountStatus(inactiveDiscountStatus);
@@ -462,37 +503,39 @@ public class DiscountService {
 
     @Transactional(readOnly = true)
     public List<DiscountDTO> getBestDiscountsForCheckout(String userId, BigDecimal cartTotal) {
-        // 1. Get all discount IDs assigned to the user
-        List<Integer> allUserDiscountIds = userDiscountRepository.findDiscountIdsByUserId(UUID.fromString(userId));
-        if (allUserDiscountIds.isEmpty()) {
-            return Collections.emptyList();
-        }
+        UUID userUuid = UUID.fromString(userId);
+        Set<Integer> assignedDiscountIds = new HashSet<>(userDiscountRepository.findDiscountIdsByUserId(userUuid));
 
-        // 2. Get the usage status for all of the user's discounts
-        List<UserDiscount> userDiscounts = userDiscountRepository.findAllById_UserId(UUID.fromString(userId));
-        Set<Integer> usedDiscountIds = userDiscounts.stream()
+        // Track used private discounts from user_discount
+        List<UserDiscount> userDiscounts = userDiscountRepository.findAllById_UserId(userUuid);
+        Set<Integer> usedPrivateDiscountIds = userDiscounts.stream()
                 .filter(UserDiscount::getIsDiscountUsed)
                 .map(ud -> ud.getId().getDiscountId())
                 .collect(Collectors.toSet());
 
-        // 3. Fetch all discount entities that the user has but has not yet used
-        List<Integer> unusedDiscountIds = allUserDiscountIds.stream()
-                .filter(id -> !usedDiscountIds.contains(id))
-                .collect(Collectors.toList());
-
-        if (unusedDiscountIds.isEmpty()) {
+        DiscountStatus activeStatus = discountStatusRespository.findByDiscountStatusName("ACTIVE");
+        if (activeStatus == null) {
             return Collections.emptyList();
         }
 
-        List<Discount> potentialDiscounts = discountRepository.findAllById(unusedDiscountIds);
+        List<Discount> activeDiscounts = discountRepository.findByDiscountStatus(activeStatus);
 
-        // 4. Filter for ACTIVE discounts where the cart total meets the minimum order value
-        List<Discount> applicableDiscounts = potentialDiscounts.stream()
-                .filter(d -> "ACTIVE".equalsIgnoreCase(d.getDiscountStatus().getDiscountStatusName()))
+        // Include private discounts assigned to the user and public discounts not yet used by this user.
+        List<Discount> applicableDiscounts = activeDiscounts.stream()
                 .filter(d -> d.getDiscountMinimumOrderValue() == null || cartTotal.compareTo(d.getDiscountMinimumOrderValue()) >= 0)
+                .filter(d -> d.getDiscountUsageLimit() == null
+                        || (d.getDiscountUsageCount() == null ? 0 : d.getDiscountUsageCount()) < d.getDiscountUsageLimit())
+                .filter(d -> {
+                    boolean isPrivate = isPrivateDiscount(d.getDiscountId());
+                    if (isPrivate) {
+                        return assignedDiscountIds.contains(d.getDiscountId())
+                                && !usedPrivateDiscountIds.contains(d.getDiscountId());
+                    }
+                    return !hasUserUsedPublicDiscount(userUuid, d.getDiscountId());
+                })
                 .toList();
 
-        // 5. Calculate the actual saving for each discount and sort by the highest saving
+        // Calculate the actual saving for each discount and sort by the highest saving.
         return applicableDiscounts.stream()
                 .map(discount -> {
                     BigDecimal savings = BigDecimal.ZERO;

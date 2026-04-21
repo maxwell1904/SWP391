@@ -116,6 +116,8 @@ public interface OrderRepository extends JpaRepository<Order, String>, JpaSpecif
     @Query("SELECT o FROM Order o WHERE o.user.userId = :userId ORDER BY o.orderCreatedAt DESC")
     List<Order> findRecentOrdersByUserId(@Param("userId") UUID userId, Pageable pageable);
 
+    boolean existsByUser_UserIdAndDiscount_DiscountId(UUID userId, Integer discountId);
+
     @Query(value = """
             WITH ProductSales AS (
                 SELECT
