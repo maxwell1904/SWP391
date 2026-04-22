@@ -141,6 +141,12 @@ public class OrderService {
             orderJson.put("notes", order.getOrderNote());
             orderJson.put("staffUsername",
                     order.getInchargeEmployee() != null ? order.getInchargeEmployee().getUsername() : "N/A");
+                orderJson.put("reviewedByUsername",
+                    order.getInchargeEmployee() != null ? order.getInchargeEmployee().getUsername() : null);
+                orderJson.put("reviewedByRole",
+                    order.getInchargeEmployee() != null && order.getInchargeEmployee().getRole() != null
+                        ? order.getInchargeEmployee().getRole().getRoleName()
+                        : null);
 
             Map<Variation, Long> variationCounts = order.getOrderVariationSingles().stream()
                     .collect(Collectors.groupingBy(
@@ -347,6 +353,12 @@ public class OrderService {
                     orderJson.put("notes", order.getOrderNote());
                     orderJson.put("staffUsername",
                             order.getInchargeEmployee() != null ? order.getInchargeEmployee().getUsername() : "N/A");
+                        orderJson.put("reviewedByUsername",
+                            order.getInchargeEmployee() != null ? order.getInchargeEmployee().getUsername() : null);
+                        orderJson.put("reviewedByRole",
+                            order.getInchargeEmployee() != null && order.getInchargeEmployee().getRole() != null
+                                ? order.getInchargeEmployee().getRole().getRoleName()
+                                : null);
                     return orderJson;
                 }).collect(Collectors.toList());
 
@@ -388,6 +400,12 @@ public class OrderService {
                     orderJson.put("notes", order.getOrderNote());
                     orderJson.put("staffUsername",
                             order.getInchargeEmployee() != null ? order.getInchargeEmployee().getUsername() : "N/A");
+                        orderJson.put("reviewedByUsername",
+                            order.getInchargeEmployee() != null ? order.getInchargeEmployee().getUsername() : null);
+                        orderJson.put("reviewedByRole",
+                            order.getInchargeEmployee() != null && order.getInchargeEmployee().getRole() != null
+                                ? order.getInchargeEmployee().getRole().getRoleName()
+                                : null);
 
                     Map<Variation, Long> variationCounts = order.getOrderVariationSingles().stream()
                             .collect(Collectors.groupingBy(

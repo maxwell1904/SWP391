@@ -55,7 +55,13 @@ export const LoginUser = async (data, navigate, signIn) => {
   try {
     await loginPromise;
   } catch (error) {
-    // Errors are handled within toast.promise, so no need for additional handling here
+    const responseStatus = error?.response?.status;
+    const responseData = error?.response?.data;
+
+    if (responseStatus === 403 && responseData?.email) {
+      localStorage.setItem("mail", responseData.email);
+      navigate("/register/confirm-registration");
+    }
   }
 };
 
