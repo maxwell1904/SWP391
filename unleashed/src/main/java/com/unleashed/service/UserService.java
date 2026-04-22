@@ -128,6 +128,17 @@ public class UserService {
 
             User user = userOptional.orElseThrow(() -> new CustomException("Username or password is wrong! Please try again", HttpStatus.NOT_FOUND));
             if (!user.getIsUserEnabled()) {
+                boolean isCustomerAccount = user.getRole() != null
+                        && Objects.equals(user.getRole().getId(), 2);
+
+                if (isCustomerAccount) {
+                    sendActivationEmail(user);
+                    responseDTO.setStatusCode(HttpStatus.FORBIDDEN.value());
+                    responseDTO.setMessage("Your account is not activated. We have sent another confirmation email.");
+                    responseDTO.setEmail(user.getUserEmail());
+                    return responseDTO;
+                }
+
                 throw new CustomException("User account is disabled. Please contact us for support.", HttpStatus.FORBIDDEN);
             }
 
