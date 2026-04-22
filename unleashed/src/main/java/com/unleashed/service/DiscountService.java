@@ -169,6 +169,12 @@ public class DiscountService {
             existingDiscount.setDiscountMaximumValue(discountDTO.getMaximumDiscountValue());
             existingDiscount.setDiscountUsageLimit(discountDTO.getUsageLimit());
 
+            if (discountDTO.getDiscountType() != null && discountDTO.getDiscountType().getId() != null) {
+                DiscountType discountType = discountTypeRepository.findById(discountDTO.getDiscountType().getId())
+                        .orElseThrow(() -> new ResourceNotFoundException("DiscountType not found"));
+                existingDiscount.setDiscountType(discountType);
+            }
+
             setInitialDiscountStatus(existingDiscount);
 
             existingDiscount.setDiscountUpdatedAt(OffsetDateTime.now(ZoneId.systemDefault()));
