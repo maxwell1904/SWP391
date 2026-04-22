@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../format/formats';
-import ReviewStars from '../../components/reviewStars/ReviewStars'; // Import component ReviewStars
 import {Rating} from '@mui/material'
 
 const ProductCard = ({ product }) => {
+    const ratingValue = product.averageRating ?? product.avgRating ?? 0;
+    const ratingCount = product.totalRatings ?? product.totalRating ?? 0;
 
     // Function to truncate product name
     const truncateProductName = (name, maxLength) => {
@@ -30,8 +31,8 @@ const ProductCard = ({ product }) => {
                     </h3>
                     <p className="product-price text-blue-700">{formatPrice(product.productPrice)}</p>
                     <div className="product-rating mt-2 mb-2 flex items-center justify-left">
-                        <Rating name="half-rating-read" precision={0.5} readOnly value={product.averageRating || 0} />
-                        <span className="text-sm text-gray-500 ml-2">({product.totalRatings || 0})</span>
+                        <Rating name="half-rating-read" precision={0.5} readOnly value={ratingValue} />
+                        <span className="text-sm text-gray-500 ml-2">({ratingCount})</span>
                     </div>
                     {/* <p className="product-total-reviews text-sm text-gray-500">
                         {product.totalRatings} Customer Reviews

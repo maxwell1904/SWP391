@@ -2,6 +2,15 @@ import { useEffect, useState } from "react";
 
 const CAN_THO_LATITUDE = 10.0364634;
 const CAN_THO_LONGITUDE = 105.7875821;
+const DEFAULT_SHIPPING_FEE = 20000;
+
+const DISTANCE_FEE_BANDS = [
+  { maxKm: 30, fee: 12000 },
+  { maxKm: 80, fee: 18000 },
+  { maxKm: 200, fee: 25000 },
+  { maxKm: 500, fee: 35000 },
+  { maxKm: Infinity, fee: 45000 },
+];
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
   const R = 6371; // Radius of Earth in km
@@ -15,21 +24,29 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 };
 
+const toCoordinateNumber = (value) => Number.parseFloat(value);
+
 const getShippingFee = (province) => {
+  const latitude = toCoordinateNumber(province.latitude);
+  const longitude = toCoordinateNumber(province.longitude);
+
+  if (Number.isNaN(latitude) || Number.isNaN(longitude)) {
+    return DEFAULT_SHIPPING_FEE;
+  }
+
   const distance = calculateDistance(
-    province.latitude,
-    province.longitude,
+    latitude,
+    longitude,
     CAN_THO_LATITUDE,
     CAN_THO_LONGITUDE
   );
-  if (distance <= 0.5) return 12500;
-  else if (distance <= 1.0) return 15000;
-  return province.id.startsWith("0") ? 30000 : 20000;
+
+  const matchedBand = DISTANCE_FEE_BANDS.find((band) => distance <= band.maxKm);
+  return matchedBand ? matchedBand.fee : DEFAULT_SHIPPING_FEE;
 };
 
 const ShipmentSelector = ({ provinceName, onFeeCalculated }) => {
   const [tinh, setTinh] = useState([]);
-  const [shippingFee, setShippingFee] = useState(0);
 
   useEffect(() => {
     fetch("https://esgoo.net/api-tinhthanh/1/0.htm")
@@ -43,8 +60,7 @@ const ShipmentSelector = ({ provinceName, onFeeCalculated }) => {
     const selectedProvince = tinh.find((t) => t.name === provinceName);
     if (selectedProvince) {
       const fee = getShippingFee(selectedProvince);
-      setShippingFee(fee);
-      if (onFeeCalculated) onFeeCalculated(fee); // Gọi callback với phí vận chuyển
+      if (onFeeCalculated) onFeeCalculated(fee);
     }
   }, [tinh, provinceName, onFeeCalculated]);
 

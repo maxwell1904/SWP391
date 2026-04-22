@@ -6,6 +6,8 @@ import {formatPrice} from "../format/formats";
 
 const ProductRecommend = ({product, username}) => { // No need for username here anymore
     const [imageLoaded, setImageLoaded] = useState(false);
+    const ratingValue = product.averageRating ?? product.avgRating ?? 0;
+    const ratingCount = product.totalRatings ?? product.totalRating ?? 0;
 
 
     // Calculate discounted price (same as before)
@@ -76,7 +78,7 @@ const ProductRecommend = ({product, username}) => { // No need for username here
                         <div className="text-right">
                             <Rating
                                 name="half-rating-read"
-                                value={product.averageRating || 0}
+                                value={ratingValue}
                                 precision={0.5}
                                 readOnly
                                 size="small"
@@ -86,7 +88,7 @@ const ProductRecommend = ({product, username}) => { // No need for username here
                                 }}
                             />
                             <span className="mt-1 block font-poppins text-xs text-gray-500">
-                                ({product.totalRatings || 0})
+                                ({ratingCount})
                             </span>
                         </div>
                     </div>

@@ -491,7 +491,6 @@ public class OrderService {
                 .user(userRepository.findById(UUID.fromString(orderDTO.getUserId())).orElse(null))
                 .orderDate(OffsetDateTime.now())
                 .orderNote(orderDTO.getNotes())
-                .discount(orderDTO.getDiscount())
                 .orderBillingAddress(orderDTO.getUserAddress())
                 .orderExpectedDeliveryDate(orderDTO.getShippingMethod().getShippingMethodName()
                         .equalsIgnoreCase("EXPRESS")
@@ -518,9 +517,12 @@ public class OrderService {
         }
 
         // 2. Check Discount
-        if (orderDTO.getDiscountCode() != null) {
+        if (StringUtils.hasText(orderDTO.getDiscountCode())) {
             try {
+                Discount appliedDiscount = discountService.findDiscountEntityByCode(orderDTO.getDiscountCode())
+                        .orElseThrow(() -> new IllegalStateException("Discount code not found."));
                 discountService.updateUsageLimit(orderDTO.getDiscountCode(), orderDTO.getUserId());
+                order.setDiscount(appliedDiscount);
             } catch (Exception e) {
                 throw new IllegalStateException("Failed to apply discount: " + e.getMessage());
             }

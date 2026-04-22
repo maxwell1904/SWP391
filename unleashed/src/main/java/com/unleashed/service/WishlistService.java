@@ -8,11 +8,15 @@ import com.unleashed.repo.ProductRepository;
 import com.unleashed.repo.UserRepository;
 import com.unleashed.repo.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -27,7 +31,7 @@ public class WishlistService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<WishlistDTO> getWishlistByUser(String username) {
+    public Map<String, Object> getWishlistByUser(String username, Pageable pageable) {
         // 1. Tìm User entity dựa trên username
         User user = userRepository.findByUserUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
@@ -36,7 +40,14 @@ public class WishlistService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
 
-        return wishlistRepository.findWishlistByUserId(user.getUserId());
+        Page<WishlistDTO> wishlistPage = wishlistRepository.findWishlistByUserId(user.getUserId(), pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("wishlist", wishlistPage.getContent());
+        response.put("currentPage", wishlistPage.getNumber());
+        response.put("totalPages", wishlistPage.getTotalPages());
+        response.put("totalItems", wishlistPage.getTotalElements());
+        return response;
     }
 
     public Wishlist addToWishlist(String username, String productId) {

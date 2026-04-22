@@ -97,6 +97,19 @@ const CheckoutPage = () => {
     [shippingMethod],
   );
   const totalShippingFee = shippingFee + shippingMethodFee;
+  const hasLocationForShippingFee = Boolean(location?.tinh);
+  const hasShippingMethod = Boolean(shippingMethod);
+  const isShippingTotalReady = hasLocationForShippingFee && hasShippingMethod;
+
+  const shippingStatusMessage = useMemo(() => {
+    if (!hasLocationForShippingFee) {
+      return "Select delivery location to calculate distance fee.";
+    }
+    if (!hasShippingMethod) {
+      return "Select a shipping service to complete shipping total.";
+    }
+    return "";
+  }, [hasLocationForShippingFee, hasShippingMethod]);
 
   const calculateFinalCheckoutPrice = useCallback(() => {
     const totalBeforeDiscount = cartTotal + totalShippingFee;
@@ -670,7 +683,23 @@ const CheckoutPage = () => {
               sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
             >
               <Typography color="text.secondary">
-                Shipping costs
+                Distance shipping fee
+                {location?.tinh ? ` (${location.tinh})` : ""}
+              </Typography>
+              <Typography
+                fontWeight="600"
+                color={hasLocationForShippingFee ? "text.primary" : "text.secondary"}
+              >
+                {hasLocationForShippingFee
+                  ? formatPrice(shippingFee)
+                  : "Select delivery location"}
+              </Typography>
+            </Box>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+            >
+              <Typography color="text.secondary">
+                Shipping service fee
                 {shippingMethod?.shippingMethodName
                   ? ` (${shippingMethod.shippingMethodName})`
                   : ""}
@@ -688,10 +717,22 @@ const CheckoutPage = () => {
               sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
             >
               <Typography color="text.secondary">Shipping total</Typography>
-              <Typography fontWeight="600">
-                {formatPrice(totalShippingFee)}
+              <Typography
+                fontWeight="600"
+                color={isShippingTotalReady ? "text.primary" : "text.secondary"}
+              >
+                {isShippingTotalReady ? formatPrice(totalShippingFee) : "Pending"}
               </Typography>
             </Box>
+            {shippingStatusMessage && (
+              <Typography
+                variant="caption"
+                color="warning.main"
+                sx={{ display: "block", mb: 1 }}
+              >
+                {shippingStatusMessage}
+              </Typography>
+            )}
             {rank && (
               <Box
                 sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
