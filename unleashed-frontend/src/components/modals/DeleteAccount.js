@@ -7,42 +7,48 @@ import {
   DialogTitle,
   Typography,
   Box,
+  TextField,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { Zoom } from "react-toastify";
 import { RequestDeleteAccount } from "../../service/UserService";
 
-const DeleteAccountButton = ({ authHeader, onDeleteSuccess }) => {
+const DeleteAccountButton = ({ authHeader, onDeleteSuccess, isGoogleAccount = false }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
+  const [password, setPassword] = useState("");
 
   const handleRequestDelete = () => {
     setOpenDialog(true); // Open the confirmation dialog
   };
 
   const handleCloseDialog = () => {
+    setPassword("");
     setOpenDialog(false); // Close dialog
   };
 
   const handleDeleteAccount = async () => {
     setLoadingDelete(true);
     try {
-      // Call your delete account API
-      await RequestDeleteAccount(authHeader);
-      toast.success("Account deletion requested successfully.", {
+      const response = await RequestDeleteAccount(authHeader, password);
+      toast.success(response.data?.message || "Your account has been deleted.", {
         position: "top-center",
         transition: Zoom,
       });
 
-      // Execute the onDeleteSuccess function to trigger any further actions
       setTimeout(() => {
-        onDeleteSuccess(); // This could handle sign-out, redirection, etc.
-      }, 3000);
+        onDeleteSuccess?.();
+      }, 1500);
     } catch (error) {
-      toast.error("Error requesting account deletion.", {
+      toast.error(
+        error.response?.data?.message ||
+          error.response?.data ||
+          "Could not delete your account.",
+        {
         position: "top-center",
         transition: Zoom,
-      });
+        }
+      );
     } finally {
       setLoadingDelete(false);
       handleCloseDialog();
@@ -69,7 +75,6 @@ const DeleteAccountButton = ({ authHeader, onDeleteSuccess }) => {
         Delete Account
       </Button>
 
-      {/* Confirmation Dialog for account deletion */}
       <Dialog
         open={openDialog}
         onClose={handleCloseDialog}
@@ -91,12 +96,30 @@ const DeleteAccountButton = ({ authHeader, onDeleteSuccess }) => {
         <DialogContent>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <Typography sx={{ color: "#444", fontSize: "1rem" }}>
-              Are you sure you want to delete your account? This action cannot
-              be undone.
+              Are you sure you want to delete your account?
             </Typography>
             <Typography sx={{ color: "#888", fontSize: "0.9rem" }}>
-              Your account will be permanently deleted after 1 week. During this
-              time, you can still recover your account if needed.
+              You will be signed out immediately and will not be able to log in
+              again unless support reactivates your account.
+            </Typography>
+            {!isGoogleAccount && (
+              <TextField
+                type="password"
+                label="Confirm your password"
+                fullWidth
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Enter your current password"
+              />
+            )}
+            {isGoogleAccount && (
+              <Typography sx={{ color: "#888", fontSize: "0.9rem" }}>
+                This Google-linked account does not require password confirmation.
+              </Typography>
+            )}
+            <Typography sx={{ color: "#888", fontSize: "0.9rem" }}>
+              Account deletion is only allowed when you have no ongoing
+              orders being processed.
             </Typography>
           </Box>
         </DialogContent>
@@ -130,7 +153,7 @@ const DeleteAccountButton = ({ authHeader, onDeleteSuccess }) => {
                 backgroundColor: "#c62828",
               },
             }}
-            disabled={loadingDelete}
+            disabled={loadingDelete || (!isGoogleAccount && !password.trim())}
           >
             {loadingDelete ? "Deleting..." : "Delete"}
           </Button>

@@ -196,7 +196,9 @@ export const ResetPassword = async (
   email,
   token,
   navigate,
-  successPath = "/reset-password/success"
+  successPath = "/reset-password/success",
+  signIn = null,
+  isStaffActivation = false
 ) => {
   try {
     const response = await apiClient.post("/api/auth/reset-password", {
@@ -204,6 +206,28 @@ export const ResetPassword = async (
       newPassword: password,
       token: token,
     });
+
+    if (isStaffActivation && response.data?.token && signIn) {
+      const user = jwtDecode(response.data.token);
+      const signedIn = signIn({
+        auth: {
+          token: response.data.token,
+          type: "Bearer",
+        },
+        userState: {
+          username: user.sub,
+          userFullName: user.fullName,
+          userImage: user.image,
+          role: user.role?.[0]?.authority,
+          userEmail: user.userEmail,
+        },
+      });
+
+      if (!signedIn) {
+        throw new Error("Automatic sign-in failed.");
+      }
+    }
+
     const successMessage =
       typeof response.data === "string"
         ? response.data
@@ -212,7 +236,14 @@ export const ResetPassword = async (
       position: "bottom-center",
       transition: Zoom,
     });
+
+    if (isStaffActivation && response.data?.token) {
+      navigate("/Dashboard");
+      return response;
+    }
+
     navigate(successPath);
+    return response;
   } catch (error) {
     const errorMessage = error.response
       ? typeof error.response.data === "string"

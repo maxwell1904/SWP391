@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 export const ProtectedRoute = ({ children, types = "" }) => {
   const isAuth = useIsAuthenticated();
@@ -12,6 +12,8 @@ export const ProtectedRoute = ({ children, types = "" }) => {
   );
   const authHeader = useAuthHeader();
   const email = localStorage.getItem("mail");
+  const location = useLocation();
+  const hasRegistrationToken = new URLSearchParams(location.search).has("token");
 
   // Decode the token to get user info, if available
   const token = authHeader;
@@ -48,7 +50,7 @@ export const ProtectedRoute = ({ children, types = "" }) => {
     if (isCheckingEmail) {
       return <CircularProgress />;
     }
-    if (email) {
+    if (email || hasRegistrationToken) {
       if (userRole === "ADMIN" || userRole === "STAFF") {
         return <Navigate to="/Dashboard" />;
       }

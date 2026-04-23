@@ -8,6 +8,8 @@ import com.unleashed.dto.mapper.ViewUserMapper;
 import com.unleashed.entity.Role;
 import com.unleashed.entity.User;
 import com.unleashed.exception.CustomException;
+import com.unleashed.repo.CartRepository;
+import com.unleashed.repo.OrderRepository;
 import com.unleashed.repo.UserRepository;
 import com.unleashed.repo.UserRoleRepository;
 import com.unleashed.util.JwtUtil;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -36,6 +40,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/user")
 public class UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Set<String> ACCOUNT_DEACTIVATION_BLOCKING_STATUSES =
+            Set.of("PENDING", "PROCESSING", "SHIPPING", "RETURNING", "INSPECTION");
+
     @Autowired
 
     private final UserRepository userRepository;
@@ -47,6 +55,8 @@ public class UserService {
     private final EmailService emailService;
     private final ViewUserMapper viewUserMapper;
     private final SystemUserProperties systemUserProperties;
+    private final OrderRepository orderRepository;
+    private final CartRepository cartRepository;
 
 
     @Autowired
@@ -61,7 +71,9 @@ public class UserService {
                        UserRoleService userRoleService,
                        EmailService emailService,
                        ViewUserMapper viewUserMapper,
-                       SystemUserProperties systemUserProperties) {
+                       SystemUserProperties systemUserProperties,
+                       OrderRepository orderRepository,
+                       CartRepository cartRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.jwtUtil = jwtUtil;
@@ -71,6 +83,8 @@ public class UserService {
         this.emailService = emailService;
         this.viewUserMapper = viewUserMapper;
         this.systemUserProperties = systemUserProperties;
+        this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
     }
 
     @Transactional
@@ -649,15 +663,81 @@ public class UserService {
         );
     }
 
-    public boolean disableAccount(String userId) {
-        Optional<User> userOptional = userRepository.findById(UUID.fromString(userId));
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setIsUserEnabled(false);
-            userRepository.save(user);
-            return true;
+    public ResponseDTO requestAccountDeactivation(String userId, String password) {
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        User user = userRepository.findById(UUID.fromString(userId)).orElse(null);
+        if (user == null) {
+            responseDTO.setStatusCode(HttpStatus.NOT_FOUND.value());
+            responseDTO.setMessage("User not found.");
+            return responseDTO;
         }
-        return false;
+
+        if (!Boolean.TRUE.equals(user.getIsUserEnabled())) {
+            responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
+            responseDTO.setMessage("Your account is already deactivated.");
+            return responseDTO;
+        }
+
+        boolean isGoogleAccount = user.getUserGoogleId() != null && !user.getUserGoogleId().isBlank();
+        if (!isGoogleAccount) {
+            if (password == null || password.isBlank()) {
+                responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
+                responseDTO.setMessage("Please confirm your password to delete your account.");
+                return responseDTO;
+            }
+
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2A, 10);
+            boolean isPasswordMatched = passwordEncoder.matches(password, user.getUserPassword());
+
+            if (!isPasswordMatched && Objects.equals(user.getUserPassword(), password)) {
+                isPasswordMatched = true;
+            }
+
+            if (!isPasswordMatched) {
+                responseDTO.setStatusCode(HttpStatus.UNAUTHORIZED.value());
+                responseDTO.setMessage("The password you entered is incorrect.");
+                return responseDTO;
+            }
+        }
+
+        boolean hasOngoingOrders = orderRepository.existsByUser_UserIdAndOrderStatus_OrderStatusNameIn(
+                user.getUserId(),
+                ACCOUNT_DEACTIVATION_BLOCKING_STATUSES
+        );
+        if (hasOngoingOrders) {
+            responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
+            responseDTO.setMessage("Your account cannot be deactivated while you still have orders being processed.");
+            return responseDTO;
+        }
+
+        user.setIsUserEnabled(false);
+        userRepository.save(user);
+        cartRepository.deleteAllById_UserId(user.getUserId());
+
+        try {
+            sendAccountDeactivationEmail(user);
+        } catch (Exception e) {
+            logger.warn("Failed to send account deactivation email for user {}", user.getUserId(), e);
+        }
+
+        responseDTO.setStatusCode(HttpStatus.OK.value());
+        responseDTO.setMessage("Your account has been deactivated successfully.");
+        return responseDTO;
+    }
+
+    private void sendAccountDeactivationEmail(User user) {
+        String htmlContent = "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: auto; "
+                + "padding: 24px; border: 1px solid #e5e7eb; border-radius: 12px; color: #1f2937;\">"
+                + "<h2 style=\"color: #dc2626; margin-top: 0;\">Account Deactivated</h2>"
+                + "<p>Hello " + user.getUserFullname() + ",</p>"
+                + "<p>Your Unleashed account has been deactivated as requested.</p>"
+                + "<p>You can no longer sign in with this account unless it is reactivated by support.</p>"
+                + "<p>If you did not make this request, please contact our support team immediately.</p>"
+                + "<p style=\"margin-bottom: 0;\">Best regards,<br><strong>Unleashed Team</strong></p>"
+                + "</div>";
+
+        emailService.sendHtmlMessage(user.getUserEmail(), "Your account has been deactivated", htmlContent);
     }
 
     public void logout(String token) {

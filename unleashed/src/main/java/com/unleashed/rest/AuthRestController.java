@@ -27,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -150,21 +152,21 @@ public class AuthRestController {
             @RequestParam String token,
             HttpServletResponse response) throws IOException {
 
-        String userId = userService.findByUsername(username).getUserId().toString();
+        User user = userService.findByUsername(username);
+        String userId = user.getUserId().toString();
 
         // Parse the token
         String parsedUserId = jwtUtil.extractSubject(token);
 
         // Check if the user ID from the token matches the provided user ID
         if (parsedUserId.equals(userId + "registration")) {
-            // Enable the user
-            User user = userService.findById(userId);
-            userService.updateEnable(user, true);
-            response.sendRedirect("http://localhost:3000/confirm-registration/success");
-//            return ResponseEntity.ok("Registration confirmed successfully");
+            User activatedUser = user.getIsUserEnabled() ? user : userService.updateEnable(user, true);
+            String authToken = jwtUtil.generateUserToken(activatedUser);
+            String redirectUrl = "http://localhost:3000/confirm-registration/success?token="
+                    + URLEncoder.encode(authToken, StandardCharsets.UTF_8);
+            response.sendRedirect(redirectUrl);
         } else {
             response.sendRedirect("http://localhost:3000/confirm-registration/error");
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or expired token");
         }
 
 
@@ -221,7 +223,7 @@ public class AuthRestController {
 
 
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO, HttpServletRequest request) {
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO, HttpServletRequest request) {
 
         User user = userService.findByEmail(resetPasswordDTO.getEmail());
         if (user == null) {
@@ -244,9 +246,17 @@ public class AuthRestController {
                 String newPassword = resetPasswordDTO.getNewPassword();
                 userService.updatePassword(user, newPassword);
 
-                if (isStaffFirstLoginToken && !Boolean.TRUE.equals(user.getIsUserEnabled())) {
-                    userService.updateEnable(user, true);
-                    return ResponseEntity.ok("Your account has been activated. Please login with your new password.");
+                if (isStaffFirstLoginToken) {
+                    User activatedUser = Boolean.TRUE.equals(user.getIsUserEnabled())
+                            ? user
+                            : userService.updateEnable(user, true);
+
+                    ResponseDTO responseDTO = new ResponseDTO();
+                    responseDTO.setStatusCode(HttpStatus.OK.value());
+                    responseDTO.setMessage("Your account has been activated successfully.");
+                    responseDTO.setToken(jwtUtil.generateUserToken(activatedUser));
+                    responseDTO.setExpirationTime("1 Day");
+                    return ResponseEntity.ok(responseDTO);
                 }
 
                 return ResponseEntity.ok("Your password has been reset");

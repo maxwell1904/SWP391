@@ -1,7 +1,9 @@
 package com.unleashed.rest;
 
+import com.unleashed.dto.DeleteAccountRequestDTO;
 import com.unleashed.dto.UpdateUserDTO;
 import com.unleashed.dto.ViewInfoDTO;
+import com.unleashed.dto.ResponseDTO;
 import com.unleashed.entity.User;
 import com.unleashed.service.UserService;
 import com.unleashed.util.JwtUtil;
@@ -84,7 +86,7 @@ public class AccountRestController {
 
     @PreAuthorize("hasAuthority('CUSTOMER')")
     @PostMapping("/request-delete")
-    public ResponseEntity<?> requestDeleteAccount() {
+    public ResponseEntity<?> requestDeleteAccount(@RequestBody(required = false) DeleteAccountRequestDTO deleteAccountRequestDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = null;
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
@@ -97,13 +99,9 @@ public class AccountRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
 
-        boolean success = userService.disableAccount(currentUser.getUserId().toString());
-
-        if (success) {
-            return ResponseEntity.ok("Account has been disabled successfully.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to disable the account.");
-        }
+        String password = deleteAccountRequestDTO == null ? null : deleteAccountRequestDTO.getPassword();
+        ResponseDTO responseDTO = userService.requestAccountDeactivation(currentUser.getUserId().toString(), password);
+        return ResponseEntity.status(responseDTO.getStatusCode()).body(responseDTO);
     }
 
 }
