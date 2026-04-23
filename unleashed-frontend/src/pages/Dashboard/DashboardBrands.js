@@ -86,7 +86,6 @@ const DashboardBrands = () => {
                     <td className="px-4 py-3"><Skeleton variant="text" /></td>
                     <td className="px-4 py-3"><Skeleton variant="text" /></td>
                     <td className="px-4 py-3"><Skeleton variant="text" /></td>
-                    <td className="px-4 py-3"><Skeleton variant="text" /></td>
                 </tr>
             ))}
         </>
@@ -118,7 +117,6 @@ const DashboardBrands = () => {
                         <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Logo</th>
                         <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Brand Name</th>
                         <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Website</th>
-                        <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Products</th>
                         <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Description</th>
                         <th className="px-4 py-3 text-center text-sm font-semibold text-gray-600">Action</th>
                     </tr>
@@ -149,7 +147,6 @@ const DashboardBrands = () => {
                                         {brand.brandWebsiteUrl}
                                     </a>
                                 </td>
-                                <td className="px-4 py-3 text-sm text-gray-700">{brand.totalQuantity}</td>
                                 <td className="px-4 py-3 text-sm text-gray-700 max-w-[300px] truncate">{brand.brandDescription}</td>
                                 <td className="px-4 py-3">
                                     <div className="flex items-center justify-center gap-2">
@@ -178,7 +175,7 @@ const DashboardBrands = () => {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="7" className="text-center py-10 text-gray-500">
+                            <td colSpan="6" className="text-center py-10 text-gray-500">
                                 No brands found.
                             </td>
                         </tr>
