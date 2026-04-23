@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.Collection;
 
 
 @Repository
@@ -163,4 +164,6 @@ public interface OrderRepository extends JpaRepository<Order, String>, JpaSpecif
         AND o.orderStatus.orderStatusName = 'COMPLETED'
         """)
     List<Order> findCompletedOrdersByUserAndProduct(@Param("userId") UUID userId, @Param("productId") UUID productId);
+
+    boolean existsByUser_UserIdAndOrderStatus_OrderStatusNameIn(UUID userId, Collection<String> statusNames);
 }

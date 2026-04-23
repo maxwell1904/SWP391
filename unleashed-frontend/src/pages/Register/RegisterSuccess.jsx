@@ -1,13 +1,62 @@
 import Lottie from "lottie-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RegSuccessAnim from "../../assets/anim/RegisterSuccess.json";
 import { FaArrowRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import useSignIn from "react-auth-kit/hooks/useSignIn";
+import { jwtDecode } from "jwt-decode";
+import { toast, Zoom } from "react-toastify";
 
 const RegisterSuccess = () => {
-    // Logic remains unchanged
-    localStorage.removeItem("mail");
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+    const signIn = useSignIn();
+    const [isAutoSigningIn, setIsAutoSigningIn] = useState(true);
+
+    useEffect(() => {
+        const token = searchParams.get("token");
+
+        localStorage.removeItem("mail");
+
+        if (!token) {
+            setIsAutoSigningIn(false);
+            return;
+        }
+
+        try {
+            const user = jwtDecode(token);
+
+            const signedIn = signIn({
+                auth: {
+                    token,
+                    type: "Bearer",
+                },
+                userState: {
+                    username: user.sub,
+                    userImage: user.image,
+                    role: user.role?.[0]?.authority,
+                    userEmail: user.userEmail,
+                },
+            });
+
+            if (!signedIn) {
+                throw new Error("Sign-in failed");
+            }
+
+            toast.success("Your email has been verified successfully.", {
+                position: "top-center",
+                transition: Zoom,
+            });
+
+            navigate("/", { replace: true });
+        } catch (error) {
+            setIsAutoSigningIn(false);
+            toast.error("Email verification succeeded, but automatic sign-in failed.", {
+                position: "top-center",
+                transition: Zoom,
+            });
+        }
+    }, [navigate, searchParams, signIn]);
 
     const handleReturnToHome = () => {
         navigate("/");
@@ -22,7 +71,9 @@ const RegisterSuccess = () => {
             <div className="contextMail text-center space-y-6 py-10">
                 <h1 className="text-5xl font-bold">Registration Complete!</h1>
                 <p className="text-lg text-gray-700 pt-3">
-                    Thank you for joining us. You can now log in to get access.
+                    {isAutoSigningIn
+                        ? "Your email has been confirmed. We are signing you in now."
+                        : "Your email has been confirmed successfully. You can continue to the home page."}
                 </p>
             </div>
 

@@ -28,12 +28,22 @@ import { jwtDecode } from "jwt-decode";
 const validationSchema = Yup.object({
     username: Yup.string()
         .required("Username is required")
-        .min(5, "Username must be at least 5 characters long"),
+        .min(7, "Username must be at least 7 characters long")
+        .matches(
+            /^[a-zA-Z0-9]*$/,
+            "Username cannot contain special characters or spaces"
+        ),
     fullName: Yup.string()
         .required("Full name is required")
-        .matches(/^[a-zA-Z\s'-]+$/, "Full name can only contain valid characters"),
+        .matches(
+            /^[\p{L}\d .,'-]+$/u,
+            "Full name can only contain letters, numbers, spaces, dots, commas, apostrophes, and hyphens"
+        ),
     userPhone: Yup.string()
-        .matches(/^(|0\d{9,11})$/, "Phone number must start with '0' and be 10 or 12 digits")
+        .matches(
+            /^(|(?:\+84|0)\d{9,10})$/,
+            "Phone number must start with '+84' or '0' and be 10-11 digits"
+        )
         .nullable(),
     userAddress: Yup.string().nullable(),
 });
@@ -255,7 +265,7 @@ export const UserProfile = () => {
                                 type="submit"
                                 variant="contained"
                                 startIcon={<Save />}
-                                disabled={!formik.dirty || !formik.isValid || formik.isSubmitting}
+                                disabled={(!formik.dirty && !selectedFile) || !formik.isValid || formik.isSubmitting}
                                 sx={{
                                     fontFamily: "Montserrat",
                                     width: "170px",
@@ -291,9 +301,13 @@ export const UserProfile = () => {
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Box>
                         <Typography fontWeight="medium">Delete your account</Typography>
-                        <Typography variant="body2" color="text.secondary">Once deleted, your account is gone forever. Please be certain.</Typography>
+                        <Typography variant="body2" color="text.secondary">Your account will be disabled and you will no longer be able to sign in.</Typography>
                     </Box>
-                    <DeleteAccountButton authHeader={authHeader} onDeleteSuccess={handleDeleteSuccess} />
+                    <DeleteAccountButton
+                        authHeader={authHeader}
+                        onDeleteSuccess={handleDeleteSuccess}
+                        isGoogleAccount={isGoogleAccount}
+                    />
                 </Box>
             </Paper>
         </Box>

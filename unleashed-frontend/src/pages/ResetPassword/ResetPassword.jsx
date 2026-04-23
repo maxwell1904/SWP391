@@ -7,11 +7,13 @@ import * as Yup from "yup";
 import {InputField} from "../../components/inputs/InputField";
 import { ResetPassword } from "../../service/AuthService";
 import { AuthCommonBtn } from "../../components/buttons/Button";
+import useSignIn from "react-auth-kit/hooks/useSignIn";
 
 const ResetPasswordPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   // const [resetPassword, setResetPassword] = useState(false);
   const navigate = useNavigate();
+  const signIn = useSignIn();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("token");
@@ -36,7 +38,15 @@ const ResetPasswordPage = () => {
       const successPath = isStaffActivation
         ? "/staff/activate-password/success"
         : "/reset-password/success";
-      await ResetPassword(values.password, email, token, navigate, successPath);
+      await ResetPassword(
+        values.password,
+        email,
+        token,
+        navigate,
+        successPath,
+        signIn,
+        isStaffActivation
+      );
     } catch (error) {
     }
   };

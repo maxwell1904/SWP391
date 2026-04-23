@@ -39,8 +39,6 @@ export const getMyReviews = async (authHeader, username) => {
 
 export const UpdateUserInfo = async (data, authHeader, signIn) => {
 	try {
-		// console.log(' Data before send API:', data)
-
         return await apiClient.put(
             '/api/account',
             {
@@ -59,30 +57,26 @@ export const UpdateUserInfo = async (data, authHeader, signIn) => {
         )
 	} catch (error) {
 		console.error('Error in UpdateUserInfo:', error)
+		throw error
 	}
 }
 
-export const RequestDeleteAccount = (authHeader) => {
-	apiClient
-		.post(
-			'/api/account/request-delete',
-			{},
-			{
-				headers: {
-					Authorization: authHeader,
-				},
-			}
-		)
-		.then((response) => {
-			return response
-		})
-		.catch((error) => {
-			// console.log(error?.data)
-			toast.error(error?.data?.message || 'Error request delete account', {
-				position: 'top-center',
-				transition: Zoom,
-			})
-		})
+export const RequestDeleteAccount = async (authHeader, password = "") => {
+	try {
+        return await apiClient.post(
+            '/api/account/request-delete',
+            {
+                password,
+            },
+            {
+                headers: {
+                    Authorization: authHeader,
+                },
+            }
+        )
+	} catch (error) {
+		throw error
+	}
 }
 export const ChangePassword = async (data, authHeader) => {
 	// console.log('📩 Gửi request đổi mật khẩu với:', data)

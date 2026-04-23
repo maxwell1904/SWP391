@@ -6,32 +6,41 @@ import { LuMousePointerClick } from 'react-icons/lu'
 import { TbRosetteDiscount } from 'react-icons/tb'
 import { Link, useLocation } from 'react-router-dom'
 import userDefault from '../../assets/images/userdefault.webp'
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 import { RateReviewOutlined, FavoriteBorder, Notifications } from '@mui/icons-material'
+import { jwtDecode } from 'jwt-decode'
 
 const LoggedMenu = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
-    const authUser = useAuthUser()
-    const [profileImageUrl, setProfileImageUrl] = useState(authUser?.userImage || userDefault)
+    const authHeader = useAuthHeader()
+    const [profileImageUrl, setProfileImageUrl] = useState(userDefault)
     const location = useLocation()
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            if (authUser?.userImage) {
-                const isGoogleImage = authUser.userImage.startsWith('https://lh3.googleusercontent.com/')
-                if (isGoogleImage) {
-                    setProfileImageUrl(authUser.userImage)
-                } else {
-                    setProfileImageUrl(`${authUser.userImage}?t=${new Date().getTime()}`)
-                }
-            } else {
-                setProfileImageUrl(userDefault)
-            }
-        }, 3000)
+        if (!authHeader) {
+            setProfileImageUrl(userDefault)
+            return
+        }
 
-        return () => clearInterval(intervalId)
-    }, [authUser])
+        try {
+            const token = authHeader.replace(/^Bearer\s+/i, '')
+            const decodedToken = jwtDecode(token)
+            const latestImage = decodedToken?.image
+
+            if (!latestImage) {
+                setProfileImageUrl(userDefault)
+                return
+            }
+
+            const isGoogleImage = latestImage.startsWith('https://lh3.googleusercontent.com/')
+            setProfileImageUrl(
+                isGoogleImage ? latestImage : `${latestImage}${latestImage.includes('?') ? '&' : '?'}t=${Date.now()}`
+            )
+        } catch (error) {
+            setProfileImageUrl(userDefault)
+        }
+    }, [authHeader])
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget)
