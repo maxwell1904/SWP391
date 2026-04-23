@@ -211,6 +211,22 @@ public class SaleService {
         }
     }
 
+    private SaleStatus resolveSaleStatusForDateRange(OffsetDateTime startDate, OffsetDateTime endDate, OffsetDateTime now) {
+        SaleStatus activeStatus = saleStatusRepository.findById(2)
+                .orElseThrow(() -> new EntityNotFoundException("Critical error: ACTIVE status (ID 2) not found in database."));
+        SaleStatus inactiveStatus = saleStatusRepository.findById(1)
+                .orElseThrow(() -> new EntityNotFoundException("Critical error: INACTIVE status (ID 1) not found in database."));
+        SaleStatus expiredStatus = saleStatusRepository.findById(3)
+                .orElseThrow(() -> new EntityNotFoundException("Critical error: EXPIRED status (ID 3) not found in database."));
+
+        if (endDate.isBefore(now)) {
+            return expiredStatus;
+        }
+
+        boolean isActive = !startDate.isAfter(now) && !endDate.isBefore(now);
+        return isActive ? activeStatus : inactiveStatus;
+    }
+
     @Transactional
     public ResponseEntity<?> updateSale(Integer saleId, Sale saleDataFromRequest) {
         // 1. Fetch the existing, managed Sale from the database
@@ -228,6 +244,13 @@ public class SaleService {
         existingSale.setSaleValue(saleDataFromRequest.getSaleValue());
         existingSale.setSaleStartDate(saleDataFromRequest.getSaleStartDate());
         existingSale.setSaleEndDate(saleDataFromRequest.getSaleEndDate());
+        existingSale.setSaleStatus(
+            resolveSaleStatusForDateRange(
+                saleDataFromRequest.getSaleStartDate(),
+                saleDataFromRequest.getSaleEndDate(),
+                OffsetDateTime.now()
+            )
+        );
         existingSale.setSaleUpdatedAt(OffsetDateTime.now());
 
         Sale updatedSale = saleRepository.save(existingSale);
@@ -264,6 +287,20 @@ public class SaleService {
             responseDTO.setStatusCode(HttpStatus.NOT_FOUND.value());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseDTO);
         }
+
+        OffsetDateTime now = OffsetDateTime.now();
+        SaleStatus expectedStatus = resolveSaleStatusForDateRange(
+                sale.getSaleStartDate(),
+                sale.getSaleEndDate(),
+                now
+        );
+
+        if (sale.getSaleStatus() == null || !sale.getSaleStatus().getId().equals(expectedStatus.getId())) {
+            sale.setSaleStatus(expectedStatus);
+            sale.setSaleUpdatedAt(now);
+            sale = saleRepository.save(sale);
+        }
+
         return ResponseEntity.ok().body(sale);
     }
 
