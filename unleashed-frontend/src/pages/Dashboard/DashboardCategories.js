@@ -82,7 +82,6 @@ const DashboardCategories = () => {
                     <td className="px-4 py-2"><Skeleton variant="circular" width={48} height={48} /></td>
                     <td className="px-4 py-3"><Skeleton variant="text" /></td>
                     <td className="px-4 py-3"><Skeleton variant="text" /></td>
-                    <td className="px-4 py-3"><Skeleton variant="text" width={40} /></td>
                     <td className="px-4 py-3"><Skeleton variant="text" /></td>
                 </tr>
             ))}
@@ -115,7 +114,6 @@ const DashboardCategories = () => {
                         <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Image</th>
                         <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Category Name</th>
                         <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Description</th>
-                        <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Products</th>
                         <th className="px-4 py-3 text-center text-sm font-semibold text-gray-600">Action</th>
                     </tr>
                     </thead>
@@ -136,7 +134,6 @@ const DashboardCategories = () => {
                                 </td>
                                 <td className="px-4 py-3 text-sm text-gray-700 max-w-[250px] truncate">{category.categoryName}</td>
                                 <td className="px-4 py-3 text-sm text-gray-700 max-w-[350px] truncate">{category.categoryDescription}</td>
-                                <td className="px-4 py-3 text-sm text-gray-700">{category.totalQuantity}</td>
                                 <td className="px-4 py-3">
                                     <div className="flex items-center justify-center gap-2">
                                         <Tooltip title="View Details">
@@ -164,7 +161,7 @@ const DashboardCategories = () => {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="6" className="text-center py-10 text-gray-500">
+                            <td colSpan="5" className="text-center py-10 text-gray-500">
                                 No categories found.
                             </td>
                         </tr>
