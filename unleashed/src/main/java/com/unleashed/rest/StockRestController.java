@@ -29,9 +29,9 @@ public class StockRestController {
         this.stockService = stockService;
     }
 
-    // CREATE - Admin only
+    // CREATE - Admin and Staff
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'STAFF')")
     public ResponseEntity<Stock> createStock(@RequestBody Stock stock) {
         Stock createdStock = stockService.create(stock);
         return ResponseEntity.ok(createdStock);
@@ -78,17 +78,17 @@ public class StockRestController {
         return ResponseEntity.ok(stockDetailsPage);
     }
 
-    // UPDATE - Admin only
+    // UPDATE - Admin and Staff
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'STAFF')")
     public ResponseEntity<Stock> updateStock(@PathVariable int id, @RequestBody Stock stockDetails) {
         Stock updatedStock = stockService.update(id, stockDetails);
         return ResponseEntity.ok(updatedStock);
     }
 
-    // DELETE - Admin only
+    // DELETE - Admin and Staff
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'STAFF')")
     public ResponseEntity<Void> deleteStock(@PathVariable int id) {
         stockService.deleteById(id);
         return ResponseEntity.noContent().build();

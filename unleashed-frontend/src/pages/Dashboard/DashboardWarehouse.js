@@ -37,6 +37,7 @@ const DashboardWarehouse = () => {
     const navigate = useNavigate();
     const varToken = useAuthHeader();
     const auth = useAuthUser();
+    const canManageWarehouse = ["ADMIN", "STAFF"].includes(auth?.role);
 
     // ... (All handler functions: fetchStocks, handleViewDetail, handleOpenModal, etc. remain exactly the same) ...
     const fetchStocks = () => {
@@ -109,7 +110,7 @@ const DashboardWarehouse = () => {
                 <Typography variant="h4" component="h1" className="font-bold">
                     Warehouse Management
                 </Typography>
-                {auth?.role === 'ADMIN' && (
+                {canManageWarehouse && (
                     <Button variant="contained" startIcon={<FaPlus />} onClick={() => handleOpenModal()}>
                         Add Warehouse
                     </Button>
@@ -149,7 +150,7 @@ const DashboardWarehouse = () => {
                                             <Button size="small" variant="outlined" startIcon={<Visibility />} onClick={() => handleViewDetail(stock)}>
                                                 View
                                             </Button>
-                                            {auth?.role === 'ADMIN' && (
+                                            {canManageWarehouse && (
                                                 <>
                                                     <Button size="small" variant="outlined" color="secondary" startIcon={<Edit />} onClick={() => handleOpenModal(stock)}>
                                                         Edit
@@ -168,7 +169,7 @@ const DashboardWarehouse = () => {
                                 <TableCell colSpan={4} align="center" sx={{ py: 10 }}>
                                     <Storefront sx={{ fontSize: 60, color: 'grey.400' }} />
                                     <Typography variant="h6" color="text.secondary">No warehouses found.</Typography>
-                                    {auth?.role === 'ADMIN' && <Typography color="text.secondary">Click "Add Warehouse" to get started.</Typography>}
+                                    {canManageWarehouse && <Typography color="text.secondary">Click "Add Warehouse" to get started.</Typography>}
                                 </TableCell>
                             </TableRow>
                         )}
