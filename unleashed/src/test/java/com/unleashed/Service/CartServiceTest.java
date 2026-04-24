@@ -45,7 +45,7 @@
 //    private StockVariationRepository stockVariationRepository;
 //
 //    @MockBean
-//    private SaleRepository saleRepository;
+//    private PromotionRepository promotionRepository;
 //
 //    private List<Cart> carts;
 //    private Variation variation1;
@@ -54,8 +54,8 @@
 //    private Product product2;
 //    private StockVariation stockVariation1;
 //    private StockVariation stockVariation2;
-//    private Sale sale1;
-//    private Sale sale2;
+//    private Promotion promotion1;
+//    private Promotion promotion2;
 //
 //    @BeforeEach
 //    void setUp() {
@@ -70,8 +70,8 @@
 //        stockVariation1 = createStockVariation(10, variation1);
 //        stockVariation2 = createStockVariation(5, variation2);
 //
-//        sale1 = createSale(1, 10, product1);
-//        sale2 = createSale(2, 20, product2);
+//        promotion1 = createPromotion(1, 10, product1);
+//        promotion2 = createPromotion(2, 20, product2);
 //
 //
 //        carts = Arrays.asList(
@@ -88,8 +88,8 @@
 //        when(variationRepository.findById(2)).thenReturn(Optional.of(variation2));
 //        when(stockVariationRepository.findStockProductByProductVariationId(1)).thenReturn(stockVariation1.getStockQuantity());
 //        when(stockVariationRepository.findStockProductByProductVariationId(2)).thenReturn(stockVariation2.getStockQuantity());
-//        when(saleRepository.findSaleByProductId(product1.getProductId())).thenReturn(Optional.of(sale1));
-//        when(saleRepository.findSaleByProductId(product2.getProductId())).thenReturn(Optional.of(sale2));
+//        when(promotionRepository.findPromotionByProductId(product1.getProductId())).thenReturn(Optional.of(promotion1));
+//        when(promotionRepository.findPromotionByProductId(product2.getProductId())).thenReturn(Optional.of(promotion2));
 //
 //
 //        LinkedMultiValueMap<String, CartDTO> result = cartService.getCartByUserId(userId);
@@ -105,18 +105,18 @@
 //        assertEquals(variation1, cartDTO1.getVariation());
 //        assertEquals(2, cartDTO1.getQuantity());
 //        assertEquals(stockVariation1.getStockQuantity(), cartDTO1.getStockQuantity());
-//        assertEquals(sale1, cartDTO1.getSale());
+//        assertEquals(promotion1, cartDTO1.getPromotion());
 //
 //        CartDTO cartDTO2 = result.get("Product 2").get(0);
 //        assertEquals(variation2, cartDTO2.getVariation());
 //        assertEquals(1, cartDTO2.getQuantity());
 //        assertEquals(stockVariation2.getStockQuantity(), cartDTO2.getStockQuantity());
-//        assertEquals(sale2, cartDTO2.getSale());
+//        assertEquals(promotion2, cartDTO2.getPromotion());
 //
 //        verify(cartRepository, times(1)).findAllById_UserId(userId);
 //        verify(variationRepository, times(2)).findById(anyInt());
 //        verify(stockVariationRepository, times(2)).findStockProductByProductVariationId(anyInt());
-//        verify(saleRepository, times(2)).findSaleByProductId(anyString());
+//        verify(promotionRepository, times(2)).findPromotionByProductId(anyString());
 //    }
 //
 //    @Test
@@ -131,7 +131,7 @@
 //        verify(cartRepository, times(1)).findAllById_UserId(userId);
 //        verify(variationRepository, never()).findById(anyInt());
 //        verify(stockVariationRepository, never()).findStockProductByProductVariationId(anyInt());
-//        verify(saleRepository, never()).findSaleByProductId(anyString());
+//        verify(promotionRepository, never()).findPromotionByProductId(anyString());
 //    }
 //
 //    @Test
@@ -253,10 +253,10 @@
 //        return stockVariation;
 //    }
 //
-//    private Sale createSale(Integer saleId, Integer discountPercent, Product product) {
-//        Sale sale = new Sale();
-//        sale.setId(saleId);
-//        sale.setSaleValue(BigDecimal.valueOf(discountPercent).divide(BigDecimal.valueOf(100))); // Assuming saleValue is a fraction
-//        return sale;
+//    private Promotion createPromotion(Integer promotionId, Integer discountPercent, Product product) {
+//        Promotion promotion = new Promotion();
+//        promotion.setId(promotionId);
+//        promotion.setPromotionValue(BigDecimal.valueOf(discountPercent).divide(BigDecimal.valueOf(100))); // Assuming promotionValue is a fraction
+//        return promotion;
 //    }
 //}

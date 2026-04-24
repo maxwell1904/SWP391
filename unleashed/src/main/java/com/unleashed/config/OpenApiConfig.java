@@ -137,11 +137,11 @@ public class OpenApiConfig {
 //    }
 //
 //    @Bean
-//    public GroupedOpenApi saleApiGroup() {
+//    public GroupedOpenApi promotionApiGroup() {
 //        return GroupedOpenApi.builder()
-//                .group("Sale")
+//                .group("Promotion")
 //                .packagesToScan("com.unleashed.controller")
-//                .pathsToMatch("/sales/**") // Assuming SaleRestController paths start with /sales. Adjust paths if needed
+//                .pathsToMatch("/promotions/**") // Assuming PromotionRestController paths start with /promotions. Adjust paths if needed
 //                .build();
 //    }
 //

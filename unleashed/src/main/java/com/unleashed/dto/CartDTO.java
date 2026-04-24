@@ -1,6 +1,6 @@
 package com.unleashed.dto;
 
-import com.unleashed.entity.Sale;
+import com.unleashed.entity.Promotion;
 import com.unleashed.entity.Variation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,5 +16,5 @@ public class CartDTO {
     VariationDTO variation;
     Integer quantity;
     Integer stockQuantity;
-    Sale sale;
+    Promotion promotion;
 }

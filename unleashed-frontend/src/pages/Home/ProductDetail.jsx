@@ -232,9 +232,9 @@ const ProductDetailPage = () => {
     const finalPrice = useMemo(() => {
         if (!product) return 0;
         const basePrice = selectedVariation ? selectedVariation.price : (product.variations && Object.values(Object.values(product.variations)[0])[0]?.price) || 0;
-        if (!product.saleType?.saleTypeName || product.saleValue == null) return basePrice;
-        if (product.saleType.saleTypeName === 'PERCENTAGE') return basePrice - (basePrice * product.saleValue) / 100;
-        if (product.saleType.saleTypeName === 'FIXED AMOUNT') return basePrice - product.saleValue;
+        if (!product.promotionType?.promotionTypeName || product.promotionValue == null) return basePrice;
+        if (product.promotionType.promotionTypeName === 'PERCENTAGE') return basePrice - (basePrice * product.promotionValue) / 100;
+        if (product.promotionType.promotionTypeName === 'FIXED AMOUNT') return basePrice - product.promotionValue;
         return basePrice;
     }, [product, selectedVariation]);
 
@@ -343,7 +343,7 @@ const ProductDetailPage = () => {
                 <div className='properties col-span-1 lg:col-span-2 pl-4 lg:pl-10'>
                     <h1 className='mb-4 font-bold text-2xl sm:text-3xl lg:text-5xl'>{product.productName}</h1>
                     <p className='mb-4 text-lg sm:text-xl font-semibold text-blue-700'>{formatPrice(finalPrice)}</p>
-                    {product.saleValue > 0 && selectedVariation && <p className='mb-2 text-gray-500 line-through'>{formatPrice(selectedVariation.price)}</p>}
+                    {product.promotionValue > 0 && selectedVariation && <p className='mb-2 text-gray-500 line-through'>{formatPrice(selectedVariation.price)}</p>}
                     <div className='rating mb-4 flex items-center text-gray-500'>
                         <Rating name='half-rating-read' precision={0.5} readOnly value={product.avgRating || 0} />
                         <div className='px-4'>|</div><div className='customerReview text-lg sm:text-xl'>{product.totalRating || 0} Customer Reviews</div>

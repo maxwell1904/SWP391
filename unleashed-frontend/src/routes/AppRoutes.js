@@ -35,12 +35,12 @@ import Logout from "../pages/Login/Logout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import UserChangePassword from "../pages/User/UserChangePassword";
 import DiscountPage from "../pages/Discount/Discounts";
-import DashboardSales from "../pages/Dashboard/DashboardSales";
+import DashboardPromotions from "../pages/Dashboard/DashboardPromotions";
 import DashboardCreateStaffAccount from "../pages/Dashboard/DashboardCreateStaffAccount";
-import DashboardViewSaleProduct from "../pages/Dashboard/DashboardViewSaleProduct";
-import DashboardCreateSale from "../pages/Dashboard/DashboardCreateSale";
-import DashboardEditSale from "../pages/Dashboard/DashboardEditSale";
-import DashboardAddProductToSale from "../pages/Dashboard/DashboardAddProductToSale";
+import DashboardViewPromotionProduct from "../pages/Dashboard/DashboardViewPromotionProduct";
+import DashboardCreatePromotion from "../pages/Dashboard/DashboardCreatePromotion";
+import DashboardEditPromotion from "../pages/Dashboard/DashboardEditPromotion";
+import DashboardAddProductToPromotion from "../pages/Dashboard/DashboardAddProductToPromotion";
 import DashboardNotifications from "../pages/Dashboard/DashboardNotifications";
 import DashboardNotificationDetailPage from "../pages/Dashboard/DashboardNotificationDetailPage";
 import DashboardCreateNotification from "../pages/Dashboard/DashboardCreateNotification";
@@ -488,51 +488,51 @@ const AppRoutes = ({ toggleSidebar, isOpen }) => {
         }
       />
       <Route
-        path="/Dashboard/Sales"
+        path="/Dashboard/Promotions"
         element={
           <PrivateRoute requiredRoles={["ADMIN"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>
-              <DashboardSales />
+              <DashboardPromotions />
             </DashboardLayout>
           </PrivateRoute>
         }
       />
       <Route
-        path="/Dashboard/Sales/:saleId"
+        path="/Dashboard/Promotions/:promotionId"
         element={
           <PrivateRoute requiredRoles={["ADMIN"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>
-              <DashboardViewSaleProduct />
+              <DashboardViewPromotionProduct />
             </DashboardLayout>
           </PrivateRoute>
         }
       />
       <Route
-        path="/Dashboard/Sales/Create"
+        path="/Dashboard/Promotions/Create"
         element={
           <PrivateRoute requiredRoles={["ADMIN"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>
-              <DashboardCreateSale />
+              <DashboardCreatePromotion />
             </DashboardLayout>
           </PrivateRoute>
         }
       />
       <Route
-        path="/Dashboard/Sales/Edit/:saleId"
+        path="/Dashboard/Promotions/Edit/:promotionId"
         element={
           <PrivateRoute requiredRoles={["ADMIN"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>
-              <DashboardEditSale />
+              <DashboardEditPromotion />
             </DashboardLayout>
           </PrivateRoute>
         }
       />
       <Route
-        path="/Dashboard/Sales/:saleId/AddProduct"
+        path="/Dashboard/Promotions/:promotionId/AddProduct"
         element={
           <PrivateRoute requiredRoles={["ADMIN"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>
-              <DashboardAddProductToSale />
+              <DashboardAddProductToPromotion />
             </DashboardLayout>
           </PrivateRoute>
         }

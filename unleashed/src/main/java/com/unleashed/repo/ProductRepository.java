@@ -113,9 +113,9 @@ public interface ProductRepository extends JpaRepository<Product, UUID>, JpaSpec
         SELECT p, v,
                COALESCE(AVG(r.reviewRating), 0.0) AS averageRating,
                COUNT(r.reviewRating) AS totalRatings,
-               (SELECT s.id FROM Sale s JOIN SaleProduct sp ON s.id = sp.sale.id
+               (SELECT s.id FROM Promotion s JOIN PromotionProduct sp ON s.id = sp.promotion.id
                 WHERE sp.product.productId = p.productId
-                AND s.saleStatus.saleStatusName = 'ACTIVE') as saleId
+                AND s.promotionStatus.promotionStatusName = 'ACTIVE') as promotionId
         FROM Product p
         JOIN p.brand b
         JOIN p.categories cat

@@ -61,11 +61,11 @@ const CartDrawer = ({ isCartOpen, toggleCartDrawer }) => {
                         if (!variation) continue;
 
                         let finalPrice = variation.variationPrice;
-                        if (data.sale && data.sale.saleValue != null) {
-                            if (data.sale.saleType?.saleTypeName === 'PERCENTAGE') {
-                                finalPrice = variation.variationPrice - (variation.variationPrice * data.sale.saleValue / 100);
-                            } else if (data.sale.saleType?.saleTypeName === 'FIXED AMOUNT') {
-                                finalPrice = variation.variationPrice - data.sale.saleValue;
+                        if (data.promotion && data.promotion.promotionValue != null) {
+                            if (data.promotion.promotionType?.promotionTypeName === 'PERCENTAGE') {
+                                finalPrice = variation.variationPrice - (variation.variationPrice * data.promotion.promotionValue / 100);
+                            } else if (data.promotion.promotionType?.promotionTypeName === 'FIXED AMOUNT') {
+                                finalPrice = variation.variationPrice - data.promotion.promotionValue;
                             }
                         }
 

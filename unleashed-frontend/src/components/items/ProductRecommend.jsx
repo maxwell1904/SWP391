@@ -13,11 +13,11 @@ const ProductRecommend = ({product, username}) => { // No need for username here
     // Calculate discounted price (same as before)
     let discountedPrice = product.productPrice;
 
-    if (product?.saleType?.saleTypeName === "PERCENTAGE" && product.saleValue > 0) {
-        discountedPrice = product.productPrice - product.productPrice * (product.saleValue / 100);
+    if (product?.promotionType?.promotionTypeName === "PERCENTAGE" && product.promotionValue > 0) {
+        discountedPrice = product.productPrice - product.productPrice * (product.promotionValue / 100);
 
-    } else if (product?.saleType?.saleTypeName === "FIXED AMOUNT" && product.saleValue > 0) {
-        discountedPrice = product.productPrice - product.saleValue;
+    } else if (product?.promotionType?.promotionTypeName === "FIXED AMOUNT" && product.promotionValue > 0) {
+        discountedPrice = product.productPrice - product.promotionValue;
     }
 
     const displayPrice = discountedPrice && discountedPrice >= 0 ? formatPrice(discountedPrice) : "0.00";
@@ -46,11 +46,11 @@ const ProductRecommend = ({product, username}) => { // No need for username here
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-90" />
                     <div className="absolute inset-x-0 top-0 h-1 bg-red-600 opacity-0 transition duration-300 group-hover:opacity-100" />
 
-                    {product.saleValue > 0 && (
+                    {product.promotionValue > 0 && (
                         <div className="absolute left-4 top-4 bg-red-600 px-3 py-2 font-['Oswald'] text-xs uppercase tracking-[0.25em] text-white">
-                            {product?.saleType?.saleTypeName === "PERCENTAGE"
-                                ? `Save ${product.saleValue}%`
-                                : "On Sale"}
+                            {product?.promotionType?.promotionTypeName === "PERCENTAGE"
+                                ? `Save ${product.promotionValue}%`
+                                : "On Promotion"}
                         </div>
                     )}
                 </div>
@@ -68,7 +68,7 @@ const ProductRecommend = ({product, username}) => { // No need for username here
                             <p className="font-['Oswald'] text-2xl tracking-[0.06em] text-red-500">
                                 {displayPrice}
                             </p>
-                            {product.saleValue > 0 && (
+                            {product.promotionValue > 0 && (
                                 <p className="mt-1 font-poppins text-sm text-gray-500 line-through">
                                     {originalPrice}
                                 </p>

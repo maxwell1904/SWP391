@@ -17,8 +17,8 @@ public class ProductItemDTO {
     private Map<String, Map<String, ProductVariationDTO>> variations;
     private List<Color> colors;
     private List<Size> sizes;
-    private SaleType saleType;
-    private BigDecimal saleValue;
+    private PromotionType promotionType;
+    private BigDecimal promotionValue;
     private String description;
     private double avgRating;
     private long totalRating;

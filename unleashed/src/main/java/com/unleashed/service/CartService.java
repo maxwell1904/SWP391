@@ -22,15 +22,15 @@ public class CartService {
     private final CartRepository cartRepository;
     private final VariationRepository variationRepository;
     private final StockVariationRepository stockVariationRepository;
-    private final SaleRepository saleRepository;
+    private final PromotionRepository promotionRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public CartService(CartRepository cartRepository, VariationRepository variationRepository, StockVariationRepository stockVariationRepository, SaleRepository saleRepository, UserRepository userRepository) {
+    public CartService(CartRepository cartRepository, VariationRepository variationRepository, StockVariationRepository stockVariationRepository, PromotionRepository promotionRepository, UserRepository userRepository) {
         this.cartRepository = cartRepository;
         this.variationRepository = variationRepository;
         this.stockVariationRepository = stockVariationRepository;
-        this.saleRepository = saleRepository;
+        this.promotionRepository = promotionRepository;
         this.userRepository = userRepository;
     }
 
@@ -66,7 +66,7 @@ public class CartService {
 
                 Variation originalVariation = variationRepository.findById(c.getVariation().getId()).orElse(null);
                 if (originalVariation != null && originalVariation.getProduct() != null) {
-                    c.setSale(saleRepository.findSaleByProductId(originalVariation.getProduct().getProductId()).orElse(null));
+                    c.setPromotion(promotionRepository.findPromotionByProductId(originalVariation.getProduct().getProductId()).orElse(null));
                 }
             }
         });

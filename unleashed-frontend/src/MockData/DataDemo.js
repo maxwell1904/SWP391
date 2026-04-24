@@ -9,8 +9,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 0,
+    promotionType: "percentage",
+    promotionValue: 0,
   },
   {
     productId: 2,
@@ -22,8 +22,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 3,
@@ -35,8 +35,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 4,
@@ -48,8 +48,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 5,
@@ -61,8 +61,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 6,
@@ -74,8 +74,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 7,
@@ -87,8 +87,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 8,
@@ -100,8 +100,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 9,
@@ -113,8 +113,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 10,
@@ -126,8 +126,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 11,
@@ -139,8 +139,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 12,
@@ -152,8 +152,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 13,
@@ -165,8 +165,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 14,
@@ -178,8 +178,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
   {
     productId: 15,
@@ -191,8 +191,8 @@ const products = [
     totalRating: 100,
     productImage:
       "https://product.hstatic.net/200000551971/product/39f5c92f89eb59b500fa_56a729e802ef4f46876153d68e3a8289_master.jpg",
-    saleType: "percentage",
-    saleValue: 15,
+    promotionType: "percentage",
+    promotionValue: 15,
   },
 ];
 

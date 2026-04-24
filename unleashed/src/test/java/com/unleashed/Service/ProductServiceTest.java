@@ -3,7 +3,7 @@
 //import com.unleashed.dto.*;
 //import com.unleashed.dto.mapper.ProductMapper;
 //import com.unleashed.entity.*;
-//import com.unleashed.entity.ComposeKey.SaleProductId;
+//import com.unleashed.entity.ComposeKey.PromotionProductId;
 //import com.unleashed.entity.ComposeKey.StockVariationId;
 //import com.unleashed.repo.*;
 //import com.unleashed.service.ProductService;
@@ -50,7 +50,7 @@
 //    @MockBean
 //    private ColorRepository colorRepository;
 //    @MockBean
-//    private SaleProductRepository saleProductRepository;
+//    private PromotionProductRepository promotionProductRepository;
 //    @MockBean
 //    private ReviewRepository reviewRepository;
 //    @MockBean
@@ -58,7 +58,7 @@
 //    @MockBean
 //    private ProductStatusRepository productStatusRepository;
 //    @MockBean
-//    private SaleRepository saleRepository;
+//    private PromotionRepository promotionRepository;
 //    @MockBean
 //    private ProductMapper productMapper;
 //    @MockBean
@@ -77,9 +77,9 @@
 //    private Size size2;
 //    private Color color1;
 //    private Color color2;
-//    private Sale sale1;
-//    private Sale sale2;
-//    private SaleProduct saleProduct1;
+//    private Promotion promotion1;
+//    private Promotion promotion2;
+//    private PromotionProduct promotionProduct1;
 //    private StockVariation stockVariation1;
 //    private StockVariation stockVariation2;
 //
@@ -110,10 +110,10 @@
 //        stockVariation1 = createStockVariation(10, variation1);
 //        stockVariation2 = createStockVariation(5, variation2);
 //
-//        sale1 = createSale(1, 10);
-//        sale2 = createSale(2, 20);
+//        promotion1 = createPromotion(1, 10);
+//        promotion2 = createPromotion(2, 20);
 //
-//        saleProduct1 = createSaleProduct(sale1, products.get(0));
+//        promotionProduct1 = createPromotionProduct(promotion1, products.get(0));
 //    }
 //
 //    @Test
@@ -156,9 +156,9 @@
 //    void findProductItemById_ExistingId_ShouldReturnProductItemDTO() {
 //        String productId = products.get(0).getProductId();
 //        when(productRepository.findById(productId)).thenReturn(Optional.of(products.get(0)));
-//        when(saleProductRepository.findSaleProductByProductId(productId)).thenReturn(saleProduct1);
-//        when(saleRepository.findById(saleProduct1.getId().getSaleId())).thenReturn(Optional.of(sale1));
-//        when(saleRepository.findSaleByProductId(productId)).thenReturn(Optional.of(sale1));
+//        when(promotionProductRepository.findPromotionProductByProductId(productId)).thenReturn(promotionProduct1);
+//        when(promotionRepository.findById(promotionProduct1.getId().getPromotionId())).thenReturn(Optional.of(promotion1));
+//        when(promotionRepository.findPromotionByProductId(productId)).thenReturn(Optional.of(promotion1));
 //        when(reviewService.getAllReviewsByProductId(productId)).thenReturn(Collections.emptyList());
 //        when(reviewRepository.countAndAvgRatingByProductId(productId)).thenReturn(Collections.emptyList());
 //        when(variationRepository.findProductVariationByProductId(productId)).thenReturn(Collections.singletonList(variation1));
@@ -180,8 +180,8 @@
 //        assertEquals(productStatusActive.getId(), result.getStatus());
 //
 //        verify(productRepository, times(1)).findById(productId);
-//        verify(saleProductRepository, times(1)).findSaleProductByProductId(productId);
-//        verify(saleRepository, times(1)).findById(anyInt());
+//        verify(promotionProductRepository, times(1)).findPromotionProductByProductId(productId);
+//        verify(promotionRepository, times(1)).findById(anyInt());
 //        verify(reviewService, times(1)).getAllReviewsByProductId(productId);
 //        verify(reviewRepository, times(1)).countAndAvgRatingByProductId(productId);
 //        verify(variationRepository, times(1)).findProductVariationByProductId(productId);
@@ -200,7 +200,7 @@
 ////
 ////        assertNotNull(result); //DTO is still returned, but empty or with default values
 ////        verify(productRepository, times(1)).findById(productId);
-////        verify(saleRepository, never()).findById(anyInt());
+////        verify(promotionRepository, never()).findById(anyInt());
 ////        verify(sizeRepository, never()).findAllByProductId(anyString());
 ////        verify(colorRepository, never()).findAllByProductId(anyString());
 ////        verify(stockVariationRepository, never()).findStockProductByProductVariationId(anyInt());
@@ -291,9 +291,9 @@
 ////        when(productRepository.findAllActiveProducts()).thenReturn(products);
 ////        when(variationRepository.findProductVariationByProductId(products.get(0).getProductId())).thenReturn(Collections.singletonList(variation1));
 ////        when(variationRepository.findProductVariationByProductId(products.get(1).getProductId())).thenReturn(Collections.singletonList(variation2));
-////        when(saleProductRepository.findById_ProductId(products.get(0).getProductId())).thenReturn(Collections.singletonList(saleProduct1));
-////        when(saleProductRepository.findById_ProductId(products.get(1).getProductId())).thenReturn(Collections.emptyList());
-////        when(saleRepository.findById(saleProduct1.getId().getSaleId())).thenReturn(Optional.of(sale1));
+////        when(promotionProductRepository.findById_ProductId(products.get(0).getProductId())).thenReturn(Collections.singletonList(promotionProduct1));
+////        when(promotionProductRepository.findById_ProductId(products.get(1).getProductId())).thenReturn(Collections.emptyList());
+////        when(promotionRepository.findById(promotionProduct1.getId().getPromotionId())).thenReturn(Optional.of(promotion1));
 ////        when(reviewRepository.countAndAvgRatingByProductId(products.get(0).getProductId())).thenReturn(Collections.emptyList());
 ////        when(reviewRepository.countAndAvgRatingByProductId(products.get(1).getProductId())).thenReturn(Collections.emptyList());
 ////        when(stockVariationRepository.getTotalStockQuantityForProduct(products.get(0).getProductId())).thenReturn(stockVariation1.getStockQuantity());
@@ -312,8 +312,8 @@
 ////
 ////        verify(productRepository, times(1)).findAllActiveProducts();
 ////        verify(variationRepository, times(2)).findProductVariationByProductId(anyString());
-////        verify(saleProductRepository, times(2)).findById_ProductId(anyString());
-////        verify(saleRepository, times(1)).findById(anyInt());
+////        verify(promotionProductRepository, times(2)).findById_ProductId(anyString());
+////        verify(promotionRepository, times(1)).findById(anyInt());
 ////        verify(reviewRepository, times(2)).countAndAvgRatingByProductId(anyString());
 ////        verify(stockVariationRepository, times(2)).getTotalStockQuantityForProduct(anyString());
 ////    }
@@ -386,9 +386,9 @@
 //
 //
 //    @Test
-//    void getProductsInStock_ShouldReturnListOfProductDetailDTOInStockAndNotOnSale() {
+//    void getProductsInStock_ShouldReturnListOfProductDetailDTOInStockAndNotOnPromotion() {
 //        when(productRepository.findProductsInStock()).thenReturn(products);
-//        when(saleProductRepository.findAllProductIdsInSale()).thenReturn(Collections.emptyList());
+//        when(promotionProductRepository.findAllProductIdsInPromotion()).thenReturn(Collections.emptyList());
 //
 //        List<ProductDetailDTO> result = productService.getProductsInStock();
 //
@@ -398,7 +398,7 @@
 //        assertEquals(products.get(1).getProductName(), result.get(1).getProductName());
 //
 //        verify(productRepository, times(1)).findProductsInStock();
-//        verify(saleProductRepository, times(1)).findAllProductIdsInSale();
+//        verify(promotionProductRepository, times(1)).findAllProductIdsInPromotion();
 //    }
 //
 //
@@ -461,21 +461,21 @@
 //        return color;
 //    }
 //
-//    private Sale createSale(Integer id, Integer discountPercent) {
-//        Sale sale = new Sale();
-//        sale.setId(id);
-//        sale.setSaleValue(BigDecimal.valueOf(discountPercent).divide(BigDecimal.valueOf(100)));
-//        return sale;
+//    private Promotion createPromotion(Integer id, Integer discountPercent) {
+//        Promotion promotion = new Promotion();
+//        promotion.setId(id);
+//        promotion.setPromotionValue(BigDecimal.valueOf(discountPercent).divide(BigDecimal.valueOf(100)));
+//        return promotion;
 //    }
 //
-//    private SaleProduct createSaleProduct(Sale sale, Product product) {
-//        SaleProductId saleProductId = new SaleProductId();
-//        saleProductId.setProductId(product.getProductId());
-//        saleProductId.setSaleId(sale.getId());
+//    private PromotionProduct createPromotionProduct(Promotion promotion, Product product) {
+//        PromotionProductId promotionProductId = new PromotionProductId();
+//        promotionProductId.setProductId(product.getProductId());
+//        promotionProductId.setPromotionId(promotion.getId());
 //
-//        SaleProduct saleProduct = new SaleProduct();
-//        saleProduct.setId(saleProductId);
-//        return saleProduct;
+//        PromotionProduct promotionProduct = new PromotionProduct();
+//        promotionProduct.setId(promotionProductId);
+//        return promotionProduct;
 //    }
 //
 //    private StockVariation createStockVariation(Integer quantity, Variation variation) {
