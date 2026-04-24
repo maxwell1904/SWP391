@@ -41,7 +41,7 @@ public class DiscountRestController {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public ResponseEntity<?> createDiscount(@RequestBody DiscountDTO discountDTO) {
         try {
