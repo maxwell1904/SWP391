@@ -9,10 +9,10 @@ const ProductItem = ({ product }) => {
     const ratingCount = product.totalRatings ?? product.totalRating ?? 0;
     let discountedPrice = product.productPrice;
 
-    if (product.sale?.saleType?.saleTypeName === "PERCENTAGE" && product.saleValue > 0) {
-        discountedPrice = product.productPrice - product.productPrice * (product.saleValue / 100);
-    } else if (product.sale?.saleType?.saleTypeName === "FIXED AMOUNT" && product.saleValue > 0) {
-        discountedPrice = product.productPrice - product.saleValue;
+    if (product.promotion?.promotionType?.promotionTypeName === "PERCENTAGE" && product.promotionValue > 0) {
+        discountedPrice = product.productPrice - product.productPrice * (product.promotionValue / 100);
+    } else if (product.promotion?.promotionType?.promotionTypeName === "FIXED AMOUNT" && product.promotionValue > 0) {
+        discountedPrice = product.productPrice - product.promotionValue;
     }
 
     const displayPrice =
@@ -48,11 +48,11 @@ const ProductItem = ({ product }) => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-90" />
                     <div className="absolute inset-x-0 top-0 h-1 bg-red-600 opacity-0 transition duration-300 group-hover:opacity-100" />
 
-                    {product.saleValue > 0 && (
+                    {product.promotionValue > 0 && (
                         <div className="absolute left-4 top-4 bg-red-600 px-3 py-2 font-['Oswald'] text-xs uppercase tracking-[0.25em] text-white">
-                            {product.sale?.saleType?.saleTypeName === "PERCENTAGE"
-                                ? `Save ${product.saleValue}%`
-                                : "On Sale"}
+                            {product.promotion?.promotionType?.promotionTypeName === "PERCENTAGE"
+                                ? `Save ${product.promotionValue}%`
+                                : "On Promotion"}
                         </div>
                     )}
                 </div>
@@ -74,7 +74,7 @@ const ProductItem = ({ product }) => {
                             <p className="font-['Oswald'] text-2xl tracking-[0.06em] text-red-500">
                                 {displayPrice}
                             </p>
-                            {product.saleValue > 0 && (
+                            {product.promotionValue > 0 && (
                                 <p className="mt-1 font-poppins text-sm text-gray-500 line-through">
                                     {originalPrice}
                                 </p>

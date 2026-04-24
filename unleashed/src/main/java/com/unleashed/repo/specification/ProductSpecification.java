@@ -1,7 +1,7 @@
 package com.unleashed.repo.specification;
 
 import com.unleashed.entity.Product;
-import com.unleashed.entity.SaleProduct;
+import com.unleashed.entity.PromotionProduct;
 import com.unleashed.entity.StockVariation;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
@@ -74,22 +74,22 @@ public class ProductSpecification {
     }
 
     /**
-     * Creates a specification to find products that are not associated with any sale.
-     * It uses a subquery to get all product IDs from the SaleProduct entity
+     * Creates a specification to find products that are not associated with any promotion.
+     * It uses a subquery to get all product IDs from the PromotionProduct entity
      * and then filters for products whose IDs are NOT IN that result set.
      */
-    public static Specification<Product> isNotInAnySale() {
+    public static Specification<Product> isNotInAnyPromotion() {
         return (root, query, cb) -> {
-            // 1. Create the subquery that will select from SaleProduct
-            Subquery<UUID> saleProductSubquery = query.subquery(UUID.class);
-            Root<SaleProduct> saleProductRoot = saleProductSubquery.from(SaleProduct.class);
+            // 1. Create the subquery that will select from PromotionProduct
+            Subquery<UUID> promotionProductSubquery = query.subquery(UUID.class);
+            Root<PromotionProduct> promotionProductRoot = promotionProductSubquery.from(PromotionProduct.class);
 
-            // 2. Select the product IDs from the SaleProduct table
-            //    Assumes SaleProduct has a composite key 'id' which contains 'productId'
-            saleProductSubquery.select(saleProductRoot.get("id").get("productId"));
+            // 2. Select the product IDs from the PromotionProduct table
+            //    Assumes PromotionProduct has a composite key 'id' which contains 'productId'
+            promotionProductSubquery.select(promotionProductRoot.get("id").get("productId"));
 
             // 3. The main predicate: Product's ID must not be in the subquery's results
-            return root.get("productId").in(saleProductSubquery).not();
+            return root.get("productId").in(promotionProductSubquery).not();
         };
     }
 

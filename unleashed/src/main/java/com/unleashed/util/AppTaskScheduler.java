@@ -21,7 +21,7 @@ public class AppTaskScheduler {
 
     private static final Logger logger = LoggerFactory.getLogger(AppTaskScheduler.class);
 
-    private final SaleService saleService;
+    private final PromotionService promotionService;
     private final DiscountService discountService;
     private final ProductService productService;
     private final UserService userService;
@@ -30,14 +30,14 @@ public class AppTaskScheduler {
      * Constructor-based dependency injection. Spring will automatically provide
      * the necessary service beans when creating this scheduler.
      *
-     * @param saleService The service responsible for sale-related business logic.
+     * @param promotionService The service responsible for promotion-related business logic.
      */
     @Autowired
-    public AppTaskScheduler(SaleService saleService,
+    public AppTaskScheduler(PromotionService promotionService,
                             DiscountService discountService,
                             ProductService productService,
                             UserService userService) {
-        this.saleService = saleService;
+        this.promotionService = promotionService;
         this.discountService = discountService;
         this.productService = productService;
         this.userService = userService;
@@ -50,7 +50,7 @@ public class AppTaskScheduler {
             userService.findOrCreateSystemUser();
             userService.findOrCreateDefaultPrivilegedUsersForDev();
             productService.performScheduledAgingUpdate();
-            saleService.performScheduledStatusUpdates();
+            promotionService.performScheduledStatusUpdates();
             discountService.performScheduledStatusUpdates();
             productService.performScheduledStockUpdates();
             logger.info("'System' user initialized successfully.");
@@ -78,7 +78,7 @@ public class AppTaskScheduler {
         Instant start = Instant.now();
         try {
             // tasks
-            saleService.performScheduledStatusUpdates();
+            promotionService.performScheduledStatusUpdates();
             discountService.performScheduledStatusUpdates();
             productService.performScheduledStockUpdates();
 

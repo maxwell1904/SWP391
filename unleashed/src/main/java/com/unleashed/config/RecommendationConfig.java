@@ -9,7 +9,7 @@ public class RecommendationConfig {
     public static final double SCORE_WEIGHT_CATEGORY = 0.3;             // Weight for matching product category
     public static final double SCORE_WEIGHT_PRICE = 1.3;                // Weight for product price within user's preferred range
     public static final double SCORE_WEIGHT_COLOR = 0.9;                // Weight for matching product color
-    public static final double SCORE_WEIGHT_SALE = 1.9;                 // Weight for products currently on sale
+    public static final double SCORE_WEIGHT_PROMOTION = 1.9;            // Weight for products currently on promotion
     public static final double SCORE_WEIGHT_DISCOUNT = 1.1;             // Weight for products with available discounts
     public static final double SCORE_WEIGHT_CART_FREQUENCY = 0.5;       // Weight for products frequently added to cart
     public static final double SCORE_WEIGHT_CART_QUANTITY = 0.4;        // Weight for products added to cart in high quantities

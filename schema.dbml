@@ -1,4 +1,4 @@
-﻿// Generated from migration_full.sql
+// Generated from migration_full.sql
 
 Table brand {
   brand_id int [pk, not null]
@@ -117,7 +117,7 @@ Table order_status {
 Table order_variation_single {
   order_id nvarchar(255) [pk, not null]
   variation_single_id int [pk, not null]
-  sale_id int
+  promotion_id int
   variation_price_at_purchase decimal(22, 2) [not null]
 }
 
@@ -179,30 +179,30 @@ Table role {
   role_name nvarchar(255)
 }
 
-Table sale {
-  sale_id int [pk, not null]
-  sale_type_id int
-  sale_status_id int
-  sale_value decimal(22, 2)
-  sale_start_date datetimeoffset(7)
-  sale_end_date datetimeoffset(7)
-  sale_created_at datetimeoffset(7)
-  sale_updated_at datetimeoffset(7)
+Table promotion {
+  promotion_id int [pk, not null]
+  promotion_type_id int
+  promotion_status_id int
+  promotion_value decimal(22, 2)
+  promotion_start_date datetimeoffset(7)
+  promotion_end_date datetimeoffset(7)
+  promotion_created_at datetimeoffset(7)
+  promotion_updated_at datetimeoffset(7)
 }
 
-Table sale_product {
-  sale_id int [pk, not null]
+Table promotion_product {
+  promotion_id int [pk, not null]
   product_id uniqueidentifier [pk, not null]
 }
 
-Table sale_status {
-  sale_status_id int [pk, not null]
-  sale_status_name nvarchar(255)
+Table promotion_status {
+  promotion_status_id int [pk, not null]
+  promotion_status_name nvarchar(255)
 }
 
-Table sale_type {
-  sale_type_id int [pk, not null]
-  sale_type_name nvarchar(255)
+Table promotion_type {
+  promotion_type_id int [pk, not null]
+  promotion_type_name nvarchar(255)
 }
 
 Table shipping_method {
@@ -326,10 +326,10 @@ Ref: product_category.product_id > product.product_id
 Ref: review.order_id > order.order_id
 Ref: review.product_id > product.product_id
 Ref: review.user_id > user.user_id
-Ref: sale.sale_status_id > sale_status.sale_status_id
-Ref: sale.sale_type_id > sale_type.sale_type_id
-Ref: sale_product.product_id > product.product_id
-Ref: sale_product.sale_id > sale.sale_id
+Ref: promotion.promotion_status_id > promotion_status.promotion_status_id
+Ref: promotion.promotion_type_id > promotion_type.promotion_type_id
+Ref: promotion_product.product_id > product.product_id
+Ref: promotion_product.promotion_id > promotion.promotion_id
 Ref: stock_variation.stock_id > stock.stock_id
 Ref: stock_variation.variation_id > variation.variation_id
 Ref: transaction.incharge_employee_id > user.user_id

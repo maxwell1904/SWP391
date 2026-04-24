@@ -30,14 +30,14 @@ public class ProductRecommendationService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
     private final OrderVariationSingleRepository orderVariationSingleRepository;
-    private final SaleProductRepository saleProductRepository;
+    private final PromotionProductRepository promotionProductRepository;
     private final DiscountRepository discountRepository;
     private final StockVariationRepository stockVariationRepository;
     private final UserDiscountRepository userDiscountRepository;
     private final UserRepository userRepository;
     private final VariationRepository variationRepository;
     private final CartRepository cartRepository;
-    private final SaleRepository saleRepository;
+    private final PromotionRepository promotionRepository;
     private final ReviewRepository reviewRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(ProductRecommendationService.class);
@@ -48,26 +48,26 @@ public class ProductRecommendationService {
             ProductRepository productRepository,
             OrderRepository orderRepository,
             OrderVariationSingleRepository orderVariationSingleRepository,
-            SaleProductRepository saleProductRepository,
+            PromotionProductRepository promotionProductRepository,
             DiscountRepository discountRepository,
             StockVariationRepository stockVariationRepository,
             UserDiscountRepository userDiscountRepository,
             UserRepository userRepository,
             VariationRepository variationRepository,
             CartRepository cartRepository,
-            SaleRepository saleRepository,
+            PromotionRepository promotionRepository,
             ReviewRepository reviewRepository) {
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
         this.orderVariationSingleRepository = orderVariationSingleRepository;
-        this.saleProductRepository = saleProductRepository;
+        this.promotionProductRepository = promotionProductRepository;
         this.discountRepository = discountRepository;
         this.stockVariationRepository = stockVariationRepository;
         this.userDiscountRepository = userDiscountRepository;
         this.userRepository = userRepository;
         this.variationRepository = variationRepository;
         this.cartRepository = cartRepository;
-        this.saleRepository = saleRepository;
+        this.promotionRepository = promotionRepository;
         this.reviewRepository = reviewRepository;
     }
 
@@ -106,9 +106,9 @@ public class ProductRecommendationService {
         PurchaseAnalysisDTO purchaseAnalysis = analyzePurchases(recentPurchaseProductIds, productMap);
         CartAnalysisDTO cartAnalysis = analyzeCarts(userId, productMap);
 
-        List<SaleProduct> saleProducts = saleProductRepository.findAll();
-        Set<UUID> saleProductIds = saleProducts.stream()
-                .map(saleProduct -> saleProduct.getId().getProductId())
+        List<PromotionProduct> promotionProducts = promotionProductRepository.findAll();
+        Set<UUID> promotionProductIds = promotionProducts.stream()
+                .map(promotionProduct -> promotionProduct.getId().getProductId())
                 .collect(Collectors.toSet());
 
         Map<UUID, Long> productStockMap = allProducts.stream()
@@ -130,7 +130,7 @@ public class ProductRecommendationService {
 
         List<ScoredProductDTO> scoredProducts = allProducts.stream()
                 .map(product -> {
-                    double score = calculateRecommendationScore(product, purchaseAnalysis, userId, cartAnalysis, saleProductIds, productStockMap, userDiscountsMap, discountMap, topSoldProductIds, currentProductName);
+                    double score = calculateRecommendationScore(product, purchaseAnalysis, userId, cartAnalysis, promotionProductIds, productStockMap, userDiscountsMap, discountMap, topSoldProductIds, currentProductName);
                     BigDecimal representativePrice = getRepresentativePrice(product);
                     double priceDifference = (purchaseAnalysis != null && representativePrice != null)
                             ? Math.abs(representativePrice.doubleValue() - purchaseAnalysis.getAveragePrice())
@@ -321,7 +321,7 @@ public class ProductRecommendationService {
                                                 PurchaseAnalysisDTO purchaseAnalysis,
                                                 UUID userId,
                                                 CartAnalysisDTO cartAnalysis,
-                                                Set<UUID> saleProductIds,
+                                                Set<UUID> promotionProductIds,
                                                 Map<UUID, Long> productStockMap,
                                                 Map<UUID, List<UserDiscount>> userDiscountsMap,
                                                 Map<Integer, Discount> discountMap,
@@ -365,8 +365,8 @@ public class ProductRecommendationService {
                 score += RecommendationConfig.SCORE_WEIGHT_COLOR;
             }
 
-            if (saleProductIds.contains(product.getProductId())) {
-                score += RecommendationConfig.SCORE_WEIGHT_SALE;
+            if (promotionProductIds.contains(product.getProductId())) {
+                score += RecommendationConfig.SCORE_WEIGHT_PROMOTION;
             }
 
             if (userId != null && userDiscountsMap != null) {
@@ -448,8 +448,8 @@ public class ProductRecommendationService {
 
     private ProductDTO convertToDto(UUID productId,
                                     Map<UUID, List<Variation>> variationsByProductId,
-                                    Map<UUID, SaleProduct> saleProductMap,
-                                    Map<Integer, Sale> saleMap,
+                                    Map<UUID, PromotionProduct> promotionProductMap,
+                                    Map<Integer, Promotion> promotionMap,
                                     Map<UUID, Product> productMap) {
         Product product = productMap.get(productId);
 
@@ -469,12 +469,12 @@ public class ProductRecommendationService {
         dto.setCreatedAt(product.getProductCreatedAt());
         dto.setUpdatedAt(product.getProductUpdatedAt());
 
-        SaleProduct saleProduct = saleProductMap.get(productId);
-        if (saleProduct != null) {
-            Sale sale = saleMap.get(saleProduct.getId().getSaleId());
-            if (sale != null && sale.getSaleType() != null) {
-                dto.setSaleType(sale.getSaleType());
-                dto.setSaleValue(sale.getSaleValue());
+        PromotionProduct promotionProduct = promotionProductMap.get(productId);
+        if (promotionProduct != null) {
+            Promotion promotion = promotionMap.get(promotionProduct.getId().getPromotionId());
+            if (promotion != null && promotion.getPromotionType() != null) {
+                dto.setPromotionType(promotion.getPromotionType());
+                dto.setPromotionValue(promotion.getPromotionValue());
             }
         }
 
@@ -563,9 +563,9 @@ public class ProductRecommendationService {
                         product -> (long) Optional.ofNullable(stockVariationRepository.getTotalStockQuantityForProduct(product.getProductId())).orElse(0)
                 ));
 
-        List<SaleProduct> saleProducts = saleProductRepository.findAll();
-        Set<UUID> saleProductIds = saleProducts.stream()
-                .map(saleProduct -> saleProduct.getId().getProductId())
+        List<PromotionProduct> promotionProducts = promotionProductRepository.findAll();
+        Set<UUID> promotionProductIds = promotionProducts.stream()
+                .map(promotionProduct -> promotionProduct.getId().getProductId())
                 .collect(Collectors.toSet());
 
         List<UUID> topSoldProductIds = orderRepository.findTopSoldProductIds(RecommendationConfig.TRENDING_DAYS_WINDOW, RecommendationConfig.MAX_TRENDING_PRODUCTS);
@@ -573,7 +573,7 @@ public class ProductRecommendationService {
 
         List<ScoredProductDTO> scoredProducts = allProducts.stream()
                 .map(product -> {
-                    double score = calculateRecommendationScore(product, dummyAnalysis, null, null, saleProductIds, productStockMap, null, null, topSoldProductIds, currentProductName);
+                    double score = calculateRecommendationScore(product, dummyAnalysis, null, null, promotionProductIds, productStockMap, null, null, topSoldProductIds, currentProductName);
                     BigDecimal representativePrice = getRepresentativePrice(product);
                     double priceDifference = (representativePrice != null && currentPrice != null)
                             ? Math.abs(representativePrice.doubleValue() - currentPrice.doubleValue())
@@ -597,19 +597,19 @@ public class ProductRecommendationService {
         Map<UUID, List<Variation>> variationsByProductId = allVariations.stream()
                 .collect(Collectors.groupingBy(v -> v.getProduct().getProductId()));
 
-        List<SaleProduct> allSaleProducts = saleProductRepository.findSaleProductsByProductIds(productIds);
-        Map<UUID, SaleProduct> saleProductMap = allSaleProducts.stream()
+        List<PromotionProduct> allPromotionProducts = promotionProductRepository.findPromotionProductsByProductIds(productIds);
+        Map<UUID, PromotionProduct> promotionProductMap = allPromotionProducts.stream()
                 .collect(Collectors.toMap(sp -> sp.getId().getProductId(), Function.identity()));
 
-        Set<Integer> saleIds = allSaleProducts.stream()
-                .map(sp -> sp.getId().getSaleId())
+        Set<Integer> promotionIds = allPromotionProducts.stream()
+                .map(sp -> sp.getId().getPromotionId())
                 .collect(Collectors.toSet());
-        List<Sale> sales = saleRepository.findAllById(saleIds);
-        Map<Integer, Sale> saleMap = sales.stream().collect(Collectors.toMap(Sale::getId, Function.identity()));
+        List<Promotion> promotions = promotionRepository.findAllById(promotionIds);
+        Map<Integer, Promotion> promotionMap = promotions.stream().collect(Collectors.toMap(Promotion::getId, Function.identity()));
 
 
         List<ProductDTO> productDTOs = products.stream()
-                .map(product -> convertToDto(product.getProductId(), variationsByProductId, saleProductMap, saleMap, productMap))
+                .map(product -> convertToDto(product.getProductId(), variationsByProductId, promotionProductMap, promotionMap, productMap))
                 .collect(Collectors.toList());
 
         int needed = RecommendationConfig.MAX_RECOMMENDATIONS - productDTOs.size();
@@ -622,7 +622,7 @@ public class ProductRecommendationService {
                     .limit(needed)
                     .map(product -> {
                         addedProductIds.add(product.getProductId());
-                        return convertToDto(product.getProductId(), variationsByProductId, saleProductMap, saleMap, productMap);
+                        return convertToDto(product.getProductId(), variationsByProductId, promotionProductMap, promotionMap, productMap);
                     })
                     .toList();
             productDTOs.addAll(additionalProducts);

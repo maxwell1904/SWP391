@@ -248,7 +248,7 @@ export const Membership = () => {
                                 Join the Club & Unlock Exclusive Perks
                             </Typography>
                             <Typography variant="subtitle1" align="center" gutterBottom>
-                                Get exclusive discounts, early access to sales, and more!
+                                Get exclusive discounts, early access to promotions, and more!
                             </Typography>
 
                             <List>
@@ -266,7 +266,7 @@ export const Membership = () => {
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon><AccessTime color="primary" /></ListItemIcon>
-                                    <ListItemText primary="Early access to sales" />
+                                    <ListItemText primary="Early access to promotions" />
                                 </ListItem>
                             </List>
                         </Card>)

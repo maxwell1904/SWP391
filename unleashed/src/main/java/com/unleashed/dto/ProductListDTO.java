@@ -1,7 +1,7 @@
 package com.unleashed.dto;
 
 import com.unleashed.entity.Category;
-import com.unleashed.entity.Sale;
+import com.unleashed.entity.Promotion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,8 +23,8 @@ public class ProductListDTO {
     private List<Category> categoryList;
     private String productVariationImage;
     private BigDecimal productPrice;
-    private Sale sale;
-    private BigDecimal saleValue;
+    private Promotion promotion;
+    private BigDecimal promotionValue;
     private Double averageRating;
     private Long totalRatings;
     private int quantity;

@@ -1,7 +1,7 @@
 package com.unleashed.dto;
 
 import com.unleashed.entity.ProductStatus;
-import com.unleashed.entity.SaleType;
+import com.unleashed.entity.PromotionType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,8 +26,8 @@ public class ProductDTO {
     private List<Integer> categoryIdList;
     private BigDecimal productPrice;
     private List<ProductVariationDTO> variations;
-    private SaleType saleType;
-    private BigDecimal saleValue;
+    private PromotionType promotionType;
+    private BigDecimal promotionValue;
     private Double averageRating;
     private Long totalRatings;
 

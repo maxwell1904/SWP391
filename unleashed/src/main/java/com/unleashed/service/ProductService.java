@@ -30,28 +30,28 @@ public class ProductService {
     private final VariationRepository variationRepository;
     private final SizeRepository sizeRepository;
     private final ColorRepository colorRepository;
-    private final SaleProductRepository saleProductRepository;
+    private final PromotionProductRepository promotionProductRepository;
     private final ReviewRepository reviewRepository;
     private final StockVariationRepository stockVariationRepository; // Inject StockVariationRepository
     private final ProductStatusRepository productStatusRepository;
-    private final SaleRepository saleRepository;
+    private final PromotionRepository promotionRepository;
     private final ProductMapper productMapper;
     private final ReviewService reviewService;
 
 
     @Autowired
-    public ProductService(ProductRepository productRepository, BrandRepository brandRepository, CategoryRepository categoryRepository, VariationRepository variationRepository, VariationRepository variationRepository1, SizeRepository sizeRepository, ColorRepository colorRepository, SaleProductRepository saleProductRepository, ReviewRepository reviewRepository, StockRepository stockRepository, StockVariationRepository stockVariationRepository, ProductStatusRepository productStatusRepository, SaleRepository saleRepository, ProductMapper productMapper, ReviewService reviewService) {
+    public ProductService(ProductRepository productRepository, BrandRepository brandRepository, CategoryRepository categoryRepository, VariationRepository variationRepository, VariationRepository variationRepository1, SizeRepository sizeRepository, ColorRepository colorRepository, PromotionProductRepository promotionProductRepository, ReviewRepository reviewRepository, StockRepository stockRepository, StockVariationRepository stockVariationRepository, ProductStatusRepository productStatusRepository, PromotionRepository promotionRepository, ProductMapper productMapper, ReviewService reviewService) {
         this.productRepository = productRepository;
         this.brandRepository = brandRepository;
         this.categoryRepository = categoryRepository;
         this.variationRepository = variationRepository;
         this.sizeRepository = sizeRepository;
         this.colorRepository = colorRepository;
-        this.saleProductRepository = saleProductRepository;
+        this.promotionProductRepository = promotionProductRepository;
         this.reviewRepository = reviewRepository;
         this.stockVariationRepository = stockVariationRepository; // Initialize StockVariationRepository
         this.productStatusRepository = productStatusRepository;
-        this.saleRepository = saleRepository;
+        this.promotionRepository = promotionRepository;
         this.productMapper = productMapper;
         this.reviewService = reviewService;
     }
@@ -205,12 +205,12 @@ public class ProductService {
         productItemDTO.setColors(new ArrayList<>(availableColors));
         productItemDTO.setVariations(variationsMap);
 
-        SaleProduct saleProduct = saleProductRepository.findSaleProductByProductId(id);
-        if (saleProduct != null) {
-            saleRepository.findById(saleProduct.getId().getSaleId()).ifPresent(sale -> {
-                if (sale.getSaleType() != null) {
-                    productItemDTO.setSaleType(sale.getSaleType());
-                    productItemDTO.setSaleValue(sale.getSaleValue());
+        PromotionProduct promotionProduct = promotionProductRepository.findPromotionProductByProductId(id);
+        if (promotionProduct != null) {
+            promotionRepository.findById(promotionProduct.getId().getPromotionId()).ifPresent(promotion -> {
+                if (promotion.getPromotionType() != null) {
+                    productItemDTO.setPromotionType(promotion.getPromotionType());
+                    productItemDTO.setPromotionValue(promotion.getPromotionValue());
                 }
             });
         }
@@ -345,14 +345,14 @@ public class ProductService {
                     productListDTO.setProductVariationImage(firstVariation.getVariationImage());
                 }
 
-                // Get Sale information
-                List<SaleProduct> saleProduct = saleProductRepository.findById_ProductId(UUID.fromString(productId));
-                if (saleProduct != null && !saleProduct.isEmpty()) {
-                    saleProduct.forEach(sp -> {
-                        Sale sale = saleRepository.findById(sp.getId().getSaleId()).orElse(null);
-                        if (sale != null && Objects.equals(sale.getSaleStatus().getSaleStatusName(), "ACTIVE")) {
-                            productListDTO.setSale(sale); // Set the entire Sale object if needed
-                            productListDTO.setSaleValue(sale.getSaleValue()); // Or just the saleValue
+                // Get Promotion information
+                List<PromotionProduct> promotionProduct = promotionProductRepository.findById_ProductId(UUID.fromString(productId));
+                if (promotionProduct != null && !promotionProduct.isEmpty()) {
+                    promotionProduct.forEach(sp -> {
+                        Promotion promotion = promotionRepository.findById(sp.getId().getPromotionId()).orElse(null);
+                        if (promotion != null && Objects.equals(promotion.getPromotionStatus().getPromotionStatusName(), "ACTIVE")) {
+                            productListDTO.setPromotion(promotion); // Set the entire Promotion object if needed
+                            productListDTO.setPromotionValue(promotion.getPromotionValue()); // Or just the promotionValue
                         }
                     });
 
@@ -448,9 +448,9 @@ public class ProductService {
 
     public List<ProductDetailDTO> getProductsInStock() {
         List<Product> products = productRepository.findProductsInStock();
-        List<UUID> productIdsInSale = saleProductRepository.findAllProductIdsInSale();
+        List<UUID> productIdsInPromotion = promotionProductRepository.findAllProductIdsInPromotion();
         return products.stream()
-                .filter(product -> !productIdsInSale.contains(UUID.fromString(product.getProductId().toString())))
+                .filter(product -> !productIdsInPromotion.contains(UUID.fromString(product.getProductId().toString())))
                 .map(product -> ProductDetailDTO.builder()
                         .productId(product.getProductId().toString())
                         .productName(product.getProductName())
@@ -478,18 +478,18 @@ public class ProductService {
 
         Page<Object[]> productPageResult = productRepository.findProductsWithFilters(query, category, brand, rating, inStockOnly, sortedPageable);
 
-        List<Integer> saleIds = productPageResult.getContent().stream()
+        List<Integer> promotionIds = productPageResult.getContent().stream()
                 .map(result -> (Integer) result[4])
                 .filter(Objects::nonNull)
                 .distinct()
                 .collect(Collectors.toList());
 
-        Map<Integer, Sale> saleMap;
-        if (!saleIds.isEmpty()) {
-            List<Sale> sales = saleRepository.findAllById(saleIds);
-            saleMap = sales.stream().collect(Collectors.toMap(Sale::getId, sale -> sale));
+        Map<Integer, Promotion> promotionMap;
+        if (!promotionIds.isEmpty()) {
+            List<Promotion> promotions = promotionRepository.findAllById(promotionIds);
+            promotionMap = promotions.stream().collect(Collectors.toMap(Promotion::getId, promotion -> promotion));
         } else {
-            saleMap = Collections.emptyMap();
+            promotionMap = Collections.emptyMap();
         }
 
         return productPageResult.map(result -> {
@@ -497,7 +497,7 @@ public class ProductService {
             Variation firstVariation = (Variation) result[1];
             Double averageRating = (Double) result[2];
             Long totalRatings = (Long) result[3];
-            Integer saleId = (Integer) result[4];
+            Integer promotionId = (Integer) result[4];
 
             ProductListDTO dto = new ProductListDTO();
             dto.setProductId(product.getProductId().toString());
@@ -513,11 +513,11 @@ public class ProductService {
             dto.setAverageRating(averageRating != null ? averageRating : 0.0);
             dto.setTotalRatings(totalRatings != null ? totalRatings : 0L);
 
-            if (saleId != null) {
-                Sale sale = saleMap.get(saleId);
-                dto.setSale(sale);
-                if (sale != null) {
-                    dto.setSaleValue(sale.getSaleValue());
+            if (promotionId != null) {
+                Promotion promotion = promotionMap.get(promotionId);
+                dto.setPromotion(promotion);
+                if (promotion != null) {
+                    dto.setPromotionValue(promotion.getPromotionValue());
                 }
             }
 

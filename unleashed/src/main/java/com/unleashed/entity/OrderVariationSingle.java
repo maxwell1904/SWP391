@@ -28,8 +28,8 @@ public class OrderVariationSingle {
     @JoinColumn(name = "variation_single_id", nullable = false)
     private VariationSingle variationSingle;
 
-    @Column(name = "sale_id")
-    private Integer saleId;
+    @Column(name = "promotion_id")
+    private Integer promotionId;
 
     @NotNull
     @Column(name = "variation_price_at_purchase", nullable = false, precision = 22, scale = 2)

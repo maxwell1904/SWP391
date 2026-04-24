@@ -1,6 +1,7 @@
 package com.unleashed.rest;
 
 import com.unleashed.dto.BrandDTO;
+import com.unleashed.dto.SearchBrandDTO;
 import com.unleashed.entity.Brand;
 import com.unleashed.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,14 @@ public class BrandRestController {
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
-    @GetMapping("/{brandId}")
+    @GetMapping("/search")
+    public ResponseEntity<List<SearchBrandDTO>> getAllBrand() {
+        List<SearchBrandDTO> result = brandService.getAllBrands();
+        return ResponseEntity.ok(result);
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
+    @GetMapping("/{brandId:\\d+}")
     public ResponseEntity<Brand> getBrandById(@PathVariable int brandId) {
         Brand brand = brandService.findById(brandId);
         if (brand != null) {
@@ -60,13 +68,6 @@ public class BrandRestController {
             return ResponseEntity.notFound().build();
         }
     }
-//
-//    @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
-//    @GetMapping("/search")
-//    public ResponseEntity<List<SearchBrandDTO>> getAllBrand() {
-//        List<SearchBrandDTO> result = brandService.getAllBrands();
-//        return ResponseEntity.ok(result);
-//    }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping

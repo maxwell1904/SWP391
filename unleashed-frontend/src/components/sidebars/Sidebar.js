@@ -90,7 +90,7 @@ const Sidebar = ({ isOpen }) => {
     menuGroups.splice(2, 0, {
       title: "Marketing & Promotions",
       items: [
-        { to: "/Dashboard/Sales", icon: FaGift, label: "Sales" },
+        { to: "/Dashboard/Promotions", icon: FaGift, label: "Promotions" },
         { to: "/Dashboard/Discounts", icon: FaPercent, label: "Discounts" },
       ],
     });
