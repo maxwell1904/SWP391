@@ -55,7 +55,7 @@ public class SaleRestController {
         }
     }
 
-    @PreAuthorize("hasAnyAuthority('STAFF', 'ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public ResponseEntity<?> createSale(@RequestBody Sale sale) {
         try {
