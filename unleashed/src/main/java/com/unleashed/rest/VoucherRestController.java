@@ -49,7 +49,7 @@ public class VoucherRestController {
             return ResponseEntity.status(HttpStatus.CREATED).body(createdVoucher);
         } catch (IllegalArgumentException e) {
             logger.error("Failed to create voucher: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -66,15 +66,20 @@ public class VoucherRestController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
     @PutMapping("/{voucherId}")
-    public ResponseEntity<VoucherDTO> updateVoucher(
+    public ResponseEntity<?> updateVoucher(
             @PathVariable Integer voucherId,
             @RequestBody VoucherDTO voucherDTO) {
-        return voucherService.updateVoucher(voucherId, voucherDTO)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> {
-                    logger.warn("Voucher ID {} not found for update.", voucherId);
-                    return ResponseEntity.notFound().build();
-                });
+        try {
+            return voucherService.updateVoucher(voucherId, voucherDTO)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> {
+                        logger.warn("Voucher ID {} not found for update.", voucherId);
+                        return ResponseEntity.notFound().build();
+                    });
+        } catch (IllegalArgumentException e) {
+            logger.error("Failed to update voucher {}: {}", voucherId, e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")

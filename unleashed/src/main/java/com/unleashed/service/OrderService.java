@@ -59,7 +59,6 @@ public class OrderService {
     private final UserRepository userRepository;
     private final VoucherService voucherService;
     private final OrderStatusRepository orderStatusRepository;
-    private final RankService rankService;
     private final StockVariationRepository stockVariationRepository;
     private final UserService userService;
     private final ReviewRepository reviewRepository;
@@ -86,7 +85,6 @@ public class OrderService {
                         VariationSingleRepository variationSingleRepository,
                         OrderVariationSingleRepository orderVariationSingleRepository,
                         CartService cartService,
-                        RankService rankService,
                         StockVariationRepository stockVariationRepository,
                         UserService userService,
                         StockTransactionService stockTransactionService) {
@@ -108,7 +106,6 @@ public class OrderService {
         this.variationSingleRepository = variationSingleRepository;
         this.orderVariationSingleRepository = orderVariationSingleRepository;
         this.cartService = cartService;
-        this.rankService = rankService;
         this.stockVariationRepository = stockVariationRepository;
         this.userService = userService;
         this.stockTransactionService = stockTransactionService;
@@ -1030,10 +1027,6 @@ public class OrderService {
         }
         order.setOrderStatus(completedStatus);
         orderRepository.save(order);
-        if (rankService.hasRegistered(order.getUser())) {
-            User user = rankService.addMoneySpent(order.getUser(), order.getOrderTotalAmount());
-            if (rankService.checkUpRank(user)) rankService.upRank(user);
-        }
     }
 
     private String buildOrderEmailBody(Order order, Set<OrderVariationSingle> orderVariationSingles, String headerMessage) {
@@ -1518,9 +1511,6 @@ public class OrderService {
         order.setOrderStatus(returnStatus);
         orderRepository.save(order);
         returnStock(order);
-
-        if (userService.getUserById(order.getUser().getUserId().toString()).getUserRank() != null)
-            rankService.removeMoneySpent(order.getUser(), order.getOrderTotalAmount());
 
     }
 

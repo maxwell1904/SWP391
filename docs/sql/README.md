@@ -4,6 +4,7 @@ Tai lieu nay dung cho SQL Server database `Unleashed` sau khi code da doi:
 
 - `sale` thanh `promotion`
 - `discount` thanh `voucher`
+- bo chuc nang `rank/membership`, drop bang `rank` va `user_rank`
 
 Co 2 cach dong bo DB. Chon dung cach theo tinh trang DB local cua moi nguoi.
 
@@ -56,17 +57,25 @@ Neu backup loi do quyen folder, doi `$backupPath` sang thu muc backup cua SQL Se
 
 ### 4. Chay migration theo dung thu tu
 
-Neu DB cua ban van con ten cu `sale` va `discount`, chay ca 2 script theo thu tu nay:
+Neu DB cua ban van con ten cu `sale` va `discount`, chay ca 3 script theo thu tu nay:
 
 ```powershell
 sqlcmd -S $server -d $db -U $user -P $password -C -b -i .\docs\sql\rename-sale-to-promotion.sql
 sqlcmd -S $server -d $db -U $user -P $password -C -b -i .\docs\sql\002-rename-discount-to-voucher.sql
+sqlcmd -S $server -d $db -U $user -P $password -C -b -i .\docs\sql\003-remove-rank-membership.sql
 ```
 
-Neu ban da migrate `sale -> promotion` tu dot truoc roi, chi can chay script voucher:
+Neu ban da migrate `sale -> promotion` tu dot truoc roi, chay tiep voucher roi remove rank:
 
 ```powershell
 sqlcmd -S $server -d $db -U $user -P $password -C -b -i .\docs\sql\002-rename-discount-to-voucher.sql
+sqlcmd -S $server -d $db -U $user -P $password -C -b -i .\docs\sql\003-remove-rank-membership.sql
+```
+
+Neu ban da migrate xong ca promotion va voucher roi, chi can chay script remove rank:
+
+```powershell
+sqlcmd -S $server -d $db -U $user -P $password -C -b -i .\docs\sql\003-remove-rank-membership.sql
 ```
 
 ### 5. Kiem tra DB sau migration
@@ -75,10 +84,16 @@ sqlcmd -S $server -d $db -U $user -P $password -C -b -i .\docs\sql\002-rename-di
 sqlcmd -S $server -d $db -U $user -P $password -C -Q "SELECT name FROM sys.tables WHERE name IN ('promotion','promotion_product','promotion_status','promotion_type','voucher','voucher_status','voucher_type','user_voucher') ORDER BY name"
 ```
 
-Kiem tra con column ten cu khong. `rank_base_discount` duoc phep con lai vi day la base discount cua membership rank, khong phai voucher.
+Kiem tra 2 bang rank da bi xoa. Lenh nay phai khong ra dong nao:
 
 ```powershell
-sqlcmd -S $server -d $db -U $user -P $password -C -Q "SELECT t.name AS table_name, c.name AS column_name FROM sys.columns c JOIN sys.tables t ON c.object_id = t.object_id WHERE (c.name LIKE '%sale%' OR c.name LIKE '%discount%') AND c.name <> 'rank_base_discount' ORDER BY t.name, c.name"
+sqlcmd -S $server -d $db -U $user -P $password -C -Q "SELECT name FROM sys.tables WHERE name IN ('rank','user_rank') ORDER BY name"
+```
+
+Kiem tra con table/column ten cu khong. Lenh nay phai khong ra dong nao:
+
+```powershell
+sqlcmd -S $server -d $db -U $user -P $password -C -Q "SELECT t.name AS table_name, c.name AS column_name FROM sys.columns c JOIN sys.tables t ON c.object_id = t.object_id WHERE c.name LIKE '%sale%' OR c.name LIKE '%discount%' OR c.name LIKE '%rank%' OR t.name LIKE '%sale%' OR t.name LIKE '%discount%' OR t.name LIKE '%rank%' ORDER BY t.name, c.name"
 ```
 
 Neu query thu hai khong ra dong nao thi DB da doi ten dung.
@@ -110,9 +125,10 @@ Dung cach nay neu ban chap nhan mat DB local cu va tao lai database tu dau.
 - `CREATE DATABASE [Unleashed]` neu DB chua ton tai
 - `USE [Unleashed]`
 - table/column moi nhat: `promotion`, `voucher`, ...
+- khong con bang `rank`, `user_rank`, va column `voucher_rank_requirement`
 - data mau trong file script
 
-Vay nen neu da xoa DB `Unleashed`, ban co the chay thang `migration_full.sql`. Khong can chay 2 script rename nua.
+Vay nen neu da xoa DB `Unleashed`, ban co the chay thang `migration_full.sql`. Khong can chay 3 script migration nua.
 
 ### Chay bang sqlcmd
 
@@ -147,6 +163,7 @@ Neu ban tu tao DB `Unleashed` truoc bang SSMS roi chay `migration_full.sql` cung
 | DB cu khong can giu | Dung Cach 2, xoa DB va chay `migration_full.sql` |
 | Da pull code moi nhung bao loi table `sale`/`discount` khong ton tai | DB da moi, code co the dang cu hoac build cache cu; pull code moi va restart app |
 | Da pull code moi nhung bao loi table `promotion`/`voucher` khong ton tai | Code moi nhung DB chua migrate; chay Cach 1 hoac Cach 2 |
+| Da pull code moi nhung bao loi table `rank`/`user_rank` hoac column `voucher_rank_requirement` | DB chua chay script `003-remove-rank-membership.sql`; chay Cach 1 buoc 4 |
 | May vua clone project, chua co DB | Dung Cach 2 |
 
 ## Loi thuong gap
@@ -171,6 +188,10 @@ Backend/frontend da la code moi nhung DB chua dong bo. Chay migration scripts ho
 
 DB da doi ten roi nhung code dang cu. Pull lai code moi tren `devD`, restart backend/frontend.
 
+### Invalid object name `rank` hoac `user_rank`
+
+Code da bo membership nhung DB/script local chua dong bo. Chay `docs\sql\003-remove-rank-membership.sql`, hoac neu khong can data local thi xoa DB roi chay lai `migration_full.sql`.
+
 ## Checklist gui cho team
 
 ```powershell
@@ -181,7 +202,7 @@ git pull origin devD
 
 Sau do moi nguoi tu chon:
 
-- Muon giu DB local: backup, roi chay `docs\sql\rename-sale-to-promotion.sql` va `docs\sql\002-rename-discount-to-voucher.sql`.
+- Muon giu DB local: backup, roi chay `docs\sql\rename-sale-to-promotion.sql`, `docs\sql\002-rename-discount-to-voucher.sql`, va `docs\sql\003-remove-rank-membership.sql` theo dung thu tu.
 - Muon lam DB sach: xoa DB `Unleashed`, roi chay `migration_full.sql`.
 
 Cuoi cung restart backend va frontend.

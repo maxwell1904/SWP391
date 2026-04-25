@@ -60,9 +60,6 @@ public class UserService {
 
 
     @Autowired
-    private RankService rankService;
-
-    @Autowired
     public UserService(UserRepository userRepository,
                        UserRoleRepository userRoleRepository,
                        JwtUtil jwtUtil,
@@ -174,10 +171,6 @@ public class UserService {
                 throw new CustomException("Please login with Google account", HttpStatus.FORBIDDEN);
             }
 
-            if (rankService.hasRegistered(user) && rankService.isRankExpired(user)) {
-                if (rankService.checkDownRank(user)) rankService.downRank(user);
-            }
-
             var token = jwtUtil.generateUserToken(user);
             responseDTO.setStatusCode(HttpStatus.OK.value());
             responseDTO.setToken(token);
@@ -222,11 +215,6 @@ public class UserService {
                 responseDTO.setMessage("Your account is not activated. We have sent another confirmation email.");
                 responseDTO.setEmail(user.getUserEmail());
                 return responseDTO;
-            }
-
-            // User is active, proceed with login
-            if (rankService.hasRegistered(user) && rankService.isRankExpired(user)) {
-                if (rankService.checkDownRank(user)) rankService.downRank(user);
             }
 
             try {
@@ -439,7 +427,6 @@ public class UserService {
                         user.getUserAddress(),
                         user.getUserCreatedAt(),
                         user.getUserUpdatedAt(),
-                        user.getUserRank() == null ? null : user.getUserRank().getRank(),
                         user.getUserGoogleId() == null ? null : user.getUserGoogleId())
                 )
                 .collect(Collectors.toList());
@@ -593,7 +580,6 @@ public class UserService {
         viewInfoDTO.setUserAddress(user.getUserAddress());
         viewInfoDTO.setUserCreatedAt(user.getUserCreatedAt());
         viewInfoDTO.setUserUpdatedAt(user.getUserUpdatedAt());
-        viewInfoDTO.setRank(user.getUserRank() == null ? null : user.getUserRank().getRank());
         viewInfoDTO.setUserGoogleId(user.getUserGoogleId());
         return viewInfoDTO;
     }
@@ -620,8 +606,7 @@ public class UserService {
                 user.getUserCurrentPaymentMethod(),
                 user.getUserAddress(),
                 user.getUserCreatedAt(),
-                user.getUserUpdatedAt(),
-                user.getUserRank().getRank()
+                user.getUserUpdatedAt()
         );
     }
 
@@ -658,8 +643,7 @@ public class UserService {
                 user.getUserCurrentPaymentMethod(),
                 user.getUserAddress(),
                 user.getUserCreatedAt(),
-                user.getUserUpdatedAt(),
-                user.getUserRank().getRank()
+                user.getUserUpdatedAt()
         );
     }
 
