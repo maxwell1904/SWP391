@@ -10,7 +10,7 @@ public class RecommendationConfig {
     public static final double SCORE_WEIGHT_PRICE = 1.3;                // Weight for product price within user's preferred range
     public static final double SCORE_WEIGHT_COLOR = 0.9;                // Weight for matching product color
     public static final double SCORE_WEIGHT_PROMOTION = 1.9;            // Weight for products currently on promotion
-    public static final double SCORE_WEIGHT_DISCOUNT = 1.1;             // Weight for products with available discounts
+    public static final double SCORE_WEIGHT_VOUCHER = 1.1;             // Weight for products with available vouchers
     public static final double SCORE_WEIGHT_CART_FREQUENCY = 0.5;       // Weight for products frequently added to cart
     public static final double SCORE_WEIGHT_CART_QUANTITY = 0.4;        // Weight for products added to cart in high quantities
     public static final double SCORE_WEIGHT_TRENDING = 2.2;             // Weight for trending products
@@ -18,10 +18,10 @@ public class RecommendationConfig {
     public static final double SCORE_WEIGHT_NAME_EXACT_MATCH = 12;      // Weight for products that has name exactly like the current one
     public static final double SCORE_WEIGHT_NAME_DISSIMILAR = 1.5;       // Penalty deduction if names are completely dissimilar
 
-    // --- Discount Threshold ---
-    // Configuration for applying a bonus to products based on the number of usable discounts.
-    public static final int DISCOUNT_BONUS_THRESHOLD = 3;               // Minimum number of usable discounts to trigger a bonus
-    public static final double USABLE_DISCOUNT_BONUS_PERCENTAGE = 0.08; // Bonus percentage per usable discount OVER the threshold
+    // --- Voucher Threshold ---
+    // Configuration for applying a bonus to products based on the number of usable vouchers.
+    public static final int VOUCHER_BONUS_THRESHOLD = 3;               // Minimum number of usable vouchers to trigger a bonus
+    public static final double USABLE_VOUCHER_BONUS_PERCENTAGE = 0.08; // Bonus percentage per usable voucher OVER the threshold
 
 
     // --- Price Range ---

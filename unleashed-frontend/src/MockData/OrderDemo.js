@@ -10,7 +10,7 @@ export const OrderListData = [
                 "size": "S",
                 "orderQuantity": 3,
                 "unitPrice": 10000,
-                "discountAmount": 20000,
+                "voucherAmount": 20000,
                 "productImage": "https://vn-test-11.slatic.net/p/ee7eb2c93a886097aed4a1a0cfb12ff6.jpg"
             },
             {

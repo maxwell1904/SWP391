@@ -9,7 +9,7 @@ const UserSideMenu = () => {
     const menuItems = [
         { path: '/user/information', label: 'User Information' },
         { path: '/user/orders', label: 'My Orders' },
-        { path: '/user/discounts', label: 'Discounts' },
+        { path: '/user/vouchers', label: 'Vouchers' },
         // { path: '/user/membership', label: 'Membership' },
         { path: '/user/histoty-review', label: 'History Reviews' },
         { path: '/user/notifications', label: 'Notifications' },

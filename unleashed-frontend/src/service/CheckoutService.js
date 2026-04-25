@@ -1,10 +1,10 @@
 import {apiClient} from "../core/api";
 import {toast, Zoom} from "react-toastify";
 
-export const checkDiscount = async (discountCode, authHeader, totalOrder) => {
+export const checkVoucher = async (voucherCode, authHeader, totalOrder) => {
   try {
     const response = await apiClient.get(
-      "/api/discounts/check-user-discount?discount=" + discountCode + "&total=" + totalOrder,
+      "/api/vouchers/check-user-voucher?voucher=" + voucherCode + "&total=" + totalOrder,
       {
         headers: {
           Authorization: authHeader,
@@ -14,7 +14,7 @@ export const checkDiscount = async (discountCode, authHeader, totalOrder) => {
     return response;
   } catch (error) {
     toast.error(
-      error.response?.data?.message || "Error when checking discount code! Try again.",
+      error.response?.data?.message || "Error when checking voucher code! Try again.",
       {
         position: "top-center",
         transition: Zoom,
@@ -28,7 +28,7 @@ export const checkoutOrder = async (checkoutItem, authHeader) => {
   try {
     const response = await apiClient.post("/api/orders", {
       notes: checkoutItem.notes,
-      discountCode: checkoutItem.discountCode,
+      voucherCode: checkoutItem.voucherCode,
       billingAddress: checkoutItem.billingAddress,
       shippingMethod: checkoutItem.shippingMethod,
       totalAmount: checkoutItem.totalAmount,
@@ -138,8 +138,8 @@ export const checkStock = async (checkoutItem, authHeader) => {
     }
 };
 
-export const getBestDiscounts = async (authHeader, cartTotal) => {
-    return apiClient.get("/api/discounts/best-for-checkout", {
+export const getBestVouchers = async (authHeader, cartTotal) => {
+    return apiClient.get("/api/vouchers/best-for-checkout", {
         headers: { Authorization: authHeader },
         params: { total: cartTotal }
     });

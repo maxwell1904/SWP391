@@ -35,7 +35,7 @@ public class Rank {
     private BigDecimal rankBaseDiscount;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "discountRankRequirement")
-    private Set<Discount> discounts = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "voucherRankRequirement")
+    private Set<Voucher> vouchers = new LinkedHashSet<>();
 
 }

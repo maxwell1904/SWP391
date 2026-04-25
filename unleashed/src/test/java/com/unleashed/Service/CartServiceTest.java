@@ -253,10 +253,10 @@
 //        return stockVariation;
 //    }
 //
-//    private Promotion createPromotion(Integer promotionId, Integer discountPercent, Product product) {
+//    private Promotion createPromotion(Integer promotionId, Integer voucherPercent, Product product) {
 //        Promotion promotion = new Promotion();
 //        promotion.setId(promotionId);
-//        promotion.setPromotionValue(BigDecimal.valueOf(discountPercent).divide(BigDecimal.valueOf(100))); // Assuming promotionValue is a fraction
+//        promotion.setPromotionValue(BigDecimal.valueOf(voucherPercent).divide(BigDecimal.valueOf(100))); // Assuming promotionValue is a fraction
 //        return promotion;
 //    }
 //}

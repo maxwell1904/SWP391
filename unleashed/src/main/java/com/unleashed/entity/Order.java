@@ -44,8 +44,8 @@ public class Order {
     private ShippingMethod shippingMethod;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "discount_id")
-    private Discount discount;
+    @JoinColumn(name = "voucher_id")
+    private Voucher voucher;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "incharge_employee_id")

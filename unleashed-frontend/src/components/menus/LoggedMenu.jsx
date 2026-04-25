@@ -103,11 +103,11 @@ const LoggedMenu = () => {
                     <ListItemText primary='Orders' />
                 </MenuItem>
 
-                <MenuItem component={Link} to='/user/discounts' onClick={handleMenuClose}>
+                <MenuItem component={Link} to='/user/vouchers' onClick={handleMenuClose}>
                     <ListItemIcon sx={{ fontSize: '1.75rem', minWidth: '40px' }}>
                         <TbRosetteDiscount className='text-3xl' />
                     </ListItemIcon>
-                    <ListItemText primary='Discounts' />
+                    <ListItemText primary='Vouchers' />
                 </MenuItem>
 
                 <MenuItem component={Link} to='/user/histoty-review' onClick={handleMenuClose}>

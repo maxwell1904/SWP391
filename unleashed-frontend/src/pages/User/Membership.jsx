@@ -77,7 +77,7 @@ export const Membership = () => {
                         <List style={{ textAlign: 'center', flexGrow: 1 }}>
                             <ListItem>
                                 <Typography component="span" style={{ fontWeight: 'bold' }}>
-                                    Discount benefit:
+                                    Voucher benefit:
                                 </Typography>{' '}
                                 <Typography component="span" style={{ color: '#8B4513', fontWeight: 'bold' }}>
                                     {Math.round(nextRank.rankBaseDiscount * 100)}%
@@ -140,7 +140,7 @@ export const Membership = () => {
                         <List style={{ textAlign: 'center', flexGrow: 1 }}> {/* Centered list with flexGrow */}
                             <ListItem>
                                 <Typography component="span" style={{ fontWeight: 'bold' }}>
-                                    Discount benefit:
+                                    Voucher benefit:
                                 </Typography>{' '}
                                 <Typography component="span" style={{ color: '#8B4513', fontWeight: 'bold' }}>
                                     {Math.round(currentRank.rankBaseDiscount * 100)}%
@@ -248,13 +248,13 @@ export const Membership = () => {
                                 Join the Club & Unlock Exclusive Perks
                             </Typography>
                             <Typography variant="subtitle1" align="center" gutterBottom>
-                                Get exclusive discounts, early access to promotions, and more!
+                                Get exclusive vouchers, early access to promotions, and more!
                             </Typography>
 
                             <List>
                                 <ListItem>
                                     <ListItemIcon><NewReleases color="primary" /></ListItemIcon>
-                                    <ListItemText primary="Exclusive discounts on new arrivals" />
+                                    <ListItemText primary="Exclusive vouchers on new arrivals" />
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon><Percent color="primary" /></ListItemIcon>

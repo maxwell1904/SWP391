@@ -57,7 +57,7 @@ public class OrderService {
     private final VariationRepository variationRepository;
     private final ProductVariationMapper productVariationMapper;
     private final UserRepository userRepository;
-    private final DiscountService discountService;
+    private final VoucherService voucherService;
     private final OrderStatusRepository orderStatusRepository;
     private final RankService rankService;
     private final StockVariationRepository stockVariationRepository;
@@ -81,7 +81,7 @@ public class OrderService {
                         UserRepository userRepository,
                         ProductRepository productRepository,
                         ReviewRepository reviewRepository,
-                        DiscountService discountService,
+                        VoucherService voucherService,
                         OrderStatusRepository orderStatusRepository,
                         VariationSingleRepository variationSingleRepository,
                         OrderVariationSingleRepository orderVariationSingleRepository,
@@ -103,7 +103,7 @@ public class OrderService {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.reviewRepository = reviewRepository;
-        this.discountService = discountService;
+        this.voucherService = voucherService;
         this.orderStatusRepository = orderStatusRepository;
         this.variationSingleRepository = variationSingleRepository;
         this.orderVariationSingleRepository = orderVariationSingleRepository;
@@ -516,15 +516,15 @@ public class OrderService {
             userService.updateUserPaymentMethod(orderDTO.getUserId(), orderDTO.getPaymentMethod().getPaymentMethodName());
         }
 
-        // 2. Check Discount
-        if (StringUtils.hasText(orderDTO.getDiscountCode())) {
+        // 2. Check Voucher
+        if (StringUtils.hasText(orderDTO.getVoucherCode())) {
             try {
-                Discount appliedDiscount = discountService.findDiscountEntityByCode(orderDTO.getDiscountCode())
-                        .orElseThrow(() -> new IllegalStateException("Discount code not found."));
-                discountService.updateUsageLimit(orderDTO.getDiscountCode(), orderDTO.getUserId());
-                order.setDiscount(appliedDiscount);
+                Voucher appliedVoucher = voucherService.findVoucherEntityByCode(orderDTO.getVoucherCode())
+                        .orElseThrow(() -> new IllegalStateException("Voucher code not found."));
+                voucherService.updateUsageLimit(orderDTO.getVoucherCode(), orderDTO.getUserId());
+                order.setVoucher(appliedVoucher);
             } catch (Exception e) {
-                throw new IllegalStateException("Failed to apply discount: " + e.getMessage());
+                throw new IllegalStateException("Failed to apply voucher: " + e.getMessage());
             }
         }
 
@@ -611,7 +611,7 @@ public class OrderService {
         order.setOrderTrackingNumber(generateTrackingNumber());
 
         order.setOrderNote(orderDTO.getNotes());
-        order.setDiscount(orderDTO.getDiscount());
+        order.setVoucher(orderDTO.getVoucher());
         order.setOrderBillingAddress(orderDTO.getBillingAddress());
 
         Calendar calendar = Calendar.getInstance();
@@ -1289,7 +1289,7 @@ public class OrderService {
             detailJson.put("size", variation.getSize() != null ? variation.getSize().getSizeName() : null);
 //            detailJson.put("orderQuantity", detail.getOrderQuantity());
             detailJson.put("unitPrice", detail.getVariationPriceAtPurchase());
-//            detailJson.put("discountAmount", detail.getDiscount());
+//            detailJson.put("voucherAmount", detail.getVoucher());
             detailJson.put("productImage", variation.getVariationImage());
 
             List<Map<String, Object>> reviews = reviewRepository.findReviewByProductId(UUID.fromString(variation.getProduct().getProductId().toString()))
@@ -1314,7 +1314,7 @@ public class OrderService {
             detailJson.put("size", null);
 //            detailJson.put("orderQuantity", detail.getOrderQuantity());
             detailJson.put("unitPrice", detail.getVariationPriceAtPurchase());
-//            detailJson.put("discountAmount", detail.getDiscountAmount());
+//            detailJson.put("voucherAmount", detail.getVoucherAmount());
             detailJson.put("productImage", null);
             detailJson.put("reviews", Collections.emptyList());
         }

@@ -44,32 +44,32 @@ Table comment_parent {
   comment_parent_id int
 }
 
-Table discount {
-  discount_id int [pk, not null]
-  discount_status_id int
-  discount_type_id int
-  discount_code nvarchar(20) [not null]
-  discount_value decimal(22, 2)
-  discount_description nvarchar(255)
-  discount_rank_requirement int
-  discount_minimum_order_value decimal(22, 2)
-  discount_maximum_value decimal(22, 2)
-  discount_usage_limit int
-  discount_start_date datetimeoffset(7)
-  discount_end_date datetimeoffset(7)
-  discount_created_at datetimeoffset(7)
-  discount_updated_at datetimeoffset(7)
-  discount_usage_count int
+Table voucher {
+  voucher_id int [pk, not null]
+  voucher_status_id int
+  voucher_type_id int
+  voucher_code nvarchar(20) [not null]
+  voucher_value decimal(22, 2)
+  voucher_description nvarchar(255)
+  voucher_rank_requirement int
+  voucher_minimum_order_value decimal(22, 2)
+  voucher_maximum_value decimal(22, 2)
+  voucher_usage_limit int
+  voucher_start_date datetimeoffset(7)
+  voucher_end_date datetimeoffset(7)
+  voucher_created_at datetimeoffset(7)
+  voucher_updated_at datetimeoffset(7)
+  voucher_usage_count int
 }
 
-Table discount_status {
-  discount_status_id int [pk, not null]
-  discount_status_name nvarchar(255)
+Table voucher_status {
+  voucher_status_id int [pk, not null]
+  voucher_status_name nvarchar(255)
 }
 
-Table discount_type {
-  discount_type_id int [pk, not null]
-  discount_type_name nvarchar(255)
+Table voucher_type {
+  voucher_type_id int [pk, not null]
+  voucher_type_name nvarchar(255)
 }
 
 Table notification {
@@ -95,7 +95,7 @@ Table order {
   order_status_id int
   payment_method_id int
   shipping_method_id int
-  discount_id int
+  voucher_id int
   incharge_employee_id uniqueidentifier
   order_date datetimeoffset(7)
   order_total_amount decimal(22, 2)
@@ -262,11 +262,11 @@ Table user {
   user_updated_at datetimeoffset(7)
 }
 
-Table user_discount {
+Table user_voucher {
   user_id uniqueidentifier [pk, not null]
-  discount_id int [pk, not null]
-  is_discount_used bit [not null]
-  discount_used_at datetimeoffset(7)
+  voucher_id int [pk, not null]
+  is_voucher_used bit [not null]
+  voucher_used_at datetimeoffset(7)
 }
 
 Table user_rank {
@@ -305,13 +305,13 @@ Ref: cart.variation_id > variation.variation_id
 Ref: comment.review_id > review.review_id
 Ref: comment_parent.comment_id > comment.comment_id
 Ref: comment_parent.comment_parent_id > comment.comment_id
-Ref: discount.discount_rank_requirement > rank.rank_id
-Ref: discount.discount_status_id > discount_status.discount_status_id
-Ref: discount.discount_type_id > discount_type.discount_type_id
+Ref: voucher.voucher_rank_requirement > rank.rank_id
+Ref: voucher.voucher_status_id > voucher_status.voucher_status_id
+Ref: voucher.voucher_type_id > voucher_type.voucher_type_id
 Ref: notification.user_id_sender > user.user_id
 Ref: notification_user.notification_id > notification.notification_id
 Ref: notification_user.user_id > user.user_id
-Ref: order.discount_id > discount.discount_id
+Ref: order.voucher_id > voucher.voucher_id
 Ref: order.incharge_employee_id > user.user_id
 Ref: order.order_status_id > order_status.order_status_id
 Ref: order.payment_method_id > payment_method.payment_method_id
@@ -338,8 +338,8 @@ Ref: transaction.stock_id > stock.stock_id
 Ref: transaction.transaction_type_id > transaction_type.transaction_type_id
 Ref: transaction.variation_id > variation.variation_id
 Ref: user.role_id > role.role_id
-Ref: user_discount.discount_id > discount.discount_id
-Ref: user_discount.user_id > user.user_id
+Ref: user_voucher.voucher_id > voucher.voucher_id
+Ref: user_voucher.user_id > user.user_id
 Ref: user_rank.rank_id > rank.rank_id
 Ref: user_rank.user_id > user.user_id
 Ref: variation.product_id > product.product_id

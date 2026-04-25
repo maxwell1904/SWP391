@@ -7,17 +7,17 @@ const ProductItem = ({ product }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const ratingValue = product.averageRating ?? product.avgRating ?? 0;
     const ratingCount = product.totalRatings ?? product.totalRating ?? 0;
-    let discountedPrice = product.productPrice;
+    let voucheredPrice = product.productPrice;
 
     if (product.promotion?.promotionType?.promotionTypeName === "PERCENTAGE" && product.promotionValue > 0) {
-        discountedPrice = product.productPrice - product.productPrice * (product.promotionValue / 100);
+        voucheredPrice = product.productPrice - product.productPrice * (product.promotionValue / 100);
     } else if (product.promotion?.promotionType?.promotionTypeName === "FIXED AMOUNT" && product.promotionValue > 0) {
-        discountedPrice = product.productPrice - product.promotionValue;
+        voucheredPrice = product.productPrice - product.promotionValue;
     }
 
     const displayPrice =
-        discountedPrice && discountedPrice >= 0
-            ? formatPrice(discountedPrice)
+        voucheredPrice && voucheredPrice >= 0
+            ? formatPrice(voucheredPrice)
             : 0;
 
     const originalPrice =

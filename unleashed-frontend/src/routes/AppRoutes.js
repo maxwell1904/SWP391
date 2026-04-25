@@ -34,7 +34,7 @@ import Shop from "../pages/Home/Shop";
 import Logout from "../pages/Login/Logout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import UserChangePassword from "../pages/User/UserChangePassword";
-import DiscountPage from "../pages/Discount/Discounts";
+import VoucherPage from "../pages/Voucher/Vouchers";
 import DashboardPromotions from "../pages/Dashboard/DashboardPromotions";
 import DashboardCreateStaffAccount from "../pages/Dashboard/DashboardCreateStaffAccount";
 import DashboardViewPromotionProduct from "../pages/Dashboard/DashboardViewPromotionProduct";
@@ -44,9 +44,9 @@ import DashboardAddProductToPromotion from "../pages/Dashboard/DashboardAddProdu
 import DashboardNotifications from "../pages/Dashboard/DashboardNotifications";
 import DashboardNotificationDetailPage from "../pages/Dashboard/DashboardNotificationDetailPage";
 import DashboardCreateNotification from "../pages/Dashboard/DashboardCreateNotification";
-import DashboardDiscounts from "../pages/Dashboard/DashboardDiscounts.js";
-import DashboardCreateDiscount from "../pages/Dashboard/DashboardCreateDiscount.js";
-import DashboardEditDiscount from "../pages/Dashboard/DashboardEditDiscount.js";
+import DashboardVouchers from "../pages/Dashboard/DashboardVouchers.js";
+import DashboardCreateVoucher from "../pages/Dashboard/DashboardCreateVoucher.js";
+import DashboardEditVoucher from "../pages/Dashboard/DashboardEditVoucher.js";
 import DashboardProducts from "../pages/Dashboard/DashboardProducts.js";
 import DashboardOrders from "../pages/Dashboard/DashboardOrders.js";
 import DashboardOrderDetailPage from "../pages/Dashboard/DashboardOrderDetailPage.jsx";
@@ -55,8 +55,8 @@ import DashboardProductVariations from "../pages/Dashboard/DashboardProductVaria
 import DashboardAddProducts from "../pages/Dashboard/DashboardAddProducts.js";
 import DashboardImportProducts from "../pages/Dashboard/DashboardImportProducts.js";
 import OrderDetail from "../pages/Order/OrderDetail.jsx";
-import DashboardViewUserDiscount from "../pages/Dashboard/DashboardViewUserDiscount.js";
-import DashboardAddAccountToDiscount from "../pages/Dashboard/DashboardAddAccountToDiscount.js";
+import DashboardViewUserVoucher from "../pages/Dashboard/DashboardViewUserVoucher.js";
+import DashboardAddAccountToVoucher from "../pages/Dashboard/DashboardAddAccountToVoucher.js";
 import DashboardEditProduct from "../pages/Dashboard/DashboardEditProduct.js";
 import DashboardAddProductVariations from "../pages/Dashboard/DashboardAddProductVariations.js";
 import DashboardEditProductVariation from "../pages/Dashboard/DashboardEditProductVariation.js";
@@ -70,7 +70,7 @@ import PaymentOptions from "../pages/footer/PaymentOptions.jsx";
 import ReturnOrder from "../pages/footer/ReturnOrder.jsx";
 import PrivacyPolicies from "../pages/footer/PrivacyPolicies.jsx";
 import SearchResultsPage from "../pages/SearchResult/SearchResultsPage.jsx";
-import DiscountDetailPage from "../pages/Discount/DiscountDetailPage";
+import VoucherDetailPage from "../pages/Voucher/VoucherDetailPage";
 import AllReviewsPage from "../pages/AllReviewsPage/AllReviewsPage";
 import ReviewHistory from "../pages/User/HistoryReviews.jsx";
 import WishlistPage from "../pages/Wishlist/Wishlist.jsx";
@@ -81,7 +81,7 @@ import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import { checkStatus } from "../service/AuthService.js";
 import NotificationPage from "../pages/User/NotificationPage";
 import NotificationDetailPage from "../pages/Notification/NotificationDetail";
-import DashboardAssignDiscount from "../pages/Dashboard/DashboardAssignDiscount";
+import DashboardAssignVoucher from "../pages/Dashboard/DashboardAssignVoucher";
 import UserPageLayout from "../layouts/UserPageLayout.jsx";
 
 const AppRoutes = ({ toggleSidebar, isOpen }) => {
@@ -273,10 +273,10 @@ const AppRoutes = ({ toggleSidebar, isOpen }) => {
         <Route path="/user/information" element={<UserProfile />} />
         <Route path="/user/orders" element={<OrderPage />} />
         <Route path="/user/histoty-review" element={<ReviewHistory />} />
-        <Route path="/user/discounts" element={<DiscountPage />} />
+        <Route path="/user/vouchers" element={<VoucherPage />} />
         <Route
-          path="/user/discounts/:discountId"
-          element={<DiscountDetailPage />}
+          path="/user/vouchers/:voucherId"
+          element={<VoucherDetailPage />}
         />
         <Route path="/user/notifications" element={<NotificationPage />} />
         <Route
@@ -568,61 +568,61 @@ const AppRoutes = ({ toggleSidebar, isOpen }) => {
         }
       />
       <Route
-        path="/Dashboard/Discounts"
+        path="/Dashboard/Vouchers"
         element={
           <PrivateRoute requiredRoles={["ADMIN"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>
-              <DashboardDiscounts />
+              <DashboardVouchers />
             </DashboardLayout>
           </PrivateRoute>
         }
       />
       <Route
-        path="/Dashboard/Discounts/:discountId"
+        path="/Dashboard/Vouchers/:voucherId"
         element={
           <PrivateRoute requiredRoles={["ADMIN"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>
-              <DashboardViewUserDiscount />
+              <DashboardViewUserVoucher />
             </DashboardLayout>
           </PrivateRoute>
         }
       />
       <Route
-        path="/Dashboard/Discounts/:discountId/AddAccount"
+        path="/Dashboard/Vouchers/:voucherId/AddAccount"
         element={
           <PrivateRoute requiredRoles={["ADMIN"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>
-              <DashboardAddAccountToDiscount />
+              <DashboardAddAccountToVoucher />
             </DashboardLayout>
           </PrivateRoute>
         }
       />
       <Route
-        path="/Dashboard/Discounts/:discountId/Assign"
+        path="/Dashboard/Vouchers/:voucherId/Assign"
         element={
           <PrivateRoute requiredRoles={["ADMIN"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>
-              <DashboardAssignDiscount />
+              <DashboardAssignVoucher />
             </DashboardLayout>
           </PrivateRoute>
         }
       />
       <Route
-        path="/Dashboard/Discounts/Create"
+        path="/Dashboard/Vouchers/Create"
         element={
           <PrivateRoute requiredRoles={["ADMIN"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>
-              <DashboardCreateDiscount />
+              <DashboardCreateVoucher />
             </DashboardLayout>
           </PrivateRoute>
         }
       />
       <Route
-        path="/Dashboard/Discounts/Edit/:discountId"
+        path="/Dashboard/Vouchers/Edit/:voucherId"
         element={
           <PrivateRoute requiredRoles={["ADMIN"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>
-              <DashboardEditDiscount />
+              <DashboardEditVoucher />
             </DashboardLayout>
           </PrivateRoute>
         }

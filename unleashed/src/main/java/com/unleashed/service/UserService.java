@@ -120,11 +120,11 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Page<DiscountUserViewDTO> searchUsersForAssignment(String searchTerm, int page, int size) {
+    public Page<VoucherUserViewDTO> searchUsersForAssignment(String searchTerm, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("userFullname").ascending());
         Page<User> userPage = userRepository.searchByTerm(searchTerm, pageable);
 
-        return userPage.map(user -> new DiscountUserViewDTO(
+        return userPage.map(user -> new VoucherUserViewDTO(
                 user.getUserId().toString(),
                 user.getUserUsername(),
                 user.getUserEmail(),
