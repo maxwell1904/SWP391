@@ -479,6 +479,10 @@ const AppRoutes = ({ toggleSidebar, isOpen }) => {
       />
       <Route
         path="/Dashboard/StockTransactions"
+        element={<Navigate to="/Dashboard/StockHistory" replace />}
+      />
+      <Route
+        path="/Dashboard/StockHistory"
         element={
           <PrivateRoute requiredRoles={["ADMIN", "STAFF"]}>
             <DashboardLayout toggleSidebar={toggleSidebar} isOpen={isOpen}>

@@ -41,9 +41,9 @@ public class StockTransactionRestController {
             @RequestBody StockTransactionDTO stockTransactionDTO) {
         boolean check = stockTransactionService.createStockTransactions(stockTransactionDTO);
         if (check) {
-            return ResponseEntity.ok("Bulk import of stock transactions successful");
+            return ResponseEntity.ok("Bulk import stock history recorded successfully");
         }
-        return ResponseEntity.badRequest().body("Bulk import of stock transactions failed");
+        return ResponseEntity.badRequest().body("Bulk import stock history recording failed");
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'STAFF')")

@@ -47,7 +47,7 @@ const DashboardStockTransactions = () => {
                 setTransactions(response.data.transactions);
                 setTotalPages(response.data.totalPages);
             })
-            .catch((error) => console.error("Error fetching stock transactions:", error))
+            .catch((error) => console.error("Error fetching stock history:", error))
             .finally(() => setLoading(false));
     };
 
@@ -85,7 +85,7 @@ const DashboardStockTransactions = () => {
     return (
         <div className="p-4">
             <Typography variant='h4' className='text-3xl font-bold mb-4'>
-                Stock Transaction History
+                Stock In/Out History
             </Typography>
 
             <div className='flex justify-between items-center mb-4 bg-white p-3 rounded-lg shadow gap-4'>
@@ -170,7 +170,7 @@ const DashboardStockTransactions = () => {
                     ) : (
                         <tr>
                             <td colSpan="8" className="text-center py-10 text-gray-500">
-                                No transactions found for the selected filters.
+                                No stock history found for the selected filters.
                             </td>
                         </tr>
                     )}

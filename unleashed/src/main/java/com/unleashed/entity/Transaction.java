@@ -57,8 +57,7 @@ public class Transaction {
     @JsonView(Views.TransactionView.class)
     private BigDecimal transactionProductPrice;
 
-    // DB schema currently has no transaction_note column; keep this field runtime-only.
-    @Transient
+    @Column(name = "transaction_note", length = 500)
     @JsonView(Views.TransactionView.class)
     private String transactionNote;
 

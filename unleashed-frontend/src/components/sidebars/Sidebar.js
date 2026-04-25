@@ -60,9 +60,9 @@ const Sidebar = ({ isOpen }) => {
       items: [
         { to: "/Dashboard/Warehouse", icon: FaWarehouse, label: "Warehouse" },
         {
-          to: "/Dashboard/StockTransactions",
+          to: "/Dashboard/StockHistory",
           icon: FaFileInvoice,
-          label: "Stock Transactions",
+          label: "Stock History",
         },
         { to: "/Dashboard/Providers", icon: FaUserGroup, label: "Providers" },
       ],
