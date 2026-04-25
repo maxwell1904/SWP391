@@ -91,7 +91,7 @@ const Sidebar = ({ isOpen }) => {
       title: "Marketing & Promotions",
       items: [
         { to: "/Dashboard/Promotions", icon: FaGift, label: "Promotions" },
-        { to: "/Dashboard/Discounts", icon: FaPercent, label: "Discounts" },
+        { to: "/Dashboard/Vouchers", icon: FaPercent, label: "Vouchers" },
       ],
     });
 

@@ -7,7 +7,7 @@ import com.unleashed.dto.ResponseDTO;
 import com.unleashed.dto.UserDTO;
 import com.unleashed.entity.User;
 import com.unleashed.exception.CustomException;
-import com.unleashed.service.DiscountService;
+import com.unleashed.service.VoucherService;
 import com.unleashed.service.EmailService;
 import com.unleashed.service.UserRoleService;
 import com.unleashed.service.UserService;
@@ -42,19 +42,19 @@ public class AuthRestController {
     private final UserRoleService userRoleService;
     private final JwtUtil jwtUtil;
     private final EmailService emailService;
-    private final DiscountService discountService;
+    private final VoucherService voucherService;
 
     private final AuthenticationManager authenticationManager;
 
 
     @Autowired
-    public AuthRestController(UserService userService, UserRoleService userRoleService, JwtUtil jwtUtil, AuthenticationManager authenticationManager, EmailService emailService, DiscountService discountService) {
+    public AuthRestController(UserService userService, UserRoleService userRoleService, JwtUtil jwtUtil, AuthenticationManager authenticationManager, EmailService emailService, VoucherService voucherService) {
         this.userService = userService;
         this.userRoleService = userRoleService;
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
         this.emailService = emailService;
-        this.discountService = discountService;
+        this.voucherService = voucherService;
     }
 
     @PostMapping("/login")

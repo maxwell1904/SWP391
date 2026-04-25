@@ -461,10 +461,10 @@
 //        return color;
 //    }
 //
-//    private Promotion createPromotion(Integer id, Integer discountPercent) {
+//    private Promotion createPromotion(Integer id, Integer voucherPercent) {
 //        Promotion promotion = new Promotion();
 //        promotion.setId(id);
-//        promotion.setPromotionValue(BigDecimal.valueOf(discountPercent).divide(BigDecimal.valueOf(100)));
+//        promotion.setPromotionValue(BigDecimal.valueOf(voucherPercent).divide(BigDecimal.valueOf(100)));
 //        return promotion;
 //    }
 //

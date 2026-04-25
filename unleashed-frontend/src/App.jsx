@@ -77,7 +77,7 @@ function App() {
         !location.pathname.startsWith("/user") &&
         !location.pathname.startsWith("/Dashboard") &&
         !location.pathname.startsWith("/confirm-registration") &&
-        location.pathname !== "/discounts";
+        location.pathname !== "/vouchers";
 
     const applyPadding = () => {
         const path = location.pathname;

@@ -74,11 +74,11 @@ public class OpenApiConfig {
 //    }
 //
 //    @Bean
-//    public GroupedOpenApi discountApiGroup() {
+//    public GroupedOpenApi voucherApiGroup() {
 //        return GroupedOpenApi.builder()
-//                .group("Discount")
+//                .group("Voucher")
 //                .packagesToScan("com.unleashed.controller")
-//                .pathsToMatch("/discounts/**") // Assuming DiscountRestController paths start with /discounts. Adjust paths if needed
+//                .pathsToMatch("/vouchers/**") // Assuming VoucherRestController paths start with /vouchers. Adjust paths if needed
 //                .build();
 //    }
 //

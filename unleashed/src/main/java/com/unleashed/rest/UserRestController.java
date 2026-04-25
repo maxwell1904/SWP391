@@ -1,7 +1,7 @@
 package com.unleashed.rest;
 
 
-import com.unleashed.dto.DiscountUserViewDTO;
+import com.unleashed.dto.VoucherUserViewDTO;
 import com.unleashed.service.UserRoleService;
 import com.unleashed.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +26,11 @@ public class UserRestController {
 
     @GetMapping("/search")
     @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
-    public ResponseEntity<Page<DiscountUserViewDTO>> searchUsers(
+    public ResponseEntity<Page<VoucherUserViewDTO>> searchUsers(
             @RequestParam(required = false, defaultValue = "") String searchTerm,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-        Page<DiscountUserViewDTO> users = userService.searchUsersForAssignment(searchTerm, page, size);
+        Page<VoucherUserViewDTO> users = userService.searchUsersForAssignment(searchTerm, page, size);
         return ResponseEntity.ok(users);
     }
 

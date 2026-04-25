@@ -124,9 +124,9 @@ export const getMyorders = async (authHeader, page) => {
 	}
 }
 
-export const getMyDiscount = async (authHeader) => {
+export const getMyVoucher = async (authHeader) => {
 	try {
-        return await apiClient.get('/api/discounts/me', {
+        return await apiClient.get('/api/vouchers/me', {
             headers: {
                 Authorization: authHeader,
             },

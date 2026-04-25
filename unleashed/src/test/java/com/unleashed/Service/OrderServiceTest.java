@@ -11,7 +11,7 @@
 //import com.unleashed.service.VNPayService;
 //import com.unleashed.service.OrderDetailService;
 //import com.unleashed.service.ProductVariationService;
-//import com.unleashed.service.DiscountService;
+//import com.unleashed.service.VoucherService;
 //import com.unleashed.service.RankService;
 //import jakarta.servlet.http.HttpServletRequest;
 //import lombok.extern.slf4j.Slf4j;
@@ -65,7 +65,7 @@
 //    @MockBean
 //    private UserRepository userRepository;
 //    @MockBean
-//    private DiscountService discountService;
+//    private VoucherService voucherService;
 //    @MockBean
 //    private OrderStatusRepository orderStatusRepository;
 //    @MockBean
@@ -86,7 +86,7 @@
 //    private Color colorRed, colorBlue;
 //    private Size sizeS, sizeM;
 //    private StockVariation stockVariation1, stockVariation2;
-//    private Discount discount;
+//    private Voucher voucher;
 //
 //    @BeforeEach
 //    void setUp() {
@@ -125,7 +125,7 @@
 //
 ////        stockVariation1 = createStockVariation(variation1, 100);
 ////        stockVariation2 = createStockVariation(variation2, 50);
-//        discount = createDiscount();
+//        voucher = createVoucher();
 //
 //        orders = Arrays.asList(
 //                createOrder("ORD001", user, orderStatusPending, paymentMethodVNPay, shippingMethodStandard, BigDecimal.valueOf(100)),
@@ -215,8 +215,8 @@
 ////        return stockVariation;
 ////    }
 //
-//    private Discount createDiscount() {
-//        return new Discount(); // Set properties if needed
+//    private Voucher createVoucher() {
+//        return new Voucher(); // Set properties if needed
 //    }
 //
 //

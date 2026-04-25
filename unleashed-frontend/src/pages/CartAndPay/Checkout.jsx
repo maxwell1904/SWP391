@@ -24,12 +24,12 @@ import ShipmentSelector from "../../service/ShipmentService";
 import { CommonRadioCard } from "../../components/inputs/Radio";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import {
-  checkDiscount,
+  checkVoucher,
   checkoutOrder,
   checkStock,
   getPaymentMethod,
   getShippingMethod,
-  getBestDiscounts,
+  getBestVouchers,
 } from "../../service/CheckoutService";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import { toast } from "react-toastify";
@@ -69,16 +69,16 @@ const CheckoutPage = () => {
   const [shippingMethods, setShippingMethods] = useState([]);
   const [shippingMethod, setShippingMethod] = useState();
   const { items, isEmpty, cartTotal } = useCart();
-  const [discountApply, setDiscountApply] = useState({
-    discountType: "",
-    discountValue: 0,
-    maximumDiscountValue: 0,
+  const [voucherApply, setVoucherApply] = useState({
+    voucherType: "",
+    voucherValue: 0,
+    maximumVoucherValue: 0,
   });
   const [userData, setUserData] = useState({});
   const [note, setNote] = useState("");
   const navigate = useNavigate();
-  const [discountCode, setDiscountCode] = useState("");
-  const [discountMinus, setDiscountMinus] = useState(0);
+  const [voucherCode, setVoucherCode] = useState("");
+  const [voucherMinus, setVoucherMinus] = useState(0);
   const [shippingFee, setShippingFee] = useState(0);
   const [finalTotal, setFinalTotal] = useState(0);
   const userState = useAuthUser();
@@ -86,11 +86,11 @@ const CheckoutPage = () => {
   const [isCheckoutReady, setIsCheckoutReady] = useState(false);
   const [houseNumber, setHouseNumber] = useState("");
   const [rank, setRank] = useState();
-  const [rankDiscount, setRankDiscount] = useState(0);
+  const [rankVoucher, setRankVoucher] = useState(0);
 
-  const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
-  const [suggestedDiscounts, setSuggestedDiscounts] = useState([]);
-  const [loadingDiscounts, setLoadingDiscounts] = useState(false);
+  const [isVoucherModalOpen, setIsVoucherModalOpen] = useState(false);
+  const [suggestedVouchers, setSuggestedVouchers] = useState([]);
+  const [loadingVouchers, setLoadingVouchers] = useState(false);
 
   const shippingMethodFee = useMemo(
     () => getShippingMethodFee(shippingMethod),
@@ -112,11 +112,11 @@ const CheckoutPage = () => {
   }, [hasLocationForShippingFee, hasShippingMethod]);
 
   const calculateFinalCheckoutPrice = useCallback(() => {
-    const totalBeforeDiscount = cartTotal + totalShippingFee;
-    const totalAfterDiscount =
-      totalBeforeDiscount - discountMinus - rankDiscount;
-    return Math.max(0, totalAfterDiscount);
-  }, [cartTotal, totalShippingFee, discountMinus, rankDiscount]);
+    const totalBeforeVoucher = cartTotal + totalShippingFee;
+    const totalAfterVoucher =
+      totalBeforeVoucher - voucherMinus - rankVoucher;
+    return Math.max(0, totalAfterVoucher);
+  }, [cartTotal, totalShippingFee, voucherMinus, rankVoucher]);
 
   useEffect(() => {
     if (isEmpty) {
@@ -196,27 +196,27 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (rank) {
-      setRankDiscount(cartTotal * (rank.rankBaseDiscount || 0));
+      setRankVoucher(cartTotal * (rank.rankBaseDiscount || 0));
     } else {
-      setRankDiscount(0);
+      setRankVoucher(0);
     }
   }, [cartTotal, rank]);
 
   useEffect(() => {
-    const fetchSuggestedDiscounts = async () => {
+    const fetchSuggestedVouchers = async () => {
       if (cartTotal > 0 && authHeader) {
-        setLoadingDiscounts(true);
+        setLoadingVouchers(true);
         try {
-          const response = await getBestDiscounts(authHeader, cartTotal);
-          setSuggestedDiscounts(response.data || []);
+          const response = await getBestVouchers(authHeader, cartTotal);
+          setSuggestedVouchers(response.data || []);
         } catch (error) {
-          console.error("Failed to fetch suggested discounts:", error);
+          console.error("Failed to fetch suggested vouchers:", error);
         } finally {
-          setLoadingDiscounts(false);
+          setLoadingVouchers(false);
         }
       }
     };
-    fetchSuggestedDiscounts();
+    fetchSuggestedVouchers();
   }, [cartTotal, authHeader]);
 
   useEffect(() => {
@@ -259,52 +259,52 @@ const CheckoutPage = () => {
     [shippingMethods],
   );
 
-  const handleDiscountCheck = async (code) => {
-    const codeToApply = code || discountCode;
+  const handleVoucherCheck = async (code) => {
+    const codeToApply = code || voucherCode;
     if (!codeToApply) return;
     try {
-      const response = await checkDiscount(codeToApply, authHeader, cartTotal);
+      const response = await checkVoucher(codeToApply, authHeader, cartTotal);
       if (response?.data) {
-        const discount = response.data;
-        setDiscountCode(codeToApply);
-        setDiscountApply(discount);
-        setDiscountMinus(calculateDiscount(cartTotal, discount));
-        toast.success("Discount applied successfully!", {
+        const voucher = response.data;
+        setVoucherCode(codeToApply);
+        setVoucherApply(voucher);
+        setVoucherMinus(calculateVoucher(cartTotal, voucher));
+        toast.success("Voucher applied successfully!", {
           position: "top-center",
           autoClose: 2000,
         });
       } else {
-        setDiscountApply({ discountType: "", value: 0 });
-        setDiscountMinus(0);
-        setDiscountCode("");
+        setVoucherApply({ voucherType: "", value: 0 });
+        setVoucherMinus(0);
+        setVoucherCode("");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Invalid discount code.", {
+      toast.error(error.response?.data?.message || "Invalid voucher code.", {
         position: "top-center",
         autoClose: 2000,
       });
-      setDiscountApply({ discountType: "", value: 0 });
-      setDiscountMinus(0);
-      setDiscountCode("");
+      setVoucherApply({ voucherType: "", value: 0 });
+      setVoucherMinus(0);
+      setVoucherCode("");
     }
   };
 
-  const handleSelectDiscount = (selectedCode) => {
-    setIsDiscountModalOpen(false);
-    handleDiscountCheck(selectedCode);
+  const handleSelectVoucher = (selectedCode) => {
+    setIsVoucherModalOpen(false);
+    handleVoucherCheck(selectedCode);
   };
 
-  const calculateDiscount = (originalPrice, discount) => {
-    if (!discount || !discount.discountType) return 0;
-    if (discount.discountType.id === 1) {
-      const calculatedDiscount = (originalPrice * discount.discountValue) / 100;
+  const calculateVoucher = (originalPrice, voucher) => {
+    if (!voucher || !voucher.voucherType) return 0;
+    if (voucher.voucherType.id === 1) {
+      const calculatedVoucher = (originalPrice * voucher.voucherValue) / 100;
       return Math.min(
-        calculatedDiscount,
-        discount.maximumDiscountValue || Infinity,
+        calculatedVoucher,
+        voucher.maximumVoucherValue || Infinity,
       );
     }
-    if (discount.discountType.id === 2) {
-      return discount.discountValue;
+    if (voucher.voucherType.id === 2) {
+      return voucher.voucherValue;
     }
     return 0;
   };
@@ -346,11 +346,11 @@ const CheckoutPage = () => {
       variationId: item.id,
       orderQuantity: item.quantity,
       unitPrice: item.price,
-      discountAmount: (item.price / cartTotal) * discountMinus,
+      voucherAmount: (item.price / cartTotal) * voucherMinus,
     }));
     return {
       notes: note,
-      discountCode: discountCode || null,
+      voucherCode: voucherCode || null,
       totalAmount: finalTotal,
       shippingFee: totalShippingFee,
       orderDetails: updatedOrderDetails,
@@ -361,9 +361,9 @@ const CheckoutPage = () => {
   }, [
     items,
     cartTotal,
-    discountMinus,
+    voucherMinus,
     note,
-    discountCode,
+    voucherCode,
     finalTotal,
     totalShippingFee,
     shippingMethod,
@@ -605,23 +605,23 @@ const CheckoutPage = () => {
             ))}
           </List>
           <p className="font-poppins font-semibold text-xl py-5">
-            Discount Code
+            Voucher Code
           </p>
           <TextField
             variant="outlined"
             fullWidth
-            placeholder="Enter discount code"
-            value={discountCode}
-            onChange={(e) => setDiscountCode(e.target.value)}
-            disabled={!!discountApply.discountType}
+            placeholder="Enter voucher code"
+            value={voucherCode}
+            onChange={(e) => setVoucherCode(e.target.value)}
+            disabled={!!voucherApply.voucherType}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <Button
-                    onClick={() => handleDiscountCheck()}
-                    disabled={!!discountApply.discountType}
+                    onClick={() => handleVoucherCheck()}
+                    disabled={!!voucherApply.voucherType}
                   >
-                    {discountApply.discountType ? "Applied" : "Apply"}
+                    {voucherApply.voucherType ? "Applied" : "Apply"}
                   </Button>
                 </InputAdornment>
               ),
@@ -629,11 +629,11 @@ const CheckoutPage = () => {
           />
           <Button
             variant="text"
-            onClick={() => setIsDiscountModalOpen(true)}
+            onClick={() => setIsVoucherModalOpen(true)}
             sx={{ mt: 1 }}
-            disabled={loadingDiscounts || suggestedDiscounts.length === 0}
+            disabled={loadingVouchers || suggestedVouchers.length === 0}
           >
-            {loadingDiscounts
+            {loadingVouchers
               ? "Finding Vouchers..."
               : "Choose Available Voucher"}
           </Button>
@@ -741,17 +741,17 @@ const CheckoutPage = () => {
                   Membership ({rank.rankName})
                 </Typography>
                 <Typography fontWeight="600" color="success.main">
-                  - {formatPrice(rankDiscount)}
+                  - {formatPrice(rankVoucher)}
                 </Typography>
               </Box>
             )}
-            {discountMinus > 0 && (
+            {voucherMinus > 0 && (
               <Box
                 sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
               >
-                <Typography color="text.secondary">Coupon Discount</Typography>
+                <Typography color="text.secondary">Coupon Voucher</Typography>
                 <Typography fontWeight="600" color="success.main">
-                  - {formatPrice(discountMinus)}
+                  - {formatPrice(voucherMinus)}
                 </Typography>
               </Box>
             )}
@@ -852,8 +852,8 @@ const CheckoutPage = () => {
         </div>
       </div>
       <Modal
-        open={isDiscountModalOpen}
-        onClose={() => setIsDiscountModalOpen(false)}
+        open={isVoucherModalOpen}
+        onClose={() => setIsVoucherModalOpen(false)}
       >
         <Paper sx={modalStyle}>
           <Box
@@ -867,24 +867,24 @@ const CheckoutPage = () => {
             <Typography variant="h6" component="h2">
               Select a Voucher
             </Typography>
-            <IconButton onClick={() => setIsDiscountModalOpen(false)}>
+            <IconButton onClick={() => setIsVoucherModalOpen(false)}>
               <CloseIcon />
             </IconButton>
           </Box>
           <Divider />
           <List sx={{ maxHeight: 400, overflow: "auto" }}>
-            {loadingDiscounts ? (
+            {loadingVouchers ? (
               <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
                 <CircularProgress />
               </Box>
-            ) : suggestedDiscounts.length > 0 ? (
-              suggestedDiscounts.map((d) => (
+            ) : suggestedVouchers.length > 0 ? (
+              suggestedVouchers.map((d) => (
                 <ListItem
-                  key={d.discountId}
+                  key={d.voucherId}
                   secondaryAction={
                     <Button
                       edge="end"
-                      onClick={() => handleSelectDiscount(d.discountCode)}
+                      onClick={() => handleSelectVoucher(d.voucherCode)}
                     >
                       Apply
                     </Button>
@@ -893,9 +893,9 @@ const CheckoutPage = () => {
                 >
                   <ListItemText
                     primary={
-                      d.discountTypeName === "PERCENTAGE"
-                        ? `${d.discountValue}% OFF`
-                        : `${formatPrice(d.discountValue)} OFF`
+                      d.voucherTypeName === "PERCENTAGE"
+                        ? `${d.voucherValue}% OFF`
+                        : `${formatPrice(d.voucherValue)} OFF`
                     }
                     secondary={
                       <React.Fragment>
@@ -904,7 +904,7 @@ const CheckoutPage = () => {
                           variant="body2"
                           color="text.primary"
                         >
-                          {`Code: ${d.discountCode}`}
+                          {`Code: ${d.voucherCode}`}
                         </Typography>
                         {` — Min. spend ${formatPrice(d.minimumOrderValue)}`}
                       </React.Fragment>

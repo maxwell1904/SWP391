@@ -22,7 +22,7 @@ public class AppTaskScheduler {
     private static final Logger logger = LoggerFactory.getLogger(AppTaskScheduler.class);
 
     private final PromotionService promotionService;
-    private final DiscountService discountService;
+    private final VoucherService voucherService;
     private final ProductService productService;
     private final UserService userService;
 
@@ -34,11 +34,11 @@ public class AppTaskScheduler {
      */
     @Autowired
     public AppTaskScheduler(PromotionService promotionService,
-                            DiscountService discountService,
+                            VoucherService voucherService,
                             ProductService productService,
                             UserService userService) {
         this.promotionService = promotionService;
-        this.discountService = discountService;
+        this.voucherService = voucherService;
         this.productService = productService;
         this.userService = userService;
     }
@@ -51,7 +51,7 @@ public class AppTaskScheduler {
             userService.findOrCreateDefaultPrivilegedUsersForDev();
             productService.performScheduledAgingUpdate();
             promotionService.performScheduledStatusUpdates();
-            discountService.performScheduledStatusUpdates();
+            voucherService.performScheduledStatusUpdates();
             productService.performScheduledStockUpdates();
             logger.info("'System' user initialized successfully.");
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class AppTaskScheduler {
         try {
             // tasks
             promotionService.performScheduledStatusUpdates();
-            discountService.performScheduledStatusUpdates();
+            voucherService.performScheduledStatusUpdates();
             productService.performScheduledStockUpdates();
 
         } catch (Exception e) {

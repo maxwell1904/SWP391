@@ -242,12 +242,12 @@ function OrderDetail() {
     return (
       acc +
       (item.unitPrice || 0) * (item.orderQuantity || 0) -
-      (item.discountAmount || 0)
+      (item.voucherAmount || 0)
     );
   }, 0);
 
-  const discountTotal = orderItems.reduce(
-    (acc, item) => acc + (item.discountAmount || 0),
+  const voucherTotal = orderItems.reduce(
+    (acc, item) => acc + (item.voucherAmount || 0),
     0,
   );
 
@@ -464,7 +464,7 @@ function OrderDetail() {
                 </Box>
 
                 <Box>
-                  {item.discountAmount > 0 && (
+                  {item.voucherAmount > 0 && (
                     <Typography
                       variant="body1"
                       sx={{
@@ -473,8 +473,8 @@ function OrderDetail() {
                         color: "green",
                       }}
                     >
-                      <span style={{ fontWeight: "bold" }}>Discount:</span> -{" "}
-                      {formatPrice(item.discountAmount)}
+                      <span style={{ fontWeight: "bold" }}>Voucher:</span> -{" "}
+                      {formatPrice(item.voucherAmount)}
                     </Typography>
                   )}
                   <Typography
@@ -488,7 +488,7 @@ function OrderDetail() {
                     <span style={{ fontWeight: "bold" }}>Total Price:</span>{" "}
                     {formatPrice(
                       (item.unitPrice || 0) * (item.orderQuantity || 0) -
-                        (item.discountAmount || 0),
+                        (item.voucherAmount || 0),
                     )}
                   </Typography>
                 </Box>
@@ -542,16 +542,16 @@ function OrderDetail() {
             {formatPrice(totalProductPrice)}
           </Typography>
         </Box>
-        {discountTotal > 0 && (
+        {voucherTotal > 0 && (
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
             <Typography
               variant="h6"
               sx={{ fontFamily: "Poppins", fontWeight: "bold" }}
             >
-              Discount:
+              Voucher:
             </Typography>
             <Typography variant="h6" sx={{ fontFamily: "Poppins" }}>
-              - {formatPrice(discountTotal)}
+              - {formatPrice(voucherTotal)}
             </Typography>
           </Box>
         )}

@@ -10,17 +10,17 @@ const ProductRecommend = ({product, username}) => { // No need for username here
     const ratingCount = product.totalRatings ?? product.totalRating ?? 0;
 
 
-    // Calculate discounted price (same as before)
-    let discountedPrice = product.productPrice;
+    // Calculate vouchered price (same as before)
+    let voucheredPrice = product.productPrice;
 
     if (product?.promotionType?.promotionTypeName === "PERCENTAGE" && product.promotionValue > 0) {
-        discountedPrice = product.productPrice - product.productPrice * (product.promotionValue / 100);
+        voucheredPrice = product.productPrice - product.productPrice * (product.promotionValue / 100);
 
     } else if (product?.promotionType?.promotionTypeName === "FIXED AMOUNT" && product.promotionValue > 0) {
-        discountedPrice = product.productPrice - product.promotionValue;
+        voucheredPrice = product.productPrice - product.promotionValue;
     }
 
-    const displayPrice = discountedPrice && discountedPrice >= 0 ? formatPrice(discountedPrice) : "0.00";
+    const displayPrice = voucheredPrice && voucheredPrice >= 0 ? formatPrice(voucheredPrice) : "0.00";
     const originalPrice = product.productPrice && product.productPrice >= 0 ? formatPrice(product.productPrice) : "0.00";
 
 

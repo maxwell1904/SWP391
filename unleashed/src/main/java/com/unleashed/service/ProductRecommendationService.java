@@ -31,9 +31,9 @@ public class ProductRecommendationService {
     private final OrderRepository orderRepository;
     private final OrderVariationSingleRepository orderVariationSingleRepository;
     private final PromotionProductRepository promotionProductRepository;
-    private final DiscountRepository discountRepository;
+    private final VoucherRepository voucherRepository;
     private final StockVariationRepository stockVariationRepository;
-    private final UserDiscountRepository userDiscountRepository;
+    private final UserVoucherRepository userVoucherRepository;
     private final UserRepository userRepository;
     private final VariationRepository variationRepository;
     private final CartRepository cartRepository;
@@ -49,9 +49,9 @@ public class ProductRecommendationService {
             OrderRepository orderRepository,
             OrderVariationSingleRepository orderVariationSingleRepository,
             PromotionProductRepository promotionProductRepository,
-            DiscountRepository discountRepository,
+            VoucherRepository voucherRepository,
             StockVariationRepository stockVariationRepository,
-            UserDiscountRepository userDiscountRepository,
+            UserVoucherRepository userVoucherRepository,
             UserRepository userRepository,
             VariationRepository variationRepository,
             CartRepository cartRepository,
@@ -61,9 +61,9 @@ public class ProductRecommendationService {
         this.orderRepository = orderRepository;
         this.orderVariationSingleRepository = orderVariationSingleRepository;
         this.promotionProductRepository = promotionProductRepository;
-        this.discountRepository = discountRepository;
+        this.voucherRepository = voucherRepository;
         this.stockVariationRepository = stockVariationRepository;
-        this.userDiscountRepository = userDiscountRepository;
+        this.userVoucherRepository = userVoucherRepository;
         this.userRepository = userRepository;
         this.variationRepository = variationRepository;
         this.cartRepository = cartRepository;
@@ -117,20 +117,20 @@ public class ProductRecommendationService {
                         product -> (long) Optional.ofNullable(stockVariationRepository.getTotalStockQuantityForProduct(product.getProductId())).orElse(0)
                 ));
 
-        List<UserDiscount> allUserDiscounts = userDiscountRepository.findAll();
-        Map<UUID, List<UserDiscount>> userDiscountsMap = allUserDiscounts.stream()
+        List<UserVoucher> allUserVouchers = userVoucherRepository.findAll();
+        Map<UUID, List<UserVoucher>> userVouchersMap = allUserVouchers.stream()
                 .collect(Collectors.groupingBy(ud -> ud.getId().getUserId()));
 
-        List<Discount> allDiscounts = discountRepository.findAll();
-        Map<Integer, Discount> discountMap = allDiscounts.stream()
-                .collect(Collectors.toMap(Discount::getDiscountId, Function.identity()));
+        List<Voucher> allVouchers = voucherRepository.findAll();
+        Map<Integer, Voucher> voucherMap = allVouchers.stream()
+                .collect(Collectors.toMap(Voucher::getVoucherId, Function.identity()));
 
         List<UUID> topSoldProductIds = orderRepository.findTopSoldProductIds(RecommendationConfig.TRENDING_DAYS_WINDOW, RecommendationConfig.MAX_TRENDING_PRODUCTS);
 
 
         List<ScoredProductDTO> scoredProducts = allProducts.stream()
                 .map(product -> {
-                    double score = calculateRecommendationScore(product, purchaseAnalysis, userId, cartAnalysis, promotionProductIds, productStockMap, userDiscountsMap, discountMap, topSoldProductIds, currentProductName);
+                    double score = calculateRecommendationScore(product, purchaseAnalysis, userId, cartAnalysis, promotionProductIds, productStockMap, userVouchersMap, voucherMap, topSoldProductIds, currentProductName);
                     BigDecimal representativePrice = getRepresentativePrice(product);
                     double priceDifference = (purchaseAnalysis != null && representativePrice != null)
                             ? Math.abs(representativePrice.doubleValue() - purchaseAnalysis.getAveragePrice())
@@ -323,8 +323,8 @@ public class ProductRecommendationService {
                                                 CartAnalysisDTO cartAnalysis,
                                                 Set<UUID> promotionProductIds,
                                                 Map<UUID, Long> productStockMap,
-                                                Map<UUID, List<UserDiscount>> userDiscountsMap,
-                                                Map<Integer, Discount> discountMap,
+                                                Map<UUID, List<UserVoucher>> userVouchersMap,
+                                                Map<Integer, Voucher> voucherMap,
                                                 List<UUID> topSoldProductIds,
                                                 String currentProductName) {
         double score = 0;
@@ -369,24 +369,24 @@ public class ProductRecommendationService {
                 score += RecommendationConfig.SCORE_WEIGHT_PROMOTION;
             }
 
-            if (userId != null && userDiscountsMap != null) {
-                List<UserDiscount> userDiscounts = userDiscountsMap.get(userId);
-                if (userDiscounts != null) {
-                    long usableDiscountCount = userDiscounts.stream()
-                            .filter(userDiscount -> !userDiscount.getIsDiscountUsed())
-                            .filter(userDiscount -> {
-                                Discount discount = discountMap.get(userDiscount.getId().getDiscountId());
-                                return discount != null && discount.getDiscountEndDate().isAfter(OffsetDateTime.now());
+            if (userId != null && userVouchersMap != null) {
+                List<UserVoucher> userVouchers = userVouchersMap.get(userId);
+                if (userVouchers != null) {
+                    long usableVoucherCount = userVouchers.stream()
+                            .filter(userVoucher -> !userVoucher.getIsVoucherUsed())
+                            .filter(userVoucher -> {
+                                Voucher voucher = voucherMap.get(userVoucher.getId().getVoucherId());
+                                return voucher != null && voucher.getVoucherEndDate().isAfter(OffsetDateTime.now());
                             })
-                            .filter(userDiscount -> {
-                                Discount discount = discountMap.get(userDiscount.getId().getDiscountId());
-                                return representativePrice != null && discount != null && discount.getDiscountMinimumOrderValue() != null && discount.getDiscountMinimumOrderValue().compareTo(representativePrice) <= 0;
+                            .filter(userVoucher -> {
+                                Voucher voucher = voucherMap.get(userVoucher.getId().getVoucherId());
+                                return representativePrice != null && voucher != null && voucher.getVoucherMinimumOrderValue() != null && voucher.getVoucherMinimumOrderValue().compareTo(representativePrice) <= 0;
                             })
                             .count();
 
-                    score += RecommendationConfig.SCORE_WEIGHT_DISCOUNT;
-                    if (usableDiscountCount >= RecommendationConfig.DISCOUNT_BONUS_THRESHOLD) {
-                        score += usableDiscountCount * RecommendationConfig.USABLE_DISCOUNT_BONUS_PERCENTAGE;
+                    score += RecommendationConfig.SCORE_WEIGHT_VOUCHER;
+                    if (usableVoucherCount >= RecommendationConfig.VOUCHER_BONUS_THRESHOLD) {
+                        score += usableVoucherCount * RecommendationConfig.USABLE_VOUCHER_BONUS_PERCENTAGE;
                     }
                 }
             }
