@@ -1,9 +1,7 @@
 package com.unleashed.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.unleashed.entity.VoucherStatus;
 import com.unleashed.entity.VoucherType;
-import com.unleashed.entity.Rank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,10 +24,7 @@ public class VoucherDTO {
     private BigDecimal minimumOrderValue;
     private BigDecimal maximumVoucherValue;
     private Integer usageLimit;
-    @JsonProperty("voucherRank")
-    private Rank rank;
     private Integer usageCount;
     private String voucherTypeName;
     private String voucherStatusName;
-    private String rankName;
 }

@@ -51,7 +51,6 @@ Table voucher {
   voucher_code nvarchar(20) [not null]
   voucher_value decimal(22, 2)
   voucher_description nvarchar(255)
-  voucher_rank_requirement int
   voucher_minimum_order_value decimal(22, 2)
   voucher_maximum_value decimal(22, 2)
   voucher_usage_limit int
@@ -158,14 +157,6 @@ Table provider {
   provider_updated_at datetimeoffset(7)
 }
 
-Table rank {
-  rank_id int [pk, not null]
-  rank_name nvarchar(max)
-  rank_num int
-  rank_payment_requirement decimal(22, 2)
-  rank_base_discount numeric(3, 2)
-}
-
 Table review {
   review_id int [pk, not null]
   product_id uniqueidentifier
@@ -269,16 +260,6 @@ Table user_voucher {
   voucher_used_at datetimeoffset(7)
 }
 
-Table user_rank {
-  user_id uniqueidentifier [pk, not null]
-  rank_id int [not null]
-  money_spent decimal(22, 2)
-  rank_status smallint [not null]
-  rank_expire_date date [not null]
-  rank_created_date datetimeoffset(7)
-  rank_updated_date datetimeoffset(7)
-}
-
 Table variation {
   variation_id int [pk, not null]
   product_id uniqueidentifier
@@ -305,7 +286,6 @@ Ref: cart.variation_id > variation.variation_id
 Ref: comment.review_id > review.review_id
 Ref: comment_parent.comment_id > comment.comment_id
 Ref: comment_parent.comment_parent_id > comment.comment_id
-Ref: voucher.voucher_rank_requirement > rank.rank_id
 Ref: voucher.voucher_status_id > voucher_status.voucher_status_id
 Ref: voucher.voucher_type_id > voucher_type.voucher_type_id
 Ref: notification.user_id_sender > user.user_id
@@ -340,8 +320,6 @@ Ref: transaction.variation_id > variation.variation_id
 Ref: user.role_id > role.role_id
 Ref: user_voucher.voucher_id > voucher.voucher_id
 Ref: user_voucher.user_id > user.user_id
-Ref: user_rank.rank_id > rank.rank_id
-Ref: user_rank.user_id > user.user_id
 Ref: variation.product_id > product.product_id
 Ref: variation.color_id > color.color_id
 Ref: variation.size_id > size.size_id

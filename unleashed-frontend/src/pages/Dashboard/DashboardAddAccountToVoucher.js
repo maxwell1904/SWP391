@@ -12,85 +12,42 @@ const DashboardAddAccountToVoucher = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const varToken = useAuthHeader();
-  const [voucherRank, setVoucherRank] = useState(null); // State to store voucher rank
     const [selectAllChecked, setSelectAllChecked] = useState(false); // State for select all checkbox
-    const [loadingVoucher, setLoadingVoucher] = useState(true); // State to track voucher rank loading
-    const [loadingAccounts, setLoadingAccounts] = useState(true); // State to track accounts loading
 
     useEffect(() => {
-        const fetchVoucherRank = async () => {
-            setLoadingVoucher(true);
-            try {
-                const response = await apiClient.get(`/api/vouchers/${voucherId}`, {
-                    headers: { Authorization: varToken },
-                });
-                if (response.status === 200) {
-                    setVoucherRank(response.data.voucherRank.rankNum); // Assuming your voucher object has a 'rank' property
-                } else {
-                    toast.error("Failed to fetch voucher details.", {
-                        position: "bottom-right",
-                        transition: Zoom,
+        apiClient
+            .get(`/api/vouchers/${voucherId}/users`, {
+                headers: { Authorization: varToken },
+            })
+            .then((resVoucher) => {
+                const existingAccountIds = resVoucher.data.users.map((user) => user.userId);
+                return apiClient
+                    .get("/api/admin/users/search", {
+                        headers: { Authorization: varToken },
+                    })
+                    .then((resUsers) => {
+                        const fetchedAccounts = resUsers.data || [];
+                        const customerAccounts = fetchedAccounts.filter(
+                            (account) => account.role === "CUSTOMER"
+                        );
+                        const filteredByVoucher = customerAccounts.filter(
+                            (account) => !existingAccountIds.includes(account.userId)
+                        );
+                        setAccounts(filteredByVoucher);
+                        setFilteredAccounts(filteredByVoucher);
                     });
-                }
-            } catch (error) {
-                console.error("Error fetching voucher details:", error);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
                 toast.error(
-                    error.response?.data?.message || "Error fetching voucher details.",
+                    error.response?.data?.message || "Error fetching data.",
                     {
                         position: "bottom-right",
                         transition: Zoom,
                     }
                 );
-            } finally {
-                setLoadingVoucher(false);
-            }
-        };
-
-        fetchVoucherRank();
+            });
     }, [voucherId, varToken]);
-
-    useEffect(() => {
-        if (voucherRank !== null) {
-            setLoadingAccounts(true);
-            apiClient
-                .get(`/api/vouchers/${voucherId}/users`, {
-                    headers: { Authorization: varToken },
-                })
-                .then((resVoucher) => {
-                    const existingAccountIds = resVoucher.data.users.map((user) => user.userId);
-                    return apiClient
-                        .get("/api/admin/users/search", {
-                            headers: { Authorization: varToken },
-                        })
-                        .then((resUsers) => {
-                            const fetchedAccounts = resUsers.data || [];
-                            const customerAccounts = fetchedAccounts.filter(
-                                (account) =>
-                                    account.role === "CUSTOMER" &&
-                                    account.rank?.rankNum >= voucherRank
-                            );
-                            const filteredByVoucher = customerAccounts.filter(
-                                (account) => !existingAccountIds.includes(account.userId)
-                            );
-                            setAccounts(filteredByVoucher);
-                            setFilteredAccounts(filteredByVoucher);
-                        });
-                })
-                .catch((error) => {
-                    console.error("Error fetching data:", error);
-                    toast.error(
-                        error.response?.data?.message || "Error fetching data.",
-                        {
-                            position: "bottom-right",
-                            transition: Zoom,
-                        }
-                    );
-                })
-                .finally(() => {
-                    setLoadingAccounts(false);
-                });
-        }
-    }, [voucherId, varToken, voucherRank]);
 
   useEffect(() => {
     const filtered = accounts.filter((account) =>
