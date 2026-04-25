@@ -83,7 +83,6 @@ const DashboardViewUserVoucher = () => {
                 <Box sx={{ display: 'grid', gridTemplateColumns: { sm: '1fr 1fr 1fr' }, gap: 2 }}>
                     <InfoItem label="Type" value={voucher.voucherTypeName} />
                     <InfoItem label="Status" value={voucher.voucherStatusName} />
-                    <InfoItem label="Rank Requirement" value={voucher.rankName} />
                     <InfoItem
                         label="Value"
                         value={voucher.voucherTypeName === 'PERCENTAGE' ? `${voucher.voucherValue}%` : formatPrice(voucher.voucherValue)}

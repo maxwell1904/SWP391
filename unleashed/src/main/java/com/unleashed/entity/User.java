@@ -88,10 +88,6 @@ public class User implements UserDetails {
     @Column(name = "user_updated_at")
     private OffsetDateTime userUpdatedAt;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    private UserRank userRank;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(this.getRole().getRoleName()));

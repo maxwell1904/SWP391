@@ -42,7 +42,6 @@ public class VoucherService {
     private final JwtUtil jwtUtil;
     private final VoucherStatusRespository voucherStatusRespository;
     private final VoucherTypeRepository voucherTypeRepository;
-    private final RankRepository rankRepository;
     private final OrderRepository orderRepository;
 
     @Autowired
@@ -53,7 +52,6 @@ public class VoucherService {
                            UserMapper userMapper,
                            VoucherStatusRespository voucherStatusRespository,
                            VoucherTypeRepository voucherTypeRepository,
-                           RankRepository rankRepository,
                            OrderRepository orderRepository) {
         this.voucherRepository = voucherRepository;
         this.userVoucherRepository = userVoucherRepository;
@@ -62,7 +60,6 @@ public class VoucherService {
         this.jwtUtil = jwtUtil;
         this.voucherStatusRespository = voucherStatusRespository;
         this.voucherTypeRepository = voucherTypeRepository;
-        this.rankRepository = rankRepository;
         this.orderRepository = orderRepository;
     }
 
@@ -144,6 +141,8 @@ public class VoucherService {
 
     @Transactional
     public VoucherDTO addVoucher(VoucherDTO voucherDTO) {
+        validateVoucherRules(voucherDTO);
+
         if (voucherDTO.getStartDate() != null && voucherDTO.getEndDate() != null &&
                 voucherDTO.getStartDate().isAfter(voucherDTO.getEndDate())) {
             throw new IllegalArgumentException("Start date cannot be after end date.");
@@ -159,6 +158,8 @@ public class VoucherService {
 
     @Transactional
     public Optional<VoucherDTO> updateVoucher(Integer voucherId, VoucherDTO voucherDTO) {
+        validateVoucherRules(voucherDTO);
+
         return voucherRepository.findById(voucherId).map(existingVoucher -> {
             existingVoucher.setVoucherCode(voucherDTO.getVoucherCode());
             existingVoucher.setVoucherValue(voucherDTO.getVoucherValue());
@@ -181,6 +182,13 @@ public class VoucherService {
 
             return Optional.of(convertToDTO(voucherRepository.save(existingVoucher)));
         }).orElse(Optional.empty());
+    }
+
+    private void validateVoucherRules(VoucherDTO voucherDTO) {
+        Integer usageLimit = voucherDTO.getUsageLimit();
+        if (usageLimit == null || usageLimit < 1 || usageLimit > 100) {
+            throw new IllegalArgumentException("Usage limit must be between 1 and 100.");
+        }
     }
 
     @Transactional(readOnly = true)
@@ -451,7 +459,6 @@ public class VoucherService {
         dto.setMinimumOrderValue(voucher.getVoucherMinimumOrderValue());
         dto.setMaximumVoucherValue(voucher.getVoucherMaximumValue());
         dto.setUsageLimit(voucher.getVoucherUsageLimit());
-        dto.setRank(voucher.getVoucherRankRequirement());
         dto.setUsageCount(voucher.getVoucherUsageCount());
 
         if (voucher.getVoucherType() != null) {
@@ -460,12 +467,6 @@ public class VoucherService {
 
         if (voucher.getVoucherStatus() != null) {
             dto.setVoucherStatusName(voucher.getVoucherStatus().getVoucherStatusName());
-        }
-
-        if (voucher.getVoucherRankRequirement() != null) {
-            dto.setRankName(voucher.getVoucherRankRequirement().getRankName());
-        } else {
-            dto.setRankName("All Ranks");
         }
 
         return dto;
@@ -491,12 +492,6 @@ public class VoucherService {
             VoucherType voucherType = voucherTypeRepository.findById(voucherDTO.getVoucherType().getId())
                     .orElseThrow(() -> new ResourceNotFoundException("VoucherType not found"));
             voucher.setVoucherType(voucherType);
-        }
-
-        if (voucherDTO.getRank() != null && voucherDTO.getRank().getId() != null) {
-            Rank rank = rankRepository.findById(voucherDTO.getRank().getId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Rank not found"));
-            voucher.setVoucherRankRequirement(rank);
         }
 
         voucher.setVoucherDescription(voucherDTO.getVoucherDescription());

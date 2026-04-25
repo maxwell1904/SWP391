@@ -22,7 +22,6 @@ import LocationSelector from "../../service/LocationService";
 import { formatPrice } from "../../components/format/formats";
 import ShipmentSelector from "../../service/ShipmentService";
 import { CommonRadioCard } from "../../components/inputs/Radio";
-import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import {
   checkVoucher,
   checkoutOrder,
@@ -33,7 +32,7 @@ import {
 } from "../../service/CheckoutService";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import { toast } from "react-toastify";
-import { fetchMembership, GetUserInfo } from "../../service/UserService";
+import { GetUserInfo } from "../../service/UserService";
 import CloseIcon from "@mui/icons-material/Close";
 
 const modalStyle = {
@@ -81,12 +80,9 @@ const CheckoutPage = () => {
   const [voucherMinus, setVoucherMinus] = useState(0);
   const [shippingFee, setShippingFee] = useState(0);
   const [finalTotal, setFinalTotal] = useState(0);
-  const userState = useAuthUser();
   const authHeader = useAuthHeader();
   const [isCheckoutReady, setIsCheckoutReady] = useState(false);
   const [houseNumber, setHouseNumber] = useState("");
-  const [rank, setRank] = useState();
-  const [rankVoucher, setRankVoucher] = useState(0);
 
   const [isVoucherModalOpen, setIsVoucherModalOpen] = useState(false);
   const [suggestedVouchers, setSuggestedVouchers] = useState([]);
@@ -113,10 +109,9 @@ const CheckoutPage = () => {
 
   const calculateFinalCheckoutPrice = useCallback(() => {
     const totalBeforeVoucher = cartTotal + totalShippingFee;
-    const totalAfterVoucher =
-      totalBeforeVoucher - voucherMinus - rankVoucher;
+    const totalAfterVoucher = totalBeforeVoucher - voucherMinus;
     return Math.max(0, totalAfterVoucher);
-  }, [cartTotal, totalShippingFee, voucherMinus, rankVoucher]);
+  }, [cartTotal, totalShippingFee, voucherMinus]);
 
   useEffect(() => {
     if (isEmpty) {
@@ -181,26 +176,6 @@ const CheckoutPage = () => {
     };
     fetchInitialData();
   }, [authHeader, navigate]);
-
-  useEffect(() => {
-    const fetchRank = async () => {
-      if (userState?.username && authHeader) {
-        const response = await fetchMembership(authHeader, userState.username);
-        if (response.data.rankStatus === 1) {
-          setRank(response.data.rank);
-        }
-      }
-    };
-    fetchRank();
-  }, [authHeader, userState]);
-
-  useEffect(() => {
-    if (rank) {
-      setRankVoucher(cartTotal * (rank.rankBaseDiscount || 0));
-    } else {
-      setRankVoucher(0);
-    }
-  }, [cartTotal, rank]);
 
   useEffect(() => {
     const fetchSuggestedVouchers = async () => {
@@ -732,18 +707,6 @@ const CheckoutPage = () => {
               >
                 {shippingStatusMessage}
               </Typography>
-            )}
-            {rank && (
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
-              >
-                <Typography color="text.secondary">
-                  Membership ({rank.rankName})
-                </Typography>
-                <Typography fontWeight="600" color="success.main">
-                  - {formatPrice(rankVoucher)}
-                </Typography>
-              </Box>
             )}
             {voucherMinus > 0 && (
               <Box

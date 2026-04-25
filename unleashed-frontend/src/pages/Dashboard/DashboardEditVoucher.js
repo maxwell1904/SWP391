@@ -19,6 +19,13 @@ import { apiClient } from "../../core/api";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import { toast } from "react-toastify";
 
+const normalizeUsageLimitValue = (value) => {
+  if (value === "") return "";
+  const numericValue = Number(value);
+  if (Number.isNaN(numericValue)) return value;
+  return numericValue > 100 ? 100 : value;
+};
+
 const formatDateTimeForInput = (dateString) => {
   if (!dateString) return "";
   try {
@@ -65,11 +72,11 @@ const validationSchema = Yup.object({
           "Max value must be empty for Fixed Amount",
           (v) => v === null || v === undefined || v === "",
         ),
-    }),
-  usageLimit: Yup.number().required("Usage limit is required").min(1),
-  voucherRank: Yup.number()
-    .required("Rank is required")
-    .oneOf([1, 2, 3, 4, 5]),
+  }),
+  usageLimit: Yup.number()
+    .required("Usage limit is required")
+    .min(1)
+    .max(100, "Usage limit cannot exceed 100"),
 });
 
 const EditVoucherSkeleton = () => (
@@ -127,7 +134,6 @@ const DashboardEditVoucher = () => {
             maximumVoucherValue:
               d.voucherType?.id === 2 ? "" : (d.maximumVoucherValue ?? ""),
             usageLimit: d.usageLimit || "",
-            voucherRank: d.rank?.id || 1,
             usageCount: d.usageCount || 0,
           });
         })
@@ -148,7 +154,6 @@ const DashboardEditVoucher = () => {
       maximumVoucherValue:
         values.voucherType === 2 ? null : values.maximumVoucherValue || null,
       usageLimit: values.usageLimit,
-      rank: { id: values.voucherRank },
       usageCount: values.usageCount,
     };
     apiClient
@@ -355,6 +360,11 @@ const DashboardEditVoucher = () => {
                         label="Minimum Order Value"
                         type="number"
                         fullWidth
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">₫</InputAdornment>
+                          ),
+                        }}
                         error={
                           touched.minimumOrderValue &&
                           !!errors.minimumOrderValue
@@ -372,6 +382,11 @@ const DashboardEditVoucher = () => {
                         type="number"
                         fullWidth
                         disabled={values.voucherType === 2}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">₫</InputAdornment>
+                          ),
+                        }}
                         error={
                           touched.maximumVoucherValue &&
                           !!errors.maximumVoucherValue
@@ -390,6 +405,13 @@ const DashboardEditVoucher = () => {
                         type="number"
                         required
                         fullWidth
+                        inputProps={{ min: 1, max: 100 }}
+                        onChange={(event) => {
+                          setFieldValue(
+                            "usageLimit",
+                            normalizeUsageLimitValue(event.target.value),
+                          );
+                        }}
                         error={touched.usageLimit && !!errors.usageLimit}
                         helperText={touched.usageLimit && errors.usageLimit}
                       />
@@ -398,9 +420,6 @@ const DashboardEditVoucher = () => {
                 </Paper>
               </Grid>
             </Grid>
-
-            <Field type="hidden" name="voucherRank" />
-
             <Box
               sx={{
                 mt: 4,

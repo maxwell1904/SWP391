@@ -53,8 +53,7 @@ public class AdminService {
                 user.getUserCurrentPaymentMethod(),
                 user.getUserAddress(),
                 user.getUserCreatedAt(),
-                user.getUserUpdatedAt(),
-                user.getUserRank() == null ? null : user.getUserRank().getRank()
+                user.getUserUpdatedAt()
         );
     }
 }

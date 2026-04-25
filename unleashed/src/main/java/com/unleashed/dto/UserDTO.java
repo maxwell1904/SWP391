@@ -1,6 +1,5 @@
 package com.unleashed.dto;
 
-import com.unleashed.entity.Rank;
 import com.unleashed.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +24,6 @@ public class UserDTO {
     private String userAddress;
     private OffsetDateTime userCreatedAt;
     private OffsetDateTime userUpdatedAt;
-    private Rank rank;
 }
 
 

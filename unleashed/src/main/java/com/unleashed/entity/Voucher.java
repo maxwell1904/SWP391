@@ -1,6 +1,5 @@
 package com.unleashed.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,8 +9,6 @@ import org.hibernate.annotations.Nationalized;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -43,11 +40,6 @@ public class Voucher {
     @Nationalized
     @Column(name = "voucher_description")
     private String voucherDescription;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "voucher_rank_requirement")
-    @JsonBackReference
-    private Rank voucherRankRequirement;
 
     @Column(name = "voucher_minimum_order_value", precision = 22, scale = 2)
     private BigDecimal voucherMinimumOrderValue;

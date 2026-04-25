@@ -20,6 +20,13 @@ import { useNavigate } from "react-router-dom";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useDebounce from "../../components/hooks/useDebounce";
 
+const normalizeUsageLimitValue = (value) => {
+  if (value === "") return "";
+  const numericValue = Number(value);
+  if (Number.isNaN(numericValue)) return value;
+  return numericValue > 100 ? 100 : value;
+};
+
 const DashboardCreateVoucher = () => {
   const [codeToCheck, setCodeToCheck] = useState("");
   const [isCheckingCode, setIsCheckingCode] = useState(false);
@@ -83,9 +90,8 @@ const DashboardCreateVoucher = () => {
       }),
     usageLimit: Yup.number()
       .min(1)
-      .max(99999999999999999)
+      .max(100, "Usage limit cannot exceed 100")
       .required("Usage limit is required"),
-    voucherRank: Yup.number().required().oneOf([1, 2, 3, 4, 5]),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -105,7 +111,6 @@ const DashboardCreateVoucher = () => {
       maximumVoucherValue:
         values.voucherType === 2 ? null : values.maximumVoucherValue || null,
       usageLimit: values.usageLimit,
-      rank: { id: values.voucherRank },
     };
     try {
       await apiClient.post("/api/vouchers", requestBody, {
@@ -174,7 +179,6 @@ const DashboardCreateVoucher = () => {
           minimumOrderValue: "",
           maximumVoucherValue: "",
           usageLimit: "",
-          voucherRank: 1,
         }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -339,6 +343,11 @@ const DashboardCreateVoucher = () => {
                         label="Minimum Order Value"
                         fullWidth
                         type="number"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">₫</InputAdornment>
+                          ),
+                        }}
                         error={
                           touched.minimumOrderValue &&
                           Boolean(errors.minimumOrderValue)
@@ -356,6 +365,11 @@ const DashboardCreateVoucher = () => {
                         fullWidth
                         type="number"
                         disabled={values.voucherType === 2}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">₫</InputAdornment>
+                          ),
+                        }}
                         error={
                           touched.maximumVoucherValue &&
                           Boolean(errors.maximumVoucherValue)
@@ -374,6 +388,13 @@ const DashboardCreateVoucher = () => {
                         fullWidth
                         type="number"
                         required
+                        inputProps={{ min: 1, max: 100 }}
+                        onChange={(event) => {
+                          setFieldValue(
+                            "usageLimit",
+                            normalizeUsageLimitValue(event.target.value),
+                          );
+                        }}
                         error={touched.usageLimit && Boolean(errors.usageLimit)}
                         helperText={touched.usageLimit && errors.usageLimit}
                       />
@@ -382,9 +403,6 @@ const DashboardCreateVoucher = () => {
                 </Paper>
               </Grid>
             </Grid>
-
-            <Field type="hidden" name="voucherRank" />
-
             <Box sx={{ mt: 4, display: "flex", justifyContent: "flex-end" }}>
               <Button
                 type="submit"
