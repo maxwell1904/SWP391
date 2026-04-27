@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { HandleLoginGoogle, logout } from "../../service/AuthService";
 import Cookies from "js-cookie";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 
 export function AddToCart({ onClick, tabindex = "0" }) {
   return (
@@ -149,6 +150,7 @@ export function RegisterBtn({ onClick, tabindex = 0, disabled = false }) {
 
 export function LoginGooglebtn({ signIn, className = "" }) {
   const navigate = useNavigate();
+  const signOut = useSignOut();
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const authType = Cookies.get("_auth_type");
@@ -165,7 +167,7 @@ export function LoginGooglebtn({ signIn, className = "" }) {
       }
 
       const accessToken = tokenResponse.access_token;
-      HandleLoginGoogle(accessToken, navigate, signIn);
+      HandleLoginGoogle(accessToken, navigate, signIn, signOut);
     },
     ux_mode: "popup",
     scope: "openid email profile",

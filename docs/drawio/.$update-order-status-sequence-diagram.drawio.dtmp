@@ -1,0 +1,215 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram id="update-order-status-sequence" name="Update Order Status Sequence Diagram">
+    <mxGraphModel dx="2056" dy="1222" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1050" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-108" value="Admin/Staff" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};participant=umlActor;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;align=center;size=65;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="35" height="1444" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-109" value="OrderListPage" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="318" y="20" width="150" height="1444" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-110" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="6emzFSh-iV6Go7x-6QmA-109">
+          <mxGeometry x="70" y="109" width="10" height="1240" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-111" value="OrderRestController" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="629" y="20" width="162" height="1444" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-112" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="6emzFSh-iV6Go7x-6QmA-111">
+          <mxGeometry x="76" y="163" width="10" height="1122" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-113" value="OrderService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="20" width="150" height="1444" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-114" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="6emzFSh-iV6Go7x-6QmA-113">
+          <mxGeometry x="70" y="265" width="10" height="956" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-115" value="OrderRepository" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1332" y="20" width="150" height="1444" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-116" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="6emzFSh-iV6Go7x-6QmA-115">
+          <mxGeometry x="70" y="319" width="10" height="142" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-117" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="6emzFSh-iV6Go7x-6QmA-115">
+          <mxGeometry x="70" y="1015" width="10" height="142" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-118" value="UserRepository" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1532" y="20" width="150" height="1444" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-119" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="6emzFSh-iV6Go7x-6QmA-118">
+          <mxGeometry x="70" y="535" width="10" height="142" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-120" value="OrderStatusRepository" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1732" y="20" width="179" height="1444" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-121" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="6emzFSh-iV6Go7x-6QmA-120">
+          <mxGeometry x="84" y="751" width="10" height="142" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-122" value="Database" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="2099" y="20" width="150" height="1444" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-123" value="Click the &quot;Approve&quot; button" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-108" target="6emzFSh-iV6Go7x-6QmA-110">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="253" y="129" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-124" value="Send approve order request" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-110" target="6emzFSh-iV6Go7x-6QmA-112">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="562" y="183" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-125" value="Ask service to approve the order" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-112" target="6emzFSh-iV6Go7x-6QmA-114">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="938" y="285" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-126" value="Get the order information" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-114" target="6emzFSh-iV6Go7x-6QmA-116">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1286" y="339" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-127" value="Search for the order in database" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-116" target="6emzFSh-iV6Go7x-6QmA-122">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1801" y="393" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-128" value="Send back order data" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-122" target="6emzFSh-iV6Go7x-6QmA-116">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1804" y="447" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-129" value="Return the order" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-115" target="6emzFSh-iV6Go7x-6QmA-114">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1287" y="501" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-130" value="Get the staff account information" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-114" target="6emzFSh-iV6Go7x-6QmA-119">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1386" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-131" value="Search for the staff account in database" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-119" target="6emzFSh-iV6Go7x-6QmA-122">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1901" y="609" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-132" value="Send back staff data" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-122" target="6emzFSh-iV6Go7x-6QmA-119">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1904" y="663" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-133" value="Return the staff account" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-118" target="6emzFSh-iV6Go7x-6QmA-114">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1387" y="717" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-134" value="Get the Processing status" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-114" target="6emzFSh-iV6Go7x-6QmA-121">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1494" y="771" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-135" value="Search for Processing status in database" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-121" target="6emzFSh-iV6Go7x-6QmA-122">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2008" y="825" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-136" value="Send back Processing status" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-122" target="6emzFSh-iV6Go7x-6QmA-121">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2011" y="879" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-137" value="Return the Processing status" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-120" target="6emzFSh-iV6Go7x-6QmA-114">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1495" y="933" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-138" value="Save the updated order" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-114" target="6emzFSh-iV6Go7x-6QmA-117">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1286" y="1035" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-139" value="Update order status and staff in database" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-117" target="6emzFSh-iV6Go7x-6QmA-122">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1801" y="1089" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-140" value="Confirm the update result" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-122" target="6emzFSh-iV6Go7x-6QmA-117">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1804" y="1143" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-141" value="Return the updated order" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-115" target="6emzFSh-iV6Go7x-6QmA-114">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1287" y="1197" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-142" value="Tell controller the order was approved" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-113" target="6emzFSh-iV6Go7x-6QmA-112">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="939" y="1251" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-143" value="Send success response to the page" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-112" target="6emzFSh-iV6Go7x-6QmA-110">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="563" y="1305" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-144" value="Show that the order is approved" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="6emzFSh-iV6Go7x-6QmA-110" target="6emzFSh-iV6Go7x-6QmA-108">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="254" y="1359" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-145" value="The request includes staff name and approve action" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="735" y="203" width="385" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="6emzFSh-iV6Go7x-6QmA-146" value="Assign staff to the order and change status to Processing" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="934" y="953" width="423" height="48" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

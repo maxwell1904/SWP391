@@ -8,12 +8,14 @@ import {InputField} from "../../components/inputs/InputField";
 import { ResetPassword } from "../../service/AuthService";
 import { AuthCommonBtn } from "../../components/buttons/Button";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 
 const ResetPasswordPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   // const [resetPassword, setResetPassword] = useState(false);
   const navigate = useNavigate();
   const signIn = useSignIn();
+  const signOut = useSignOut();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("token");
@@ -45,7 +47,8 @@ const ResetPasswordPage = () => {
         navigate,
         successPath,
         signIn,
-        isStaffActivation
+        isStaffActivation,
+        signOut
       );
     } catch (error) {
     }

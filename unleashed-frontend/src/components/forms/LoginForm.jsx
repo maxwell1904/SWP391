@@ -8,6 +8,7 @@ import { Divider } from "@mui/material";
 import { InputField } from "../inputs/InputField";
 import { LoginBtn, LoginGooglebtn } from "../buttons/Button";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 import Cookies from 'js-cookie';
 
 
@@ -23,6 +24,7 @@ export function LoginForm() {
   // const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
   const signIn = useSignIn();
+  const signOut = useSignOut();
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -43,7 +45,7 @@ export function LoginForm() {
       }
     }
 
-    await LoginUser(values, navigate, signIn);
+    await LoginUser(values, navigate, signIn, signOut);
     setSubmitting(false);
 
   };

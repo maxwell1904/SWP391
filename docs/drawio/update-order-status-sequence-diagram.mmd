@@ -1,0 +1,50 @@
+sequenceDiagram
+    actor AdminStaff as Admin/Staff
+    participant Page as OrderListPage
+    participant Controller as OrderRestController
+    participant Service as OrderService
+    participant OrderRepo as OrderRepository
+    participant StatusRepo as OrderStatusRepository
+    participant DB as Database
+
+    AdminStaff->>Page: Click the "Approve" button
+    activate Page
+
+    Page->>Controller: Send approve order request
+    activate Controller
+    Note right of Controller: The request asks the system to approve the order
+
+    Controller->>Service: Ask service to update order status
+    activate Service
+
+    Service->>OrderRepo: Get the order information
+    activate OrderRepo
+    OrderRepo->>DB: Search for the order in database
+    DB-->>OrderRepo: Send back order data
+    OrderRepo-->>Service: Return the order
+    deactivate OrderRepo
+
+    Service->>StatusRepo: Get the Processing status
+    activate StatusRepo
+    StatusRepo->>DB: Search for Processing status in database
+    DB-->>StatusRepo: Send back Processing status
+    StatusRepo-->>Service: Return the Processing status
+    deactivate StatusRepo
+
+    Note over Service: Change order status to Processing
+
+    Service->>OrderRepo: Save the updated order
+    activate OrderRepo
+    OrderRepo->>DB: Update order status in database
+    DB-->>OrderRepo: Confirm the update result
+    OrderRepo-->>Service: Return the updated order
+    deactivate OrderRepo
+
+    Service-->>Controller: Tell controller the order was approved
+    deactivate Service
+
+    Controller-->>Page: Send success response to the page
+    deactivate Controller
+
+    Page-->>AdminStaff: Show that the order is approved
+    deactivate Page

@@ -1,9 +1,10 @@
 import { jwtDecode } from "jwt-decode";
 import { toast, Zoom } from "react-toastify";
 import { apiClient } from "../core/api";
+import { replaceAuthSession } from "../utils/authSession";
 
 
-export const LoginUser = async (data, navigate, signIn) => {
+export const LoginUser = async (data, navigate, signIn, signOut = null) => {
   const loginPromise = apiClient
     .post("/api/auth/login", {
       username: data.username,
@@ -12,7 +13,7 @@ export const LoginUser = async (data, navigate, signIn) => {
     .then((response) => {
       const user = jwtDecode(response.data.token);
 
-      signIn({
+      replaceAuthSession(signIn, {
         auth: {
           token: response.data.token,
           type: "Bearer",
@@ -23,7 +24,7 @@ export const LoginUser = async (data, navigate, signIn) => {
           role: user.role?.[0]?.authority,
           userEmail: user.userEmail,
         },
-      });
+      }, signOut);
       // Check the user's role 
       user.role?.[0]?.authority === "CUSTOMER" ?
         navigate("/") : navigate("/Dashboard");
@@ -110,7 +111,7 @@ export const HandleForgotPassword = async (data, navigate) => {
   }
 };
 
-export const HandleLoginGoogle = async (accessToken, navigate, signIn) => {
+export const HandleLoginGoogle = async (accessToken, navigate, signIn, signOut = null) => {
     try {
         // This line will attempt to get the user data from your backend
         const response = await apiClient.get(
@@ -121,7 +122,7 @@ export const HandleLoginGoogle = async (accessToken, navigate, signIn) => {
         // For example, a 200 OK for a successful login.
         if (response.status === 200 && response.data.token) {
             const user = jwtDecode(response.data.token);
-            signIn({
+            replaceAuthSession(signIn, {
                 auth: {
                     token: response.data.token,
                     type: "Bearer",
@@ -131,7 +132,7 @@ export const HandleLoginGoogle = async (accessToken, navigate, signIn) => {
                     userImage: user.image,
                     role: user.role?.[0]?.authority,
                 },
-            });
+            }, signOut);
 
             toast.success("Login successful!", {
                 position: "top-center",
@@ -198,7 +199,8 @@ export const ResetPassword = async (
   navigate,
   successPath = "/reset-password/success",
   signIn = null,
-  isStaffActivation = false
+  isStaffActivation = false,
+  signOut = null
 ) => {
   try {
     const response = await apiClient.post("/api/auth/reset-password", {
@@ -209,7 +211,7 @@ export const ResetPassword = async (
 
     if (isStaffActivation && response.data?.token && signIn) {
       const user = jwtDecode(response.data.token);
-      const signedIn = signIn({
+      const signedIn = replaceAuthSession(signIn, {
         auth: {
           token: response.data.token,
           type: "Bearer",
@@ -221,7 +223,7 @@ export const ResetPassword = async (
           role: user.role?.[0]?.authority,
           userEmail: user.userEmail,
         },
-      });
+      }, signOut);
 
       if (!signedIn) {
         throw new Error("Automatic sign-in failed.");
@@ -257,7 +259,7 @@ export const ResetPassword = async (
   }
 };
 
-export const loginForStaffAndAdmin = async (data, navigate, signIn) => {
+export const loginForStaffAndAdmin = async (data, navigate, signIn, signOut = null) => {
   const loginPromise = apiClient.post("/api/auth/login-for-staff-and-admin", {
     username: data.username,
     password: data.password,
@@ -294,7 +296,7 @@ export const loginForStaffAndAdmin = async (data, navigate, signIn) => {
     // console.log(response.data.token);
     // console.log(user);
 
-    signIn({
+    replaceAuthSession(signIn, {
       auth: {
         token: response.data.token,
         type: "Bearer",
@@ -305,7 +307,7 @@ export const loginForStaffAndAdmin = async (data, navigate, signIn) => {
         userImage: user.image,
         role: user.role?.[0]?.authority,
       },
-    });
+    }, signOut);
 
     navigate("/Dashboard");
   } catch (error) {
