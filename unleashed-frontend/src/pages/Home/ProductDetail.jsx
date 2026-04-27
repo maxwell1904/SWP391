@@ -122,6 +122,11 @@ const ProductDetailPage = () => {
         return [...product.colors].sort((a, b) => (a.id ?? 0) - (b.id ?? 0));
     }, [product?.colors]);
 
+    const sortedSizes = useMemo(() => {
+        if (!product?.sizes) return [];
+        return [...product.sizes].sort((a, b) => (a.id ?? 0) - (b.id ?? 0));
+    }, [product?.sizes]);
+
     useEffect(() => {
         if (!product || !product.variations) return;
 
@@ -140,7 +145,7 @@ const ProductDetailPage = () => {
                 return;
             }
             const variationsForColor = product.variations[selectedColor];
-            const firstAvailableSize = product.sizes.find(size => variationsForColor[size.sizeName]?.quantity > 0);
+            const firstAvailableSize = sortedSizes.find(size => variationsForColor[size.sizeName]?.quantity > 0);
             setSelectedSize(firstAvailableSize?.sizeName || null);
             return;
         }
@@ -149,7 +154,7 @@ const ProductDetailPage = () => {
         if (firstAvailableColor) {
             const colorName = firstAvailableColor.colorName;
             const variationsForColor = product.variations[colorName];
-            const firstAvailableSize = product.sizes.find(size => variationsForColor[size.sizeName]?.quantity > 0);
+            const firstAvailableSize = sortedSizes.find(size => variationsForColor[size.sizeName]?.quantity > 0);
             setSelectedColor(colorName);
             setSelectedSize(firstAvailableSize?.sizeName || null);
             return;
@@ -157,24 +162,21 @@ const ProductDetailPage = () => {
 
         setSelectedColor(null);
         setSelectedSize(null);
-    }, [product, selectedColor, selectedSize, sortedColors]);
+    }, [product, selectedColor, selectedSize, sortedColors, sortedSizes]);
 
     const handleColorSelect = (colorName) => {
         setSelectedColor(colorName);
         const variationsForColor = product.variations[colorName];
-        const firstAvailableSize = product.sizes.find(size => variationsForColor[size.sizeName]?.quantity > 0);
+        if (selectedSize && variationsForColor[selectedSize]?.quantity > 0) {
+            return;
+        }
+        const firstAvailableSize = sortedSizes.find(size => variationsForColor[size.sizeName]?.quantity > 0);
         setSelectedSize(firstAvailableSize?.sizeName || null);
     };
 
     const handleSizeSelect = (sizeName) => {
+        if (!selectedColor || !product.variations?.[selectedColor]?.[sizeName]?.quantity) return;
         setSelectedSize(sizeName);
-        const isCurrentColorValid = product.variations[selectedColor]?.[sizeName]?.quantity > 0;
-        if (!isCurrentColorValid) {
-            const firstAvailableColor = sortedColors.find(color => product.variations[color.colorName]?.[sizeName]?.quantity > 0);
-            if (firstAvailableColor) {
-                setSelectedColor(firstAvailableColor.colorName);
-            }
-        }
     };
 
     const handleLoadMoreReviews = () => fetchReviews(reviewsPage + 1);
@@ -364,7 +366,7 @@ const ProductDetailPage = () => {
                     <div className='sizes flex items-center mb-4'>
                         <div className='font-semibold text-gray-600'>Size:</div>
                         <div className='flex gap-2 flex-row px-5'>
-                            {product.sizes?.map((size) => {
+                            {sortedSizes.map((size) => {
                                 const isAvailableForAnyColor = sortedColors.some(color => product.variations?.[color.colorName]?.[size.sizeName]?.quantity > 0);
                                 if (!isAvailableForAnyColor) return null;
 
@@ -373,8 +375,9 @@ const ProductDetailPage = () => {
 
                                 return (
                                     <div key={size.id} onClick={() => handleSizeSelect(size.sizeName)}
-                                         className={`px-4 py-2 border rounded-lg transition-colors cursor-pointer
-                                            ${isSelected ? 'bg-blue-500 text-white border-blue-500' : isAvailableForCurrentColor ? 'border-gray-300 hover:border-blue-400' : 'border-gray-200 text-gray-400'}`}>
+                                         aria-disabled={!isAvailableForCurrentColor}
+                                         className={`px-4 py-2 border rounded-lg transition-colors
+                                            ${isSelected ? 'bg-blue-500 text-white border-blue-500' : isAvailableForCurrentColor ? 'cursor-pointer border-gray-300 hover:border-blue-400' : 'cursor-not-allowed border-gray-200 text-gray-400 opacity-60'}`}>
                                         {size.sizeName}
                                     </div>);
                             })}
