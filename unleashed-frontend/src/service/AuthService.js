@@ -317,17 +317,27 @@ export const loginForStaffAndAdmin = async (data, navigate, signIn, signOut = nu
   }
 };
 
-export const logout = (token) => {
+export const logout = async (token) => {
+  if (!token) {
+    return null;
+  }
+
   try {
-    const response = apiClient.delete("/api/auth/logout", {
+    const response = await apiClient.delete("/api/auth/logout", {
       headers: {
         Authorization: token,
       },
-    })
-    // console.log(response);
+    });
     return response;
   } catch (error) {
-    // console.log(error)
+    const status = error.response?.status;
+
+    if (status === 400 || status === 401 || status === 403) {
+      return null;
+    }
+
+    console.error("Logout failed:", error);
+    return null;
   }
 };
 

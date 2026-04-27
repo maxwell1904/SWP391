@@ -287,29 +287,35 @@ public class ProductService {
     }
 
 
-    @Transactional
-    public Product updateProduct(ProductDTO productDTO, String id) {
-        Optional<Product> existingProduct = productRepository.findById(UUID.fromString(id));
+@Transactional
+public Product updateProduct(ProductDTO productDTO, String id) {
+    Optional<Product> existingProduct = productRepository.findById(UUID.fromString(id));
 
-        if (existingProduct.isPresent()) {
-            Product product = existingProduct.get();
-            product.setProductDescription(productDTO.getProductDescription());
-            product.setProductName(productDTO.getProductName());
+    if (existingProduct.isPresent()) {
+        Product product = existingProduct.get();
+
+        product.setProductDescription(productDTO.getProductDescription());
+        product.setProductName(productDTO.getProductName());
+
+        if (productDTO.getProductStatusId() != null) {
             product.setProductStatus(productDTO.getProductStatusId());
-            product.setBrand(brandRepository.findById(productDTO.getBrandId()).orElse(null));
-            List<Integer> categoryIdList = productDTO.getCategoryIdList();
-            List<Category> categories = categoryIdList.stream()
-                    .map(catId -> categoryRepository.findById(catId)
-                            .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + catId)))
-                    .collect(Collectors.toList());
-
-            product.setCategories(categories);
-
-            return productRepository.save(product);
-        } else {
-            return null;
         }
+
+        product.setBrand(brandRepository.findById(productDTO.getBrandId()).orElse(null));
+
+        List<Integer> categoryIdList = productDTO.getCategoryIdList();
+        List<Category> categories = categoryIdList.stream()
+                .map(catId -> categoryRepository.findById(catId)
+                        .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + catId)))
+                .collect(Collectors.toList());
+
+        product.setCategories(categories);
+
+        return productRepository.save(product);
+    } else {
+        return null;
     }
+}
 
     public List<ProductListDTO> getListProduct() {
         List<Product> result = productRepository.findAllActiveProducts();

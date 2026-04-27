@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "react-use-cart";
@@ -9,23 +9,35 @@ import { clearAuthCookies, notifyAuthSessionChanged } from "../../utils/authSess
 function Logout({ isDashboard }) {
   const navigate = useNavigate();
   const signOut = useSignOut();
-  const token = useAuthHeader()
+  const token = useAuthHeader();
+  const hasStartedLogout = useRef(false);
   const {
     emptyCart,
   } = useCart();
 
 
   useEffect(() => {
+    if (hasStartedLogout.current) {
+      return;
+    }
+
+    hasStartedLogout.current = true;
+
     const logoutUser = async () => {
-      await logout(token);
+      try {
+        await logout(token);
+      } finally {
+        signOut();
+        clearAuthCookies();
+        notifyAuthSessionChanged("logout");
+        emptyCart();
+        navigate("/", { replace: true });
+      }
     }
     logoutUser();
-    signOut();
-    clearAuthCookies();
-    notifyAuthSessionChanged("logout");
-    emptyCart();
-    navigate("/");
   }, [isDashboard, navigate, signOut, emptyCart, token]);
+
+  return null;
 }
 
 export default Logout;
