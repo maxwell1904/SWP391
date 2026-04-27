@@ -4,13 +4,16 @@ import RegSuccessAnim from "../../assets/anim/RegisterSuccess.json";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 import { jwtDecode } from "jwt-decode";
 import { toast, Zoom } from "react-toastify";
+import { replaceAuthSession } from "../../utils/authSession";
 
 const RegisterSuccess = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const signIn = useSignIn();
+    const signOut = useSignOut();
     const [isAutoSigningIn, setIsAutoSigningIn] = useState(true);
 
     useEffect(() => {
@@ -26,7 +29,7 @@ const RegisterSuccess = () => {
         try {
             const user = jwtDecode(token);
 
-            const signedIn = signIn({
+            const signedIn = replaceAuthSession(signIn, {
                 auth: {
                     token,
                     type: "Bearer",
@@ -37,7 +40,7 @@ const RegisterSuccess = () => {
                     role: user.role?.[0]?.authority,
                     userEmail: user.userEmail,
                 },
-            });
+            }, signOut);
 
             if (!signedIn) {
                 throw new Error("Sign-in failed");
@@ -56,7 +59,7 @@ const RegisterSuccess = () => {
                 transition: Zoom,
             });
         }
-    }, [navigate, searchParams, signIn]);
+    }, [navigate, searchParams, signIn, signOut]);
 
     const handleReturnToHome = () => {
         navigate("/");

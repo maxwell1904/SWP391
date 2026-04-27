@@ -1,0 +1,105 @@
+<mxfile host="app.diagrams.net" modified="2026-04-26T02:35:00.000Z" agent="Codex" version="24.7.17" editor="www.draw.io" type="device">
+  <diagram id="update-order-status-class-diagram" name="Update Order Status Class Diagram">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Class Diagram - Update Order Status" style="text;html=1;strokeColor=none;fillColor=none;fontSize=22;fontStyle=1;align=center;" parent="1" vertex="1">
+          <mxGeometry x="430" y="20" width="520" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="controller" value="&lt;b&gt;OrderRestController&lt;/b&gt;&lt;hr&gt;+ orderService: OrderService&lt;br&gt;+ userService: UserService&lt;hr&gt;+ reviewOrderByStaff(orderId, body): ResponseEntity&amp;lt;ResponseDTO&amp;gt;&lt;br&gt;+ confirmOrderReceived(orderId): ResponseEntity&amp;lt;ResponseDTO&amp;gt;&lt;br&gt;+ cancelOrder(orderId): ResponseEntity&amp;lt;ResponseDTO&amp;gt;&lt;br&gt;+ returnOrder(orderId): ResponseEntity&amp;lt;ResponseDTO&amp;gt;&lt;br&gt;+ inspectOrder(orderId): ResponseEntity&amp;lt;ResponseDTO&amp;gt;&lt;br&gt;+ orderReturned(orderId): ResponseEntity&amp;lt;ResponseDTO&amp;gt;&lt;br&gt;+ handlePaymentCallback(orderId, isSuccess): ResponseEntity&amp;lt;ResponseDTO&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="40" y="110" width="360" height="245" as="geometry" />
+        </mxCell>
+
+        <mxCell id="service" value="&lt;b&gt;OrderService&lt;/b&gt;&lt;hr&gt;- orderRepository: OrderRepository&lt;br&gt;- orderStatusRepository: OrderStatusRepository&lt;br&gt;- userRepository: UserRepository&lt;br&gt;- stockTransactionService: StockTransactionService&lt;br&gt;- emailService: EmailService&lt;hr&gt;+ reviewOrderByStaff(orderId, staffName, isApproved): void&lt;br&gt;+ confirmOrderReceived(orderId): void&lt;br&gt;+ cancelOrder(orderId): void&lt;br&gt;+ returnOrder(orderId): void&lt;br&gt;+ inspectOrder(orderId): void&lt;br&gt;+ orderReturned(orderId): void&lt;br&gt;+ handlePaymentCallback(orderId, isSuccess): void&lt;br&gt;- returnStock(order): void" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="510" y="95" width="410" height="285" as="geometry" />
+        </mxCell>
+
+        <mxCell id="orderRepository" value="&lt;b&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;OrderRepository&lt;/b&gt;&lt;hr&gt;extends JpaRepository&amp;lt;Order, String&amp;gt;&lt;br&gt;extends JpaSpecificationExecutor&amp;lt;Order&amp;gt;&lt;hr&gt;+ findById(orderId): Optional&amp;lt;Order&amp;gt;&lt;br&gt;+ save(order): Order&lt;br&gt;+ updateOrderStatusToCancelled(orderId): void" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="1020" y="80" width="330" height="160" as="geometry" />
+        </mxCell>
+
+        <mxCell id="orderStatusRepository" value="&lt;b&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;OrderStatusRepository&lt;/b&gt;&lt;hr&gt;extends JpaRepository&amp;lt;OrderStatus, Integer&amp;gt;&lt;hr&gt;+ findById(id): Optional&amp;lt;OrderStatus&amp;gt;&lt;br&gt;+ findByOrderStatusName(name): Optional&amp;lt;OrderStatus&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="1020" y="280" width="330" height="145" as="geometry" />
+        </mxCell>
+
+        <mxCell id="userRepository" value="&lt;b&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;UserRepository&lt;/b&gt;&lt;hr&gt;extends JpaRepository&amp;lt;User, UUID&amp;gt;&lt;hr&gt;+ findByUserUsername(username): Optional&amp;lt;User&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="1020" y="465" width="330" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="stockTransactionService" value="&lt;b&gt;StockTransactionService&lt;/b&gt;&lt;hr&gt;+ createReturnTransactionsForOrder(order): void" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="1020" y="625" width="330" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="emailService" value="&lt;b&gt;EmailService&lt;/b&gt;&lt;hr&gt;+ sendHtmlMessage(to, subject, body): void" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="1020" y="750" width="330" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="order" value="&lt;b&gt;Order&lt;/b&gt;&lt;hr&gt;- orderId: String&lt;br&gt;- orderStatus: OrderStatus&lt;br&gt;- inchargeEmployee: User&lt;br&gt;- orderDate: OffsetDateTime&lt;br&gt;- orderUpdatedAt: OffsetDateTime&lt;hr&gt;+ setOrderStatus(orderStatus): void&lt;br&gt;+ setInchargeEmployee(user): void&lt;br&gt;+ getOrderStatus(): OrderStatus" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="190" y="510" width="310" height="190" as="geometry" />
+        </mxCell>
+
+        <mxCell id="orderStatus" value="&lt;b&gt;OrderStatus&lt;/b&gt;&lt;hr&gt;- id: Integer&lt;br&gt;- orderStatusName: String&lt;br&gt;- orders: Set&amp;lt;Order&amp;gt;&lt;hr&gt;+ getOrderStatusName(): String" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="590" y="530" width="270" height="145" as="geometry" />
+        </mxCell>
+
+        <mxCell id="user" value="&lt;b&gt;User&lt;/b&gt;&lt;hr&gt;- userId: UUID&lt;br&gt;- userUsername: String&lt;br&gt;- userFullname: String&lt;hr&gt;Used as staff inchargeEmployee" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="190" y="740" width="310" height="125" as="geometry" />
+        </mxCell>
+
+        <mxCell id="responseDTO" value="&lt;b&gt;ResponseDTO&lt;/b&gt;&lt;hr&gt;- statusCode: int&lt;br&gt;- message: String&lt;hr&gt;+ setStatusCode(statusCode): void&lt;br&gt;+ setMessage(message): void" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="40" y="395" width="300" height="145" as="geometry" />
+        </mxCell>
+
+        <mxCell id="statusNote" value="&lt;b&gt;Main status transitions in code&lt;/b&gt;&lt;br&gt;PENDING + approve -&amp;gt; PROCESSING&lt;br&gt;PROCESSING + approve -&amp;gt; SHIPPING&lt;br&gt;Reject/cancel -&amp;gt; CANCELLED + returnStock(order)&lt;br&gt;SHIPPING + confirm receipt -&amp;gt; COMPLETED&lt;br&gt;SHIPPING/COMPLETED + return -&amp;gt; RETURNING&lt;br&gt;RETURNING + inspect -&amp;gt; INSPECTION&lt;br&gt;INSPECTION + returned -&amp;gt; RETURNED + returnStock(order)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;strokeColor=#000000;fillColor=#fff2cc;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="540" y="710" width="370" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="notationNote" value="&lt;b&gt;UML relationship notation&lt;/b&gt;&lt;br&gt;Dependency: dashed line + open arrow&lt;br&gt;Association: solid line&lt;br&gt;Aggregation: hollow diamond" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;strokeColor=#000000;fillColor=#dae8fc;fontSize=12;align=left;verticalAlign=top;spacing=8;" parent="1" vertex="1">
+          <mxGeometry x="40" y="570" width="260" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_controller_service" value="dependency" style="endArrow=open;html=1;rounded=0;strokeColor=#000000;fontSize=11;dashed=1;" parent="1" source="controller" target="service" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_controller_response" value="dependency" style="endArrow=open;html=1;rounded=0;strokeColor=#000000;fontSize=11;dashed=1;" parent="1" source="controller" target="responseDTO" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_service_order_repo" value="dependency" style="endArrow=open;html=1;rounded=0;strokeColor=#000000;fontSize=11;dashed=1;" parent="1" source="service" target="orderRepository" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_service_status_repo" value="dependency" style="endArrow=open;html=1;rounded=0;strokeColor=#000000;fontSize=11;dashed=1;" parent="1" source="service" target="orderStatusRepository" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_service_user_repo" value="dependency" style="endArrow=open;html=1;rounded=0;strokeColor=#000000;fontSize=11;dashed=1;" parent="1" source="service" target="userRepository" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_service_stock" value="dependency" style="endArrow=open;html=1;rounded=0;strokeColor=#000000;fontSize=11;dashed=1;" parent="1" source="service" target="stockTransactionService" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_service_email" value="dependency" style="endArrow=open;html=1;rounded=0;strokeColor=#000000;fontSize=11;dashed=1;" parent="1" source="service" target="emailService" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_repo_order" value="dependency" style="endArrow=open;html=1;rounded=0;strokeColor=#000000;fontSize=11;dashed=1;" parent="1" source="orderRepository" target="order" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_status_repo_status" value="dependency" style="endArrow=open;html=1;rounded=0;strokeColor=#000000;fontSize=11;dashed=1;" parent="1" source="orderStatusRepository" target="orderStatus" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_user_repo_user" value="dependency" style="endArrow=open;html=1;rounded=0;strokeColor=#000000;fontSize=11;dashed=1;" parent="1" source="userRepository" target="user" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_order_status" value="aggregation" style="startArrow=diamondThin;startFill=0;endArrow=none;html=1;rounded=0;strokeColor=#000000;fontSize=11;" parent="1" source="order" target="orderStatus" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_order_user" value="aggregation" style="startArrow=diamondThin;startFill=0;endArrow=none;html=1;rounded=0;strokeColor=#000000;fontSize=11;" parent="1" source="order" target="user" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_service_order" value="dependency" style="endArrow=open;html=1;rounded=0;strokeColor=#000000;fontSize=11;dashed=1;" parent="1" source="service" target="order" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

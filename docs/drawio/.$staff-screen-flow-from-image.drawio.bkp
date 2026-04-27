@@ -1,0 +1,221 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram id="staff-screen-flow-from-image" name="Staff Screen Flow">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="create_notifications" value="Create notifications" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="250" y="20" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="add_product_to_sales" value="Add product to sales" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="250" y="85" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="create_sales" value="Create Sales" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="250" y="150" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="sales_detail" value="Sales detail" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="250" y="215" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="notifications" value="Notifications" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="600" y="20" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="notifications_details" value="Notifications details" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="860" y="20" width="170" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="order_detail" value="Order detail" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="80" y="260" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="order_lists" value="Order Lists" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="390" y="260" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="sales" value="Sales" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="520" y="200" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="discount" value="Discount" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="720" y="170" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="discount_detail" value="Discount detail" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="980" y="170" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="brands_detail" value="Brands detail" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="300" y="340" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="brands" value="Brands" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="290" y="445" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="new_brand" value="New Brand" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="20" y="420" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="edit_brands" value="edit Brands" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="20" y="505" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="product_reviews" value="Product reviews" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="290" y="510" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="stock_transaction" value="Stock transaction" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="290" y="620" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dashboard" value="Dashboard" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="620" y="440" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="product_management" value="Product Management" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="820" y="260" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="product_detail_page" value="Product Detail Page" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="1140" y="260" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="edit_product_variation" value="Edit Product Variation" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="1460" y="260" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="update_product" value="Update Product" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="1190" y="360" width="150" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="categories" value="Categories" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="1080" y="440" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="create_categories" value="Create Categories" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="1080" y="540" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="categories_detail" value="Categories detail" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="1520" y="380" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="edit_categories" value="Edit Categories" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="1520" y="440" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="providers" value="Providers" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="610" y="640" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="warehouse" value="WareHouse" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="900" y="640" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="warehouse_detail" value="WareHouse detail" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="1270" y="640" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="import_product_into_warehouse" value="Import product into warehouse" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="1545" y="640" width="190" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="edit_warehouse_detail" value="Edit WareHouse detail" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="1270" y="730" width="170" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edit_providers" value="edit providers" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="290" y="840" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="create_provider" value="Create Provider" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="520" y="840" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="providers_detail" value="Providers detail" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="740" y="840" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" value="Click on create-notifications button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="notifications" target="create_notifications" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="Click on view icon" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="notifications" target="notifications_details" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="Click add product to sales icon" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="sales" target="add_product_to_sales" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="Click on create new sales" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="sales" target="create_sales" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="Click on view button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="sales" target="sales_detail" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="Click on view-detail icon" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="order_lists" target="order_detail" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="Click on view button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="brands" target="brands_detail" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="Click on new brand button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="brands" target="new_brand" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" value="Click on edit icon" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="brands" target="edit_brands" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" value="Click on edit icon" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="stock_transaction" target="edit_providers" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" value="Click on 'Add provider' button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="providers" target="create_provider" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" value="Click on view button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="providers" target="providers_detail" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" value="Click on view button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="discount" target="discount_detail" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" value="Click on product section" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="product_management" target="product_detail_page" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" value="Click on variation icon" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="product_detail_page" target="edit_product_variation" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" value="Click on the edit icon" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="product_management" target="update_product" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" value="Click on view button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="update_product" target="categories_detail" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" value="click on edit icon" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="categories" target="edit_categories" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" value="Click on create categories button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="categories" target="create_categories" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" value="Click on view button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="warehouse" target="warehouse_detail" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e21" value="Click on import button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="warehouse_detail" target="import_product_into_warehouse" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e22" value="Click on edit button" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="warehouse" target="edit_warehouse_detail" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e23" value="Click 'Notifications' tab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="dashboard" target="notifications" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e24" value="Click 'Order list' tab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="dashboard" target="order_lists" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e25" value="Click 'Sales' tab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="dashboard" target="sales" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e26" value="Click 'Discount' tab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="dashboard" target="discount" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e27" value="Click 'Products' tab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="dashboard" target="product_management" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e28" value="Click 'Categories' tab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="dashboard" target="categories" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e29" value="Click 'Warehouse' tab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="dashboard" target="warehouse" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e30" value="Click 'Providers' tab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="dashboard" target="providers" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e31" value="Click 'Brands' tab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="dashboard" target="brands" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e32" value="Click 'Product reviews' tab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="dashboard" target="product_reviews" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e33" value="Click 'Stock transaction' tab" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;strokeColor=#000000;fontSize=9;" parent="1" source="dashboard" target="stock_transaction" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

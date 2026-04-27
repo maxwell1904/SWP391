@@ -10,6 +10,8 @@ import * as Yup from "yup";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import TermsAndPrivacyModals from "../modals/Term";
 
+const normalizeFullName = (value = "") => value.trim().replace(/\s+/g, " ");
+
 export function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -34,8 +36,9 @@ export function RegisterForm() {
       ),
     fullname: Yup.string()
       .required("Full name is required")
+      .transform((value) => normalizeFullName(value))
       .matches(
-        /^[\p{L} .'-]+$/u,
+        /^[\p{L}\p{M}]+(?:[\s.'-]+[\p{L}\p{M}]+)*$/u,
         "Full name can only contain letters, spaces, dots, apostrophes, and hyphens."
       ),
     email: Yup.string()
@@ -61,7 +64,13 @@ export function RegisterForm() {
 
   const onSubmit = async (values) => {
     try {
-      await RegisterUser(values, navigate);
+      await RegisterUser(
+        {
+          ...values,
+          fullname: normalizeFullName(values.fullname),
+        },
+        navigate
+      );
     } catch (error) {
       // Handle registration error
       toast.error("Error during registration: " + error?.data?.message, {

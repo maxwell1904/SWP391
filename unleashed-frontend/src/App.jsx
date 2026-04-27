@@ -10,6 +10,11 @@ import useSignOut from "react-auth-kit/hooks/useSignOut";
 import { jwtDecode } from "jwt-decode";
 import AppRoutes from "./routes/AppRoutes.js";
 import ScrollToTop from "./Scroll.js";
+import {
+    AUTH_SESSION_EVENT_KEY,
+    getCurrentAuthTabId,
+    notifyAuthSessionChanged,
+} from "./utils/authSession";
 
 function App() {
     const location = useLocation();
@@ -34,9 +39,32 @@ function App() {
                     transition: Zoom,
                 });
                 signOut();
+                notifyAuthSessionChanged("logout", { reason: "expired" });
             }
         }
     }, [authHeader, signOut]);
+
+    useEffect(() => {
+        const handleAuthSessionChange = (event) => {
+            if (event.key !== AUTH_SESSION_EVENT_KEY || !event.newValue) {
+                return;
+            }
+
+            try {
+                const payload = JSON.parse(event.newValue);
+                if (payload.originTabId === getCurrentAuthTabId()) {
+                    return;
+                }
+            } catch (error) {
+                // If the event cannot be parsed, reloading is still the safest sync.
+            }
+
+            window.location.reload();
+        };
+
+        window.addEventListener("storage", handleAuthSessionChange);
+        return () => window.removeEventListener("storage", handleAuthSessionChange);
+    }, []);
 
     const HideNav =
         !location.pathname.startsWith("/LoginForStaffAndAdmin") &&

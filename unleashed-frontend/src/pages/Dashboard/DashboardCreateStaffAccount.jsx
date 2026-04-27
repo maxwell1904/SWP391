@@ -15,6 +15,8 @@ import {
 import LocationSelector from "../../service/LocationService";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
+const normalizeFullName = (value = "") => value.trim().replace(/\s+/g, " ");
+
 const DashboardCreateStaffAccount = () => {
   const varToken = useAuthHeader();
   const navigate = useNavigate();
@@ -30,10 +32,11 @@ const DashboardCreateStaffAccount = () => {
       ),
     fullName: Yup.string()
       .required("Full Name is required")
+      .transform((value) => normalizeFullName(value))
       .min(1, "Full Name must be at least 1 character")
       .max(255, "Full Name cannot exceed 255 characters")
       .matches(
-        /^[\p{L} .'-]+$/u,
+        /^[\p{L}\p{M}]+(?:[\s.'-]+[\p{L}\p{M}]+)*$/u,
         "Full Name cannot contain special characters or numbers"
       ),
     email: Yup.string()
@@ -68,7 +71,7 @@ const DashboardCreateStaffAccount = () => {
           {
             userEmail: values.email,
             userUsername: values.username,
-            userFullname: values.fullName,
+            userFullname: normalizeFullName(values.fullName),
             userPhone: values.phoneNumber,
             userAddress: values.userAddress,
           },
