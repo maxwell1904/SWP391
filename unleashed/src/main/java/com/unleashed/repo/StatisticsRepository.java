@@ -56,20 +56,26 @@ public interface StatisticsRepository extends JpaRepository<Order, String> {
     @Query(value = """
             WITH ProductSales AS (
                 SELECT
+                    p.product_id,
                     p.product_name,
                     COUNT(ovs.variation_single_id) AS total_sold
                 FROM
-                    product p
+                    order_variation_single ovs
                 JOIN
-                    variation_single vs ON SUBSTRING(vs.variation_single_code, 1, 6) = p.product_code
+                    variation_single vs ON ovs.variation_single_id = vs.variation_single_id
                 JOIN
-                    order_variation_single ovs ON vs.variation_single_id = ovs.variation_single_id
+                    variation v ON vs.variation_id = v.variation_id
+                JOIN
+                    product p ON v.product_id = p.product_id
                 JOIN
                     [order] o ON ovs.order_id = o.order_id
+                JOIN
+                    order_status os ON o.order_status_id = os.order_status_id
                 WHERE
                     o.order_date >= DATEADD(day, -:number_of_days, GETDATE())
-                  AND o.order_status_id IN (SELECT order_status_id from order_status)
+                  AND os.order_status_name = 'COMPLETED'
                 GROUP BY
+                    p.product_id,
                     p.product_name
             )
             SELECT
@@ -86,19 +92,25 @@ public interface StatisticsRepository extends JpaRepository<Order, String> {
     @Query(value = """
             WITH ProductSales AS (
                 SELECT
+                    p.product_id,
                     p.product_name,
                     COUNT(ovs.variation_single_id) AS total_sold
                 FROM
-                    product p
+                    order_variation_single ovs
                 JOIN
-                    variation_single vs ON SUBSTRING(vs.variation_single_code, 1, 6) = p.product_code
+                    variation_single vs ON ovs.variation_single_id = vs.variation_single_id
                 JOIN
-                    order_variation_single ovs ON vs.variation_single_id = ovs.variation_single_id
+                    variation v ON vs.variation_id = v.variation_id
+                JOIN
+                    product p ON v.product_id = p.product_id
                 JOIN
                     [order] o ON ovs.order_id = o.order_id
+                JOIN
+                    order_status os ON o.order_status_id = os.order_status_id
                 WHERE
-                    o.order_status_id IN (SELECT order_status_id from order_status)
+                    os.order_status_name = 'COMPLETED'
                 GROUP BY
+                    p.product_id,
                     p.product_name
             )
             SELECT

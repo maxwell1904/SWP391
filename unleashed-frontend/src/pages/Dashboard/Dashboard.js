@@ -1,13 +1,25 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { apiClient } from "../../core/api";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import Column3DChart from "../../components/chart/3dColumnChart";
 import { formatPrice } from "../../components/format/formats";
 
+const TOP_BEST_SELLING_PRODUCTS = 10;
+
+const bestSellingFilters = [
+  { label: "Last 30 days", value: "30" },
+  { label: "Last 90 days", value: "90" },
+  { label: "All time", value: "all" },
+];
+
 const Dashboard = () => {
   const [monthlyRevenueChartData, setMonthlyRevenueChartData] = useState([]);
   const [monthlyTotalRevenue, setMonthlyTotalRevenue] = useState(0);
   const [yearlyRevenue, setYearlyRevenue] = useState(0);
+  const [bestSellingProducts, setBestSellingProducts] = useState([]);
+  const [bestSellingFilter, setBestSellingFilter] = useState("30");
+  const [bestSellingLoading, setBestSellingLoading] = useState(false);
+  const [bestSellingError, setBestSellingError] = useState("");
 
   const [orderStatusList, setOrderStatusList] = useState([]); // State cho danh sách trạng thái đơn hàng
 
@@ -21,6 +33,14 @@ const Dashboard = () => {
 
   const currentMonth = currentDate.getMonth() + 1; // Tháng trong Javascript bắt đầu từ 0
   const currentYear = currentDate.getFullYear();
+  const maxBestSellingTotal = useMemo(
+    () =>
+      bestSellingProducts.reduce(
+        (max, product) => Math.max(max, Number(product.totalSold || 0)),
+        0,
+      ),
+    [bestSellingProducts],
+  );
 
   // Tạo list tháng và năm để chọn
   const months = [
@@ -43,10 +63,53 @@ const Dashboard = () => {
   ); // Năm từ 2000 đến năm hiện tại
 
   useEffect(() => {
-    fetchMonthlyRevenue(currentMonth, currentYear);
-    fetchYearlyRevenue(currentYear);
-    fetchOrderStatusData();
-  }, [varToken, currentMonth, currentYear, currentPage]); // Fetch lại khi tháng/năm thay đổi
+    let isMounted = true;
+
+    const fetchBestSellingProducts = async () => {
+      setBestSellingLoading(true);
+      setBestSellingError("");
+
+      const isAllTime = bestSellingFilter === "all";
+      const endpoint = isAllTime
+        ? "/api/statistics/best-selling-products/all-time"
+        : "/api/statistics/best-selling-products";
+      const params = isAllTime
+        ? { topNProducts: TOP_BEST_SELLING_PRODUCTS }
+        : {
+            numberOfDays: Number(bestSellingFilter),
+            topNProducts: TOP_BEST_SELLING_PRODUCTS,
+          };
+
+      try {
+        const response = await apiClient.get(endpoint, {
+          headers: {
+            Authorization: varToken,
+          },
+          params,
+        });
+
+        if (isMounted) {
+          setBestSellingProducts(response.data || []);
+        }
+      } catch (error) {
+        console.error("Error fetching best selling products:", error);
+        if (isMounted) {
+          setBestSellingProducts([]);
+          setBestSellingError("Could not load best-selling data.");
+        }
+      } finally {
+        if (isMounted) {
+          setBestSellingLoading(false);
+        }
+      }
+    };
+
+    fetchBestSellingProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [varToken, bestSellingFilter]);
 
   useEffect(() => {
     // Effect để xử lý click bên ngoài dropdown để đóng dropdown
@@ -65,7 +128,7 @@ const Dashboard = () => {
     };
   }, [pageDropdownRef]);
 
-  const fetchMonthlyRevenue = async (month, year) => {
+  const fetchMonthlyRevenue = useCallback(async (month, year) => {
     try {
       const response = await apiClient.get(
         `/api/statistics/revenue/monthly?month=${month}&year=${year}`,
@@ -104,9 +167,9 @@ const Dashboard = () => {
       setMonthlyRevenueChartData(() => []);
       setMonthlyTotalRevenue(0);
     }
-  };
+  }, [varToken]);
 
-  const fetchYearlyRevenue = async (year) => {
+  const fetchYearlyRevenue = useCallback(async (year) => {
     // Thêm tham số năm
     try {
       const response = await apiClient.get(
@@ -122,7 +185,7 @@ const Dashboard = () => {
     } catch (error) {
       console.error("Error fetching yearly revenue:", error);
     }
-  };
+  }, [varToken]);
 
   const goToPreviousMonth = () => {
     const newDate = new Date(currentDate);
@@ -157,7 +220,7 @@ const Dashboard = () => {
     return currentYear === now.getFullYear() && currentMonth === 12;
   };
 
-  const fetchOrderStatusData = async () => {
+  const fetchOrderStatusData = useCallback(async () => {
     try {
       const response = await apiClient.get(
         `/api/statistics/order-status-list?page=${currentPage}&size=20`,
@@ -173,7 +236,19 @@ const Dashboard = () => {
     } catch (error) {
       console.error("Error fetching order status list:", error);
     }
-  };
+  }, [currentPage, varToken]);
+
+  useEffect(() => {
+    fetchMonthlyRevenue(currentMonth, currentYear);
+    fetchYearlyRevenue(currentYear);
+    fetchOrderStatusData();
+  }, [
+    currentMonth,
+    currentYear,
+    fetchMonthlyRevenue,
+    fetchOrderStatusData,
+    fetchYearlyRevenue,
+  ]); // Fetch lại khi tháng/năm thay đổi
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -260,6 +335,88 @@ const Dashboard = () => {
           <span className="font-bold">{formatPrice(yearlyRevenue)}</span>
         </h4>{" "}
         {/* Hiển thị tổng doanh thu năm trong thẻ div monthly */}
+      </div>
+
+      {/* Best Selling Products Section */}
+      <div className="bg-gray-50 p-6 rounded-lg shadow-md mb-6">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-4">
+          <div>
+            <h3 className="text-xl font-semibold">Best Selling Products</h3>
+            <p className="text-sm text-gray-500">
+              Completed orders only | Top {TOP_BEST_SELLING_PRODUCTS}
+            </p>
+          </div>
+          <div className="inline-flex w-full md:w-auto rounded-md border border-gray-300 overflow-hidden bg-white">
+            {bestSellingFilters.map((filter) => {
+              const isActive = bestSellingFilter === filter.value;
+              return (
+                <button
+                  key={filter.value}
+                  type="button"
+                  onClick={() => setBestSellingFilter(filter.value)}
+                  className={`flex-1 md:flex-none px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  {filter.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {bestSellingLoading ? (
+          <div className="space-y-3">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="h-10 rounded bg-gray-200 animate-pulse" />
+            ))}
+          </div>
+        ) : bestSellingError ? (
+          <p className="text-center text-red-500 py-8">{bestSellingError}</p>
+        ) : bestSellingProducts.length > 0 ? (
+          <div className="space-y-3">
+            {bestSellingProducts.map((product, index) => {
+              const totalSold = Number(product.totalSold || 0);
+              const barWidth =
+                maxBestSellingTotal > 0
+                  ? `${Math.max((totalSold / maxBestSellingTotal) * 100, 6)}%`
+                  : "0%";
+
+              return (
+                <div
+                  key={`${product.productName}-${index}`}
+                  className="grid grid-cols-1 md:grid-cols-[3rem_minmax(0,1fr)_7rem] gap-2 md:gap-4 items-center"
+                >
+                  <div className="text-sm font-bold text-gray-500">
+                    #{index + 1}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex justify-between gap-3 mb-1">
+                      <span className="font-medium text-gray-800 truncate">
+                        {product.productName || "Unnamed product"}
+                      </span>
+                    </div>
+                    <div className="h-2.5 rounded-full bg-gray-200 overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-blue-600"
+                        style={{ width: barWidth }}
+                      />
+                    </div>
+                  </div>
+                  <div className="text-sm font-semibold text-gray-700 md:text-right">
+                    {totalSold.toLocaleString()} sold
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="text-center text-gray-500 py-8">
+            No best-selling data for this range.
+          </p>
+        )}
       </div>
 
       {/* Order Status Section */}
