@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Navbar } from "./components/navbars/Navbar";
 import { NavLogin } from "./components/navbars/UserAccessBar";
 import { toast, ToastContainer, Zoom } from "react-toastify";
@@ -10,6 +10,7 @@ import useSignOut from "react-auth-kit/hooks/useSignOut";
 import { jwtDecode } from "jwt-decode";
 import AppRoutes from "./routes/AppRoutes.js";
 import ScrollToTop from "./Scroll.js";
+import { checkStatus } from "./service/AuthService";
 import {
     AUTH_SESSION_EVENT_KEY,
     getCurrentAuthTabId,
@@ -18,6 +19,7 @@ import {
 
 function App() {
     const location = useLocation();
+    const navigate = useNavigate();
     const authHeader = useAuthHeader();
     const signOut = useSignOut();
 
@@ -43,6 +45,64 @@ function App() {
             }
         }
     }, [authHeader, signOut]);
+
+    useEffect(() => {
+        const token = authHeader?.split(" ")[1];
+        if (!token) {
+            return;
+        }
+
+        let isCancelled = false;
+
+        const endSession = (decodedToken) => {
+            if (isCancelled) {
+                return;
+            }
+
+            const userRole = decodedToken?.role?.[0]?.authority;
+            const loginPath = userRole === "ADMIN" || userRole === "STAFF"
+                ? "/LoginForStaffAndAdmin"
+                : "/login";
+
+            toast.info("Your account is no longer active. Please log in again.", {
+                position: "top-center",
+                transition: Zoom,
+            });
+            signOut();
+            notifyAuthSessionChanged("logout", { reason: "disabled" });
+            navigate(loginPath, { replace: true });
+        };
+
+        const validateActiveSession = async () => {
+            let decodedToken;
+            try {
+                decodedToken = jwtDecode(token);
+            } catch (error) {
+                endSession(null);
+                return;
+            }
+
+            const currentTime = Date.now() / 1000;
+            if (decodedToken.exp < currentTime) {
+                return;
+            }
+
+            try {
+                await checkStatus(authHeader);
+            } catch (error) {
+                const status = error?.response?.status;
+                if ([400, 401, 403, 404].includes(status)) {
+                    endSession(decodedToken);
+                }
+            }
+        };
+
+        validateActiveSession();
+
+        return () => {
+            isCancelled = true;
+        };
+    }, [authHeader, location.pathname, navigate, signOut]);
 
     useEffect(() => {
         const handleAuthSessionChange = (event) => {

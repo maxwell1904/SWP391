@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react";
 import qrvcb from "../../assets/images/bankTransferVCB.jpg";
 import qrzp from "../../assets/images/bankTransferZP.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCart } from "react-use-cart";
 import { formatPrice } from "../../components/format/formats";
-import { Navbar } from "../../components/navbars/Navbar";
 import Footer from "../../components/footer/CustomerFooter";
 
 function OrderBankTransfer() {
     const OrderId = localStorage.getItem("orderId");
     const [isConfirmed, setIsConfirmed] = useState(false);
     const navigate = useNavigate();
-    const { emptyCart } = useCart();
     const location = useLocation();
 
     const queryParams = new URLSearchParams(location.search);
@@ -24,10 +21,9 @@ function OrderBankTransfer() {
 
     useEffect(() => {
         if (!OrderId) {
-            emptyCart();
             return navigate("/shop");
         }
-    }, [OrderId, emptyCart, navigate]);
+    }, [OrderId, navigate]);
 
     const handleConfirmPayment = () => {
         setIsConfirmed(true);

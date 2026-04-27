@@ -7,49 +7,82 @@ import { TbReorder } from "react-icons/tb";
 import { paymentCallback } from "../../service/CheckoutService";
 import { useCart } from "react-use-cart";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
-import { Navbar } from "../../components/navbars/Navbar";
 import Footer from "../../components/footer/CustomerFooter";
+
+const COMPLETED_ORDER_ID_KEY = "completedOrderId";
 
 function OrderSuccess() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const orderId = localStorage.getItem("orderId");
+    const pendingOrderId = localStorage.getItem("orderId");
+    const completedOrderId = sessionStorage.getItem(COMPLETED_ORDER_ID_KEY);
+    const orderId = pendingOrderId || completedOrderId;
     const { emptyCart } = useCart();
     const authHeader = useAuthHeader();
 
     useEffect(() => {
         const responseCode = searchParams.get("vnp_ResponseCode");
         const transactionStatus = searchParams.get("vnp_TransactionStatus");
+        let isCancelled = false;
 
         if (!orderId) {
             navigate("/shop");
-            emptyCart();
             return;
         }
 
-        if (!responseCode || !transactionStatus) {
-            paymentCallback(orderId, authHeader, 1);
-            return localStorage.removeItem("orderId");
+        if (!pendingOrderId || !authHeader) {
+            return;
         }
 
-        if (responseCode === "00" && transactionStatus === "00") {
-            paymentCallback(orderId, authHeader, 1);
+        const completeOrder = () => {
+            sessionStorage.setItem(COMPLETED_ORDER_ID_KEY, orderId);
+            emptyCart();
             localStorage.removeItem("orderId");
-        } else {
-            navigate("/orders/error");
-            return localStorage.removeItem("orderId");
-        }
-    }, [authHeader, emptyCart, navigate, orderId, searchParams]);
+        };
+
+        const finalizePayment = async () => {
+            if (!responseCode || !transactionStatus) {
+                await paymentCallback(orderId, authHeader, 1);
+                if (!isCancelled) {
+                    completeOrder();
+                }
+                return;
+            }
+
+            if (responseCode === "00" && transactionStatus === "00") {
+                await paymentCallback(orderId, authHeader, 1);
+                if (!isCancelled) {
+                    completeOrder();
+                }
+                return;
+            }
+
+            await paymentCallback(orderId, authHeader, 0);
+            if (!isCancelled) {
+                sessionStorage.removeItem(COMPLETED_ORDER_ID_KEY);
+                localStorage.removeItem("orderId");
+                navigate("/orders/error");
+            }
+        };
+
+        finalizePayment();
+
+        return () => {
+            isCancelled = true;
+        };
+    }, [authHeader, emptyCart, navigate, orderId, pendingOrderId, searchParams]);
 
     const handleViewOrder = () => {
         navigate("/user/orders/me/" + orderId);
         emptyCart();
+        sessionStorage.removeItem(COMPLETED_ORDER_ID_KEY);
         localStorage.removeItem("orderId");
     };
 
     const handleReturnToHome = () => {
         navigate("/shop");
         emptyCart();
+        sessionStorage.removeItem(COMPLETED_ORDER_ID_KEY);
         localStorage.removeItem("orderId");
     };
 

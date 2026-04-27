@@ -7,12 +7,14 @@ import com.unleashed.dto.ResponseDTO;
 import com.unleashed.dto.UserDTO;
 import com.unleashed.entity.User;
 import com.unleashed.exception.CustomException;
+import com.unleashed.service.CustomUserDetailsService;
 import com.unleashed.service.VoucherService;
 import com.unleashed.service.EmailService;
 import com.unleashed.service.UserRoleService;
 import com.unleashed.service.UserService;
 import com.unleashed.util.GoogleUtil;
 import com.unleashed.util.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,18 +46,20 @@ public class AuthRestController {
     private final JwtUtil jwtUtil;
     private final EmailService emailService;
     private final VoucherService voucherService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     private final AuthenticationManager authenticationManager;
 
 
     @Autowired
-    public AuthRestController(UserService userService, UserRoleService userRoleService, JwtUtil jwtUtil, AuthenticationManager authenticationManager, EmailService emailService, VoucherService voucherService) {
+    public AuthRestController(UserService userService, UserRoleService userRoleService, JwtUtil jwtUtil, AuthenticationManager authenticationManager, EmailService emailService, VoucherService voucherService, CustomUserDetailsService customUserDetailsService) {
         this.userService = userService;
         this.userRoleService = userRoleService;
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
         this.emailService = emailService;
         this.voucherService = voucherService;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @PostMapping("/login")
@@ -326,13 +331,18 @@ public class AuthRestController {
             if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Authorization header");
             }
-            if (jwtUtil.isTokenRevoked(authorizationHeader.substring(7))) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Token revoked");
+            String token = authorizationHeader.substring(7);
+            String username = jwtUtil.extractSubject(token);
+            UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+
+            if (!jwtUtil.isValidToken(token, userDetails)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Token invalid or account disabled");
             }
-            else {
-                return ResponseEntity.status(HttpStatus.OK).body("Token valid");
-            }
-        } catch (IllegalArgumentException e) {
+
+            return ResponseEntity.status(HttpStatus.OK).body("Token valid");
+        } catch (CustomException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+        } catch (IllegalArgumentException | JwtException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token: " + e.getMessage());
         }
     }

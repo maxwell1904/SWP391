@@ -3,6 +3,7 @@ package com.unleashed.security;
 
 import com.unleashed.service.CustomUserDetailsService;
 import com.unleashed.util.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,13 +37,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwtToken;
         final String username;
-        if (authHeader == null || authHeader.isEmpty()) {
+        if (authHeader == null || authHeader.isEmpty() || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         jwtToken = authHeader.replace("Bearer ", "");
-        username = jwtUtil.extractSubject(jwtToken);
+        try {
+            username = jwtUtil.extractSubject(jwtToken);
+        } catch (IllegalArgumentException | JwtException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
@@ -54,7 +60,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 SecurityContextHolder.setContext(securityContext);
                 //System.out.println(securityContext.getAuthentication());
             } else {
-//                System.err.println("Invalid token");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
             }
         }
         filterChain.doFilter(request, response);

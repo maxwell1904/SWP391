@@ -675,8 +675,6 @@ public class OrderService {
             });
 
             stockTransactionService.createReservationTransactionsForOrder(order);
-
-            cartService.removeAllFromCart(order.getUser().getUserId().toString());
         } catch (Exception e) {
             System.err.println("Failed to save order details: " + e.getMessage());
             throw new RuntimeException("Failed to save order details", e);
@@ -746,6 +744,7 @@ public class OrderService {
 //        order.setOrderStatus(Order.OrderStatus.PENDING);
 
         orderRepository.save(order);
+        clearCartForOrder(order);
 //        System.out.println("Get here");
         sendOrderConfirmationEmail(order);
 
@@ -840,22 +839,51 @@ public class OrderService {
         return response;
     }
 
+    @Transactional
     public void handlePaymentCallback(String orderId, boolean isSuccess) {
         Order order = orderRepository.findById(orderId).orElse(null);
         if (order != null) {
-            // Only proceed if the order is in the PENDING status
-            if (order.getOrderStatus().getOrderStatusName().equalsIgnoreCase("PENDING")) {
-                // System.out.println("Order is not in PENDING status. Payment callback will not be processed.");
+            String paymentMethodName = order.getPaymentMethod() != null
+                    ? order.getPaymentMethod().getPaymentMethodName()
+                    : "";
+
+            if (paymentMethodName.equalsIgnoreCase("COD")) {
+                clearCartForOrder(order);
                 return;
             }
 
-            // Update the order status based on the payment success
-            order.setOrderStatus(isSuccess ? orderStatusRepository.findAll().get(2)
-                    : orderStatusRepository.findAll().get(5));
+            String orderStatusName = order.getOrderStatus() != null
+                    ? order.getOrderStatus().getOrderStatusName()
+                    : "";
+            if (!orderStatusName.equalsIgnoreCase("PENDING")) {
+                return;
+            }
+
+            OrderStatus nextStatus = orderStatusRepository.findByOrderStatusName(isSuccess ? "PROCESSING" : "CANCELLED")
+                    .orElseThrow(() -> new IllegalStateException("Order status not found for payment callback."));
+            order.setOrderStatus(nextStatus);
             orderRepository.save(order);
+
+            if (isSuccess) {
+                clearCartForOrder(order);
+            } else {
+                returnStock(order);
+            }
 
             // Send payment callback email
             sendPaymentCallbackEmail(order, isSuccess);
+        }
+    }
+
+    private void clearCartForOrder(Order order) {
+        if (order == null || order.getUser() == null || order.getUser().getUserId() == null) {
+            return;
+        }
+
+        try {
+            cartService.removeAllFromCart(order.getUser().getUserId().toString());
+        } catch (RuntimeException e) {
+            logger.debug("Cart was already empty for order {}", order.getOrderId(), e);
         }
     }
 
